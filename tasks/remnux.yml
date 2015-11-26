@@ -1,0 +1,548 @@
+# adapted from get-remnux.sh "REMnux-v6-116"
+## or from inventory as seen http://www.stavros.io/posts/example-provisioning-and-deployment-ansible/
+
+- name: adding REMnux repository
+  apt_repository: repo='ppa:remnux/stable' state=present
+  when: ansible_distribution == 'Ubuntu'
+- name: adding Inetsim repository
+  apt_repository: repo='deb http://www.inetsim.org/debian/ binary/' state=present
+- apt_key: url=http://www.inetsim.org/inetsim.org-archive-signing-key.asc state=present
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+- name: adding SIFT repository
+  apt_repository: repo='ppa:sift/stable' state=present
+  when: ansible_distribution == 'Ubuntu'
+## Alternative: trusty-backports?
+- name: adding Draios repository (sysdig)
+  apt_repository: repo='deb http://download.draios.com/stable/deb stable-$(ARCH)/' state=present
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+- apt_key: url=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public state=present
+# These repositories are needed for REMnux, but are disabled on some Ubuntu 14.04 base builds, so enable them.
+- name: Enabling Universe repository
+  apt_repository: repo='deb http://archive.ubuntu.com/ubuntu trusty universe' state=present
+  when: ansible_distribution == 'Ubuntu'
+- replace: dest=/etc/apt/sources.list regexp='^#(\.*)multiverse$' replace='\1multiverse' backup=yes
+  when: ansible_distribution == 'Ubuntu'
+# Some 64-bit systems are not configured to support i386 packages. Let's make sure they are enabled. (done in main.yml)
+#- name: Ensure both i386/x86_64 architecture support for packages
+#  command: dpkg --add-architecture i386
+## should be through a handler/notify
+#- command: ldconfig
+
+- name: REMNUX | packages install
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - software-properties-common
+    - vbindiff
+    - wxhexeditor
+    - feh
+    - libffi-dev
+    - binutils
+    - curl
+    - exfat-utils
+    - xpdf
+    - stunnel4
+    - imagemagick
+## sift is using gdb so keep same, else keep installing/removing
+## but remnux-bashacks wants gdb-minimal and not gdb...
+    - gdb-minimal
+#    - gdb
+    - python-hachoir-core
+    - python-hachoir-regex
+    - python-hachoir-metadata
+    - python-hachoir-parser
+    - python-hachoir-subfile
+    - python-hachoir-urwid
+    - python-hachoir-wx
+    - firefox
+    - xmlstarlet
+    - inspircd
+    - epic5
+    - tor
+    - torsocks
+    - pdftk
+    - libemu2
+    - clamav-daemon
+    - bulk-extractor
+    - ltrace
+    - strace
+    - inetsim
+    - openssh-client
+    - openssh-server
+    - foremost
+    - ngrep
+    - unhide
+    - tcpdump
+    - default-jre
+    - tcpick
+    - wireshark
+    - radare2
+    - p7zip-full
+    - upx-ucl
+    - swftools
+    - libmozjs-24-bin
+    - rhino
+    - python-crypto
+    - python-volatility
+    - ssdeep
+    - docker.io
+    - libimage-exiftool-perl
+    - scalpel
+    - liblzma-dev
+    - libwebkitgtk-1.0-0
+    - lame
+    - ibus
+    - libgif4
+    - libgif-dev
+    - libjpeg-turbo8
+    - libjpeg-turbo8-dev
+    - libgtk2.0-0:i386
+    - libxxf86vm1:i386
+    - libsm6:i386
+    - lib32stdc++6
+    - gtk2-engines:i386
+    - gtk2-engines-*:i386
+#    - libgtkmm-2.4-1c2:i386
+    - libcanberra-gtk-module:i386
+    - libxslt1-dev
+    - libxml2-dev
+    - zlib1g-dev
+    - libyaml-dev
+    - bundler
+    - build-essential
+    - python
+    - python-dev
+    - automake
+    - python-pip
+    - ruby
+    - ruby-dev
+    - git
+    - subversion
+    - mercurial
+    - bundler
+## msg: No package matching 'unrar' is available
+#    - unrar
+    - unrar-free
+    - dos2unix
+    - tcpxtract
+    - libsqlite3-dev
+    - python-pydot
+    - libncurses5:i386
+    - automake
+    - libmagic-dev
+    - libtool
+    - bison
+    - flex
+    - libboost1.54-all-dev
+    - libncurses5-dev
+    - python-setuptools
+    - python-magic
+    - libpcre3
+    - libpcre3-dev
+    - libpcre++-dev
+    - automake
+    - openssl
+    - python-qt4
+    - libzmq3-dev
+    - libc6-dev-i386
+    - usbmount
+    - python-numpy
+    - python-scipy
+    - python-levenshtein
+    - python-pil
+    - python-gtksourceview2
+    - python-gtk2
+    - libfuzzy-dev
+    - graphviz
+    - python-utidylib
+    - rsakeyfind
+    - aeskeyfind
+    - pyew
+    - nginx
+    - ruby-gtk2
+    - libjavassist-java
+    - tcpflow
+    - geany
+    - sysdig
+    - yara
+    - libyara3
+    - python-yara
+    - python-pyasn1
+    - python-capstone
+    - remnux-config
+    - remnux-rules
+    - remnux-volatility-plugins
+    - remnux-pylibemu
+    - remnux-pyv8
+    - remnux-v8
+    - python-pefile
+    - remnux-python-ssdeep
+    - remnux-libdasm
+    - remnux-scripts
+    - remnux-officedissector
+    - remnux-didier
+    - remnux-xorsearch
+    - remnux-xorstrings
+    - remnux-ioc-writer
+    - remnux-findaes
+    - remnux-nsrllookup
+    - remnux-balbuzard
+    - remnux-signsrch
+    - remnux-bokken
+    - remnux-viper
+    - remnux-pdfxray-lite
+    - remnux-thug
+    - remnux-trid
+    - remnux-rule-editor
+    - remnux-peepdf
+    - remnux-mastiff
+    - remnux-udis86
+    - remnux-vivisect
+    - remnux-edb-debugger
+    - remnux-peframe
+    - remnux-rabcdasm
+    - remnux-jad
+    - remnux-jd-gui
+    - remnux-automater
+    - remnux-network-miner
+    - remnux-python-chilkat
+    - remnux-androwarn
+    - remnux-androguard
+    - remnux-pev
+    - remnux-bashacks
+    - remnux-pype32
+    - remnux-ratdecoders
+    - remnux-procdot
+    - remnux-densityscout
+    - remnux-ragpicker
+    - remnux-vttool
+    - remnux-bytehist
+    - libolecf-tools
+    - remnux-burpsuite-free
+    - scite
+    - remnux-js-didier
+    - remnux-python-pdns
+    - remnux-flare
+    - remnux-oletools
+    - remnux-captipper
+    - remnux-cfr
+    - remnux-pycdc
+    - remnux-virustotalapi
+    - remnux-dc3-mwcp
+    - libemail-outlook-message-perl
+    - python-dnspython
+    - remnux-ioc-parser
+    - lxde
+    - lxdm
+  notify:
+    - Updating ClamAV Signatures
+
+#- name: Setting up auto-login for user {{ current_user }}
+#  replace: dest='/etc/lxdm/lxdm.conf' regexp={{ item.regexp }} replace={{ item.replace }}
+#  with_items:
+#    - { regexp: '^#\ autologin=dgod', replace: "autologin={{ current_user }}" }
+#    - { regexp: '^disable=0$', replace: 'disable=1' }
+- name: Setting up auto-login for user {{ current_user }}
+  replace: dest='/etc/lxdm/lxdm.conf' regexp='^#\ autologin=dgod' replace="autologin={{ current_user }}"
+- replace: dest='/etc/lxdm/lxdm.conf' regexp='^disable=0$' replace='disable=1'
+
+- name: Install pip packages
+  pip: name={{item}} state=present
+  with_items:
+    - distorm3
+    - cryptography
+    - pyelftools
+    - rekall
+    - jsbeautifier
+    - xortool
+    - cybox
+    - olefile
+    - mitmproxy
+    - pydeep
+    - bottle
+    - pylzma
+    - pyelftools
+    - bitstring
+    - requesocks
+    - rarfile
+    - fuzzywuzzy
+
+- name: Install Ruby Gems
+  gem: name={{item}} state=present
+  with_items:
+    - therubyracer
+    - origami
+    - passivedns-client
+    - pedump
+
+- name: Tweaking Ruby Gems Configuration
+  file:
+# This is needed for Origami PDF Walker
+    dest=/home/{{ current_user }}/.local/share owner={{ current_user }} group={{ current_user }} mode=700 state=directory
+# This is needed for passivedns-client
+- stat: path=/home/{{ current_user }}/.passivedns-client
+  register: passivednsclient
+- file:
+    dest=/home/{{ current_user }}/.passivedns-client owner={{ current_user }} group={{ current_user }} mode=600 state=touch
+  when: not passivednsclient.stat.exists
+
+- name: Downloading Firefox extensions
+  get_url: url={{ item.url }} dest={{ item.dest }}
+  with_items:
+    - { url: 'https://addons.mozilla.org/firefox/downloads/latest/1237/addon-1237-latest.xpi', dest: '/tmp/addon-1237-latest.xpi' }
+    - { url: 'https://addons.mozilla.org/firefox/downloads/latest/1843/addon-1843-latest.xpi', dest: '/tmp/addon-1843-latest.xpi' }
+## Not figured how to do em:id extraction directly from ansible...
+#- name: Installing Firefox extensions
+#  command: "{{ item }}"
+#  with_items:
+#    - unzip -q -d /usr/lib/firefox/browser/extensions/{E6C1199F-E687-42da-8C24-E7770CC3AE66} /tmp/addon-1237-latest.xpi
+#    - unzip -q -d /usr/lib/firefox/browser/extensions/firebug@software.joehewitt.com /tmp/addon-1843-latest.xpi
+- stat: path=/usr/lib/firefox/browser/extensions/{E6C1199F-E687-42da-8C24-E7770CC3AE66}
+  register: addon1237
+- stat: path=/usr/lib/firefox/browser/extensions/firebug@software.joehewitt.com
+  register: addon1843
+- name: Installing Firefox extensions
+  command: unzip -q -d /usr/lib/firefox/browser/extensions/{E6C1199F-E687-42da-8C24-E7770CC3AE66} /tmp/addon-1237-latest.xpi
+  when: not addon1237.stat.exists
+- command: unzip -q -d /usr/lib/firefox/browser/extensions/firebug@software.joehewitt.com /tmp/addon-1843-latest.xpi
+  when: not addon1843.stat.exists
+
+- name: Updating REMnux documentation
+  file: path=/home/{{ current_user }}/Desktop owner={{ current_user }} state=directory mode=0700
+- stat: path=/usr/share/remnux/docs/sitemap.xml
+  register: remnuxdocs
+- name: git clone Remnux docs
+  git:
+    repo=https://github.com/REMnux/docs.git
+    dest=/usr/share/remnux/docs
+    version=gh-pages
+  when: not remnuxdocs.stat.exists
+- file: src=/usr/share/applications/show-remnux-docs.desktop path='/home/{{ current_user }}/Desktop/REMnux Docs' state=link force=yes
+- file: path=/var/www state=directory mode=0755
+- file: src=/usr/share/remnux/docs path=/var/www/remnux-docs state=link
+- file: src=/usr/share/remnux/remnux-tools-sheet.html path='/home/{{ current_user }}/Desktop/REMnux Tools Sheet' state=link
+- file: src=/usr/share/remnux/remnux-malware-analysis-tips.pdf path='/home/{{ current_user }}/Desktop/REMnux CheatSheet' state=link
+
+- name: Creating mount points and other directories
+  file:
+    dest={{ item }} mode=755 state=directory
+  with_items:
+    - /mnt/cdrom
+    - /opt
+- file: dest=/var/log/thug mode=777 state=directory
+- name: Disabling Tor
+  service: name=tor state=stopped enabled=no
+- lineinfile: dest=/etc/ssh/sshd_config regexp='^UseDNS no' line='UseDNS no'
+- name: Stopping ClamAV daemons
+  service: name={{ item }} state=stopped enabled=no
+  with_items:
+    - clamav-daemon
+    - clamav-freshclam
+- name: Stopping Docker daemon
+  service: name=docker state=stopped enabled=no
+- lineinfile: dest=/etc/init/docker.override regexp='^manual' line='manual'
+- name: Stopping Nginx daemon
+  service: name=nginx state=stopped enabled=no
+- name: Stopping InspIRCd daemon
+  service: name=inspircd state=stopped enabled=no
+
+- name: Modules exclusions for VM
+#  lineinfile: dest=/etc/modprobe.d/blacklist.conf regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
+  lineinfile: dest=/etc/modprobe.d/blacklist.conf regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+    - { regexp: "^blacklist i2c-piix4", line: "blacklist i2c-piix4" }
+    - { regexp: "^blacklist intel_rapl", line: "blacklist intel_rapl" }
+  when: vm
+
+- name: Debian | Remove some packages
+  apt: name={{item}} state=absent
+  with_items:
+    - xscreensaver
+    - xscreensaver-data
+
+#- name: Setting up /etc/fstab for CD-ROM
+#  #lineinfile: dest=/etc/fstab regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
+#  lineinfile: dest=/etc/fstab regexp={{ item.regexp }} line="{{ item.line }}" state=present
+#    - { regexp: '^/dev/sr0  /mnt/cdrom  udf,iso9660 user,noauto,exec,utf8   0   0', line: '/dev/sr0  /mnt/cdrom  udf,iso9660 user,noauto,exec,utf8   0   0' }
+#    - { regexp: '^/dev/fd0', line: '#/dev/fd0' }
+- name: Setting up USB auto-mount options
+  lineinfile: dest=/etc/usbmount/usbmount.conf regexp='\"$' line=' ntfs exfat\"'
+- lineinfile: dest=/home/{{ current_user }}/.bashrc regexp='^set -o noclobber' line='set -o noclobber'
+- name: Configuring packet capture capabilities for non-root users
+#  command: setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap     ## NOK
+#  capabilities: path=/usr/bin/dumpcap capability='CAP_NET_RAW+eip CAP_NET_ADMIN+eip' state=present     ## NOK
+  capabilities: path=/usr/bin/dumpcap capability="{{ item }}" state=present
+  with_items:
+    - CAP_NET_RAW+eip
+    - CAP_NET_ADMIN+eip
+- name: Configuring sudo
+  lineinfile: "dest=/etc/sudoers regexp='^{{ current_user }} ALL=NOPASSWD: ALL' line='{{ current_user }} ALL=NOPASSWD: ALL'"
+## why ?
+- replace:
+    dest='/etc/sudoers' regexp='^Defaults        secure_path=' replace='#Defaults       secure_path='
+
+- stat: path=/etc/inetsim/inetsim.conf
+  register: inetsim
+- name: Configuring INetSim
+  replace:
+    dest=/etc/inetsim/inetsim.conf regexp={{ item.regexp }} replace="{{ item.replace }}"
+  with_items:
+    - { regexp: "toto", replace: "tata" }
+  when: inetsim.stat.exists
+#    inetsim_services="dns tftp irc ntp finger ident syslog time_tcp time_udp daytime_tcp daytime_udp echo_tcp echo_udp discard_tcp discard_udp quotd_tcp quotd_udp chargen_tcp chargen_udp dummy_tcp dummy_udp"
+#    for INETSIM_SERVICE in $inetsim_services; do
+#      sed -i -e "/start_service $INETSIM_SERVICE/ s/^#*/#/" /etc/inetsim/inetsim.conf
+#    done
+- stat: path=/var/log/inetsim/main.log
+  register: inetsimlog
+- name: Configuring INetSim logs
+  file: dest="{{ item }}" mode=0664 state=touch
+  with_items:
+    - /var/log/inetsim/service.log
+    - /var/log/inetsim/debug.log
+    - /var/log/inetsim/main.log
+  when: not inetsimlog.stat.exists
+
+- name: Configuring Web Server
+  replace:
+    dest=/etc/nginx/nginx.conf regexp='worker_processes 4' replace='worker_processes 1'
+- stat: path=/var/www
+  register: www
+- file: dest=/var/www owner=www-data group=www-data mode=0755 state=directory
+- replace:
+    dest=/etc/nginx/sites-enabled/default regexp='^\s.*location \/ {' replace='\tlocation \/ {\n\t\tautoindex on;'
+- file: src=/usr/share/remnux/fake-forms dest=/var/www/fake-forms state=link
+
+#- name: Setting up aliases
+#  lineinfile: dest=/home/{{ current_user }}/.bash_aliases regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
+#    - { regexp: "alias mountwin='mount -o ro,loop,show_sys_files,streams_interface=windows'", line: "alias mountwin='mount -o ro,loop,show_sys_files,streams_interface=windows" }
+#    - { regexp: '', line: '' }
+#- lineinfile: dest=/home/{{ current_user }}/.bashrc regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
+#    - { regexp: 'source /usr/share/remnux/remnux-aliases.sh', line: 'source /usr/share/remnux/remnux-aliases.sh' }
+#- lineinfile: dest=/root/bashrc regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
+#    - { regexp: 'source /usr/share/remnux/remnux-aliases.sh', line: 'source /usr/share/remnux/remnux-aliases.sh' }
+
+- name: Configuring global PATH
+  replace:
+    dest=/etc/environment regexp='^PATH="/usr/local/sbin' replace='PATH="/opt/remnux-procdot:/opt/remnux-ratdecoders:/opt/remnux-rabcdasm:/opt/remnux-vivisect:/opt/remnux-peepdf:/opt/remnux-thug/src:/opt/remnux-pdfxray-lite:/opt/remnux-viper:/opt/remnux-oletools:/opt/remnux-balbuzard:/opt/remnux-didier:/opt/remnux-scripts:/usr/local/sbin'
+- replace:
+    dest=/etc/apt/apt.conf.d/10periodic regexp='^APT::Periodic::Update-Package-Lists \"1\"' replace='APT::Periodic::Update-Package-Lists \"0\";'
+- file: src=/usr/share/remnux/fake-forms dest=/var/www/fake-forms state=link
+
+- name: Setting up symlinks, permissions and options for useful tools
+  file: src=/usr/bin/vol.py dest=/usr/bin/vol state=link
+- file: src=/dev/null dest=/etc/inspircd/inspircd.motd
+- file: src=/usr/share/remnux/inspircd.conf dest=/etc/inspircd/inspircd.conf
+- replace: dest=/etc/epic5/servers regexp='^irc.debian.org:6667' replace='localhost:6667'
+- file: src=/usr/share/remnux/scalpel.conf dest=/etc/scalpel/scalpel.conf
+- file: path=/home/{{ current_user }}/.wireshark owner={{ current_user }} state=directory mode=0700
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/wireshark-preferences /home/{{ current_user }}/.wireshark/preferences"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+- file: path=/home/{{ current_user }}/.procdot owner={{ current_user }} state=directory mode=0700
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/procdot.conf /home/{{ current_user }}/.procdot/.procdot"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+- stat: path=/home/{{ current_user }}/.procdot/default.pd
+  register: procdot
+- file: dest=/home/{{ current_user }}/.procdot/default.pd owner={{ current_user }} state=touch
+  when: not procdot.stat.exists
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/scite.conf /home/{{ current_user }}/.SciTEUser.properties"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+- file: path=/var/log/network-miner state=directory mode=1777
+- file: src=/var/log/network-miner dest=/opt/remnux-network-miner/AssembledFiles state=link force=yes
+- file: path=/opt/remnux-network-miner/Captures state=directory mode=1777
+- file: path=/home/{{ current_user }}/.config/codef00.com state=directory mode=755 owner={{ current_user }}
+- stat: path=/usr/share/remnux/edb.conf
+  register: edb
+- stat: path="/home/{{ current_user }}/.config/codef00.com/edb.conf"
+  register: edbu
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/edb.conf /home/{{ current_user }}/.config/codef00.com/edb.conf"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+  when: edb.stat.exists and not edbu.stat.exists
+- file: path=/home/{{ current_user }}/.config/codef00.com/edb-symbols state=directory mode=755 owner={{ current_user }}
+- file: path=/home/{{ current_user }}/.config/codef00.com/edb-session state=directory mode=755 owner={{ current_user }}
+- replace: dest="/home/{{ current_user }}/.config/codef00.com/edb.conf" regexp="{{ item.regexp }}" replace="{{ item.replace }}"
+  with_items:
+    - { regexp: /usr/bin/xterm, replace: /usr/bin/lxterminal }
+    - { regexp: '^directory.symbol.path=$', replace: 'directory.symbol.path=/home/{{ current_user }}/.config/codef00.com/edb-symbols' }
+    - { regexp: '^directory.session.path=$', replace: 'directory.session.path=/home/{{ current_user }}/.config/codef00.com/edb-session' }
+    - { regexp: '^directory.plugin.path=$', replace: 'directory.plugin.path=/lib64/edb' }
+    - { regexp: '^directory.plugin.path=$HOME$', replace: 'directory.plugin.path=/lib64/edb' }
+# Allow non-privileged users to write to Androwarn's Reports directory
+- command: chown -R {{ current_user }}:{{ current_user }} /opt/remnux-androwarn/Report
+- file: src=/usr/bin/js24 dest=/etc/alternatives/js state=link
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/wget.conf /home/{{ current_user }}/.wgetrc"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+- file: dest="/home/{{ current_user }}/.wgetrc" owner="{{ current_user }}"
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/curl.conf /home/{{ current_user }}/.curlrc"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+- file: dest="/home/{{ current_user }}/.curlrc" owner="{{ current_user }}"
+- lineinfile: dest=/home/{{ current_user }}/.wxHexEditor regexp='^UpdateCheck=0' line='UpdateCheck=0' owner={{ current_user }} create=yes
+
+- name: Setting LXDE options
+# Set up LXTerminal to start automatically when the user logs in
+  file: path=/home/{{ current_user }}/.config/autostart state=directory mode=700 owner={{ current_user }}
+- command: "rsync -ci --chown={{ current_user }} /var/lib/menu-xdg/applications/menu-xdg/X-Debian-Applications-Terminal-Emulators-lxterminal.desktop /home/{{ current_user }}/.config/autostart/X-Debian-Applications-Terminal-Emulators-lxterminal.desktop"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+- file: path=/home/{{ current_user }}/.config/lxterminal state=directory mode=755 owner={{ current_user }}
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/lxterminal.conf /home/{{ current_user }}/.config/lxterminal/lxterminal.conf"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+# Set up LXDE app launch bar options, including which icons should be displayed there
+- file: path=/home/{{ current_user }}/.config/lxpanel/LXDE/panels state=directory mode=755 owner={{ current_user }}
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/app-launch-bar.conf /home/{{ current_user }}/.config/lxpanel/LXDE/panels/panel"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+# Disable console messages that are shown when the system boots up and shuts down
+- replace: dest=/etc/init/rc.conf regexp='^console output' replace='#console output'
+
+# Set up the desktop to user the REMnux logo
+- file: path=/home/{{ current_user }}/.config/pcmanfm/LXDE/panels state=directory mode=755 owner={{ current_user }}
+- stat: path=/home/{{ current_user }}/.config/pcmanfm/LXDE/pcmanfm.conf
+  register: pcmanfmconf
+- stat: path=/usr/share/remnux/pcmanfm.conf
+  register: pcmanfmconforig
+- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/pcmanfm.conf /home/{{ current_user }}/.config/pcmanfm/LXDE/pcmanfm.conf"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+  when: not pcmanfmconf.stat.exists and pcmanfmconforig.stat.exists
+# Fix an error that would be otherwise seen when the user logs out using the GUI
+- lineinfile: dest=/etc/pam.d/lxdm regexp='^session required pam_systemd.so' line='session required pam_systemd.so'
+# Set up links to match the setup of older REMnux versions
+- name: Applying REMnux backwards compatibility settings
+  file: path=/usr/local/etc state=directory mode=755
+- file: src=/usr/share/remnux/objects.js dest=/usr/local/etc/def.js state=link
+- file: path=/usr/local/MalwareCrawler state=directory mode=755
+- file: src=/opt/remnux-ragpicker dest=/usr/local/MalwareCrawler/src state=link
+- stat: path=/media/cdrom
+  register: mcdrom
+- file: src=/mnt/cdrom dest=/media/cdrom state=link
+  when: not mcdrom.stat.exists
+- file: src=/opt/remnux-balbuzard dest=/usr/local/balbuzard state=link
+
+# Just for fun
+- debug: msg="Taking the dog for a walk"
+
+- name: Setting permissions for {{ current_user }}
+  file: dest=/home/{{ current_user }} owner={{ current_user }} group={{ current_user }}
+- user: name={{ current_user }} groups=docker append=yes 
+
+## cleanup
+- name: Check if packages need to be autoremoved
+  command: apt-get --dry-run autoremove
+  register: check_autoremove
+  changed_when: False
+- name: Autoremove unused packages
+  command: apt-get autoremove -qq -y
+  when: "'packages will be REMOVED' in check_autoremove.stdout"
+#- command: apt-get clean
+- stat: path=/usr/share/remnux
+  register: shareremnux
+- debug: msg="Some REMnux packages didn't install."
+  when: not shareremnux.stat.isdir
+

@@ -1,0 +1,58 @@
+---
+- name: Debian | Extra packages install
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+## Vortessence
+    - mysql-server
+    - python-mysqldb
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Vortessence - Automated memory forensics analysis 
+  git:
+    repo=https://github.com/vortessence/vortessence.git
+    dest={{ toolsetdir }}/vortessence
+    force=no
+  ignore_errors: true
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+
+- name: Install Vortessence requirements
+  pip: name={{item}} state=present
+  with_items:
+    - django
+    - tabulate
+    - django-extra-views
+    - pycrypto
+    - django-pure-pagination
+    - distorm3
+  sudo: yes 
+- mysql_db: name=vortessence state=present
+- mysql_user: name=vortessence password=vortessence priv=*.*:USAGE/vortessence.*:ALL state=present
+## Database settings should be reflected in ~/Toolset/vortessence/vortessence/vortessence/settings.py
+- replace: dest="{{ toolsetdir }}/vortessence/vortessence/vortessence/settings.py" regexp="{{ item.regexp }}" replace="{{ item.replace }}"
+  with_items:
+    - { regexp: '/vagrant/data/upload', replace: "/cases/vortessence_upload" }
+    - { regexp: '/vagrant/data/target', replace: '/cases/vortessence_target' }
+#    - { regexp: '/media/tmpfs', replace: '/path/to/ramdisk' }
+- file: dest="{{ item }}" state=directory mode=0755 owner={{ current_user }}
+  with_items:
+    - /cases/vortessence_upload
+    - /cases/vortessence_target
+## Vortessence Frontend:\nhttp://localhost:8000/\n\nphpMyAdmin (credentials: root/toor):\nhttp://localhost:8080/phpmyadmin/
+- stat: path=/root/.vortessence-setup
+  register: vs
+- name: Vortessence - setup
+  command: "{{ item }} chdir={{ toolsetdir }}/vortessence/vortessence"
+  with_items:
+    - python manage.py migrate
+    - python manage.py loaddata profile_fixture.json
+## interactive (password)
+#    - python manage.py createsuperuser --username admin --email root@localhost
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+  when: not vs.stat.exists
+- file: dest=/root/.vortessence-setup state=touch
+  when: not vs.stat.exists
+
+- file: dest="{{ ramdisk_path }}" mode=1777 state=directory
+

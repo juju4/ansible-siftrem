@@ -1,0 +1,7 @@
+---
+## create a ramdisk
+
+- file: dest="{{ ramdisk_path }}" mode=1777 state=directory
+
+- mount: name="{{ ramdisk_path }}" src=tmpfs fstype=tmpfs opts="size={{ ramdisk_size }}" state=mounted
+

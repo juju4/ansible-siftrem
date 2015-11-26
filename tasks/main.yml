@@ -1,0 +1,315 @@
+---
+- name: Debian | Extra packages install
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
+## https://major.io/2007/07/01/check-available-entropy-in-linux/
+## https://blog.cloudflare.com/ensuring-randomness-with-linuxs-random-number-generator/
+    - rng-tools
+    - python-pip
+    - git
+    - argus-client
+    - tshark
+    - graphviz
+    - snort
+    - suricata
+    - librrds-perl
+    - libnet-ip-perl
+    - tcptrace
+    - xplot
+    - chaosreader
+    - picviz
+    - python-pip
+    - cmake
+    - make
+    - g++
+    - python-hachoir-wx
+    - sqlite3
+    - lynx
+    - fcrackzip
+    - pdfcrack
+    - john
+    - wamerican-insane
+    - wcanadian-insane
+    - wngerman
+    - wfrench
+    - steghide
+    - python-xlrd
+    - openjdk-7-jre
+    - python-netaddr
+    - python-virtualenv
+    - build-essential
+    - python-dev
+    - python-setuptools
+    - python-lzma       # BinWalk
+    - phantomjs
+    - wkhtmltopdf
+## cutycapt and its dependencies
+    - cutycapt
+    - xvfb
+    - xauth
+    - xfonts-base
+    - libqt4-webkit
+    - libqt4-dev
+#    - node             ## NOK for casperjs
+    - nodejs-legacy
+    - npm
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- command: dpkg --print-foreign-architectures
+  register: archi
+  changed_when: False
+  when: ansible_architecture == 'x86_64'
+- name: Ensure both i386/x86_64 architecture support for packages
+  shell: dpkg --add-architecture i386
+  when: ansible_architecture == 'x86_64' and archi.stdout.find('i386') == -1
+
+## https://remnux.org/docs/distro/get/#install-remnux-on-an-existing-system
+- include: remnux.yml
+  when: do_remnux and (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04' and ansible_architecture == 'x86_64')
+  tags:
+    - remnux
+
+## https://github.com/sans-dfir/sift-bootstrap/
+- include: sift.yml
+  when: do_sift and (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release >= 12)
+  tags:
+    - sift
+
+- include: ramdisk.yml
+  when: ramdisk_path is defined and ramdisk_size is defined
+
+- name: Debian | open-vm-tools install
+  apt: name={{item}} state=present
+  with_items:
+    - open-vm-tools
+  when: vm
+
+- name: Debian | Remove some packages
+  apt: name={{item}} state=absent
+  with_items:
+    - rpcbind
+    - xterm
+#    - netcat-traditional
+    - cups-client
+
+- name: Review some limits
+  lineinfile: dest=/etc/security/limits.d/openfiles regexp="^{{ current_user }}\t\thard\tnofiles\t\t2048" line="{{ current_user }}\t\thard\tnofiles\t\t2048" state=present create=yes
+
+## Extra tools
+- name: git clone binglide
+  git:
+    repo=https://github.com/wapiflapi/binglide
+    dest={{ toolsetdir }}/binglide
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: Debian | Binglide Extra packages install
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - python3-pyqt4
+    - python3-pyqt4.qtopengl
+    - python3-opengl
+    - python3-pip
+    - python3-numpy
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Afterglow
+  git:
+    repo=https://github.com/zrlram/afterglow.git
+    dest={{ toolsetdir }}/afterglow
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+#    - name: Afterglow install
+#      copy: src={{ toolsetdir }}/afterglow/afterglow.pl dest=/usr/local/bin/afterglow.pl mode=0755
+- name: Afterglow parsers
+  git:
+    repo=https://github.com/zrlram/parsers.git
+    dest={{ toolsetdir }}/afterglowparsers
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: event2timeline
+  git:
+    repo=https://github.com/certsocietegenerale/event2timeline.git
+    dest={{ toolsetdir }}/event2timeline
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: Debian | event2timeline dependencies
+  apt: name={{item}} state=present
+  with_items:
+    - python-dateutil
+- name: TekDefense-Automater
+  git:
+    repo=https://github.com/1aN0rmus/TekDefense-Automater.git
+    dest={{ toolsetdir }}/TekDefense-Automater
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: Network-Traffic-Visualization
+  git:
+    repo=https://github.com/rpt/Network-Traffic-Visualization.git
+    dest={{ toolsetdir }}/Network-Traffic-Visualization
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: faup
+  git:
+    repo=https://github.com/stricaud/faup
+    dest={{ toolsetdir }}/faup
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- stat: path=/usr/local/bin/faup
+  register: faup
+- name: Debian | faup dependencies
+  apt: name={{item}} state=present
+  with_items:
+    - cmake
+  when: not faup.stat.exists
+- name: faup | compile
+  command: "{{ item }} chdir={{ toolsetdir }}/faup/build"
+  with_items:
+    - cmake ..
+    - make
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+  when: not faup.stat.exists
+- name: faup | install
+  command: "{{ item }} chdir={{ toolsetdir }}/faup/build"
+  with_items:
+    - make install
+  sudo: yes 
+  when: not faup.stat.exists
+  notify:
+    - run ldconfig
+- name: yavol - GUI for volatility framework and yara
+  git:
+    repo=https://Ft44k@bitbucket.org/Ft44k/yavol.git
+    dest={{ toolsetdir }}/yavol
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: BinNavi - binary analysis IDE (source+prebuilt)
+  git:
+    repo=https://github.com/google/binnavi
+    dest={{ toolsetdir }}/binnavi
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: Install Binwalk - Firmware analysis tool virtualenv
+  pip: name=binwalk state=present
+    virtualenv={{ toolsetdir }}/env-binwalk
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: Usercorn - User-space system emulator
+  git:
+    repo=https://github.com/lunixbochs/usercorn.git
+    dest={{ toolsetdir }}/usercorn
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+#- name: Install Usercorn requirements
+#  pip: requirements={{ toolsetdir }}/usercorn/py/requirements.txt state=present
+#    virtualenv={{ toolsetdir }}/env-usercorn
+
+- include: vortessence.yml
+- include: volatility-win10.yml
+
+- name: DAMM - Differential Analysis of Malware in Memory
+  git:
+    repo=https://github.com/504ensicsLabs/DAMM.git
+    dest={{ toolsetdir }}/DAMM
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- name: jsunpack-n
+  git:
+    repo=https://github.com/urule99/jsunpack-n
+    dest={{ toolsetdir }}/jsunpack-n
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- stat: path={{ toolsetdir }}/Cytoscape_3_2_1_unix.sh
+  register: cytoscape
+- name: Cytoscape download
+  get_url: url=http://chianti.ucsd.edu/cytoscape-3.2.1/Cytoscape_3_2_1_unix.sh
+    dest={{ toolsetdir }}/Cytoscape_3_2_1_unix.sh
+    mode=0400
+    owner={{ current_user }}
+    sha256sum=9739a240d8f407fb907df7ed624b4c4037288334b581be00a174df32ed4a5a4b
+  when: not cytoscape.stat.exists
+- stat: path={{ toolsetdir }}/gephi-0.8.2-beta.tar.gz
+  register: gephi
+- name: Gephi download
+  get_url: url=https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz
+    dest={{ toolsetdir }}/gephi-0.8.2-beta.tar.gz
+    mode=0400
+    owner={{ current_user }}
+    sha256sum=cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365
+  when: not gephi.stat.exists
+- stat: path={{ toolsetdir }}/Mondrian15b.jar
+  register: mondrian
+- name: Mondrian download
+  get_url: url=http://www.theusrus.de/Mondrian/Mondrian15b.jar
+    dest={{ toolsetdir }}/Mondrian15b.jar
+    mode=0400
+    owner={{ current_user }}
+#        sha256sum=
+  when: not mondrian.stat.exists
+- stat: path={{ toolsetdir }}/procdot_1_1_47_linux.zip
+  register: procdot
+- name: Procdot download
+  get_url: url=http://procdot.com/download/procdot/binaries/procdot_1_1_47_linux.zip
+    dest={{ toolsetdir }}/procdot_1_1_47_linux.zip
+    mode=0400
+    owner={{ current_user }}
+#        sha256sum=
+  when: not procdot.stat.exists
+- name: Maldetect download
+  get_url: url=http://www.rfxn.com/downloads/maldetect-current.tar.gz
+    dest={{ toolsetdir }}/maldetect-current.tar.gz
+    owner={{ current_user }}
+    mode=0400
+- name: TimeCraver
+  get_url: url=http://www.hexacorn.com/tools/TimeCraver.pl
+    dest={{ toolsetdir }}/TimeCraver.pl
+    owner={{ current_user }}
+    mode=0700
+- name: find_times.py
+  get_url: url=https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py
+    dest={{ toolsetdir }}/find_times.py
+    owner={{ current_user }}
+    mode=0700
+
+## https://code.google.com/p/volatility/wiki/SampleMemoryImages
+- file: dest={{ toolsetdir }}/sample state=directory owner={{ current_user }}
+
+- stat: path={{ toolsetdir }}/sample/xp-infected.tgz
+  register: dldone
+- name: Download memory samples
+  get_url: url={{ item }}
+    dest={{ toolsetdir }}/sample
+    owner={{ current_user }}
+    mode=0600
+  with_items:
+    - http://www.cfreds.nist.gov/mem/memory-images.rar
+    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/1/zeus.vmem.zip
+    - http://www.mediafire.com/file/yxqodp1p2aca91x/0zapftis.rar
+    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/11/sality.vmem.zip
+    - http://dl.dropbox.com/u/21148428/xp-clean.tgz
+    - http://dl.dropbox.com/u/21148428/xp-infected.tgz
+  when: not dldone.stat.exists
+
+- npm: name=casperjs path={{ toolsetdir }}/casperjs
+  ignore_errors: true
+
+- include: volatility-modules.yml
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- include: yara-signature.yml
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+- include: iocrepository.yml
+  sudo: yes 
+  sudo_user: "{{ current_user }}"
+
+# http://blog.didierstevens.com/2015/11/09/byte-stats-py/
+- name: Didier Stevens Byte-Stats
+  get_url: url=http://didierstevens.com/files/software/byte-stats_V0_0_3.zip
+    dest={{ toolsetdir }}/byte-stats_V0_0_3.zip
+
+    owner={{ current_user }}
+    mode=0700
+- name: find_times.py
+  get_url: url=https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py

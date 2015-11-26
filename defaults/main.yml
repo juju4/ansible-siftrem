@@ -1,0 +1,17 @@
+---
+tz: Etc/UTC
+current_user: vagrant
+
+do_sift: true
+do_remnux: true
+
+toolsetdir: "/home/{{ current_user }}/Toolset"
+
+## for a volatility/vortessence usage, you want it maxmemfilesize+300MB
+## define size to enable
+ramdisk_path: /media/tmpfs
+#ramdisk_size: 2048m
+
+## is it vmware virtual machine? (OpenVM)
+vm: 1 
+

@@ -1,0 +1,8 @@
+---
+
+- file: dest={{ toolsetdir }}/ioc state=directory
+
+- name: Alienvault repository - IOC in malware_analysis
+  git: repo=https://github.com/AlienVault-Labs/AlienVaultLabs.git
+       dest={{ toolsetdir }}/ioc/AlienVaultLabs
+

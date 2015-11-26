@@ -1,0 +1,14 @@
+---
+- name: restart sshd
+  service: name=ssh state=restarted
+- name: restart samba smbd
+  service: name=smbd state=restarted
+- name: restart samba nmbd
+  service: name=nmbd state=restarted
+- name: update timezone
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+- name: Updating ClamAV Signatures
+  command: freshclam --quiet
+- name: run ldconfig
+  command: ldconfig
+

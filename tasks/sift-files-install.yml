@@ -1,0 +1,110 @@
+---
+- command: "rsync -ci /tmp/sift-files/foremost/foremost.conf /etc/foremost.conf"
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /usr/share/tsk/sorter/"
+  with_fileglob:
+    - /tmp/sift-files/sorter/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /etc/samba/"
+  with_fileglob:
+    - /tmp/sift-files/samba/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /usr/local/bin/"
+  with_fileglob:
+    - /tmp/sift-files/wbtools/*
+    - /tmp/sift-files/pdf-tools/*
+    - /tmp/sift-files/scripts/*
+    - /tmp/sift-files/densityscout/densityscout
+## FIXME! submodule missing...
+#    - /tmp/sift-files/pe_carver/*.py
+    - /tmp/sift-files/page_brute/*.py
+#    - /tmp/sift-files/java_idx_parser/*.py
+    - /tmp/sift-files/sift/scripts/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /usr/lib/python2.7/dist-packages/volatility/plugins/"
+  with_fileglob:
+    - /tmp/sift-files/volatility/*.py
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- file: dest=/usr/lib/python2.7/dist-packages/volatility/plugins/javarat.py state=absent
+
+- file: dest={{ item }} mode=0644
+  with_fileglob:
+    - /usr/lib/python2.7/dist-packages/volatility/plugins/*.py
+  ignore_errors: true
+
+- file: dest={{ item }} state=directory
+  with_items:
+    - /usr/share/sift/resources
+    - /usr/share/sift/images
+    - /usr/share/sift/audio
+    - /usr/share/sift/other
+    - /usr/share/sift/scripts
+    - /usr/share/regripper
+
+## 201511 FIXME! fileglob issue? sources exist but skipping (1.9.4-1ppa~trusty). worked before
+##      is fileglob just local/on controlling machine?  No. working for volatility
+- command: "rsync -ci {{ item }} /usr/share/sift/resources/"
+  with_fileglob:
+    - /tmp/sift-files/sift/resources/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /usr/share/sift/images/"
+  with_fileglob:
+    - /tmp/sift-files/sift/images/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /usr/share/sift/audio/"
+  with_fileglob:
+    - /tmp/sift-files/sift/audio/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /usr/share/sift/other/"
+  with_fileglob:
+    - /tmp/sift-files/sift/other/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+## temporary fix for above issue
+- command: "rsync -cir {{ item }} /usr/share/sift/"
+  with_items:
+    - /tmp/sift-files/sift/scripts
+    - /tmp/sift-files/sift/other
+    - /tmp/sift-files/sift/images
+    - /tmp/sift-files/sift/audio
+    - /tmp/sift-files/sift/resources
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- command: "rsync -ci {{ item }} /usr/share/regripper/"
+  with_fileglob:
+    - /tmp/sift-files/regripper/*
+  register: rsync_result
+  changed_when: 'rsync_result.stdout != ""'
+
+- file: dest=/usr/local/bin/id state=absent
+
+# Install rc.local patch for more loopback devices
+# fixes https://github.com/sans-dfir/sift/issues/22
+- name: apply patch to one file
+  patch: >
+    src=/tmp/sift-files/patches/rc.local.patch
+    dest=/etc/rc.local
+    remote_src=True
+  ignore_errors: true
+
+- command: bash fixubuntu.sh chdir=/tmp/sift-files
+  ignore_errors: true
+

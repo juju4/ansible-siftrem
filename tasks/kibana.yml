@@ -1,0 +1,16 @@
+---
+- stat: path=/var/www/html/kibana
+  register: kibana
+
+- name: download kibana (x86_64)
+  get_url: url=https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz dest=/tmp/kibana-4.1.2-linux.tar.gz
+  when: ansible_architecture == 'x86_64' and not kibana.stat.exists
+- name: download kibana (i386)
+  get_url: url=https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x86.tar.gz dest=/tmp/kibana-4.1.2-linux.tar.gz
+  when: ansible_architecture == 'i386' and not kibana.stat.exists
+
+- file: path=/var/www/html/kibana state=directory owner=0755
+
+- unarchive: src=/tmp/kibana-4.1.2-linux.tar.gz dest=/var/www/html/kibana copy=no
+  when: not kibana.stat.exists
+

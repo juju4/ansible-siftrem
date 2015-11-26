@@ -1,0 +1,19 @@
+---
+- name: adding Elasticsearch repository
+  apt_repository: repo='deb http://packages.elasticsearch.org/elasticsearch/1.5/debian stable main' state=present
+- apt_key: url=https://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
+
+- name: Debian | packages install
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - elasticsearch
+
+- lineinfile: "dest=/etc/elasticsearch/elasticsearch.yml regexp='^http.cors.enabled:' line='http.cors.enabled: true' create=yes"
+
+#- stat: path=/etc/rc.d/elasticsearch
+#  register: rcd
+#- command: update-rc.d elasticsearch defaults 95 10
+#  when: not rcd.stat.exists
+
+- service: name=elasticsearch state=started enabled=yes
+
