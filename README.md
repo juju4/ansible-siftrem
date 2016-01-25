@@ -43,6 +43,8 @@ $ vagrant up siftrem
 [fail]
 $ vagrant provision siftrem
 [OK]
+* menu entries are not available be it for sift (unity-based?) or remnux(lxde)
+* remnux use nginx, sift apache2...
 
 ## License
 

@@ -29,7 +29,7 @@
 #- command: ldconfig
 
 - name: REMNUX | packages install
-  apt: name={{item}} state=present update_cache=yes
+  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
   with_items:
     - software-properties-common
     - vbindiff
@@ -157,7 +157,6 @@
     - rsakeyfind
     - aeskeyfind
     - pyew
-    - nginx
     - ruby-gtk2
     - libjavassist-java
     - tcpflow
@@ -231,19 +230,34 @@
     - libemail-outlook-message-perl
     - python-dnspython
     - remnux-ioc-parser
-    - lxde
-    - lxdm
+    - unzip
+    - menu-xdg
+    - lxterminal
   notify:
     - Updating ClamAV Signatures
 
-#- name: Setting up auto-login for user {{ current_user }}
-#  replace: dest='/etc/lxdm/lxdm.conf' regexp={{ item.regexp }} replace={{ item.replace }}
-#  with_items:
-#    - { regexp: '^#\ autologin=dgod', replace: "autologin={{ current_user }}" }
-#    - { regexp: '^disable=0$', replace: 'disable=1' }
-- name: Setting up auto-login for user {{ current_user }}
-  replace: dest='/etc/lxdm/lxdm.conf' regexp='^#\ autologin=dgod' replace="autologin={{ current_user }}"
-- replace: dest='/etc/lxdm/lxdm.conf' regexp='^disable=0$' replace='disable=1'
+- name: REMNUX | nginx packages install
+  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
+  with_items:
+    - nginx
+  when: siftrem_webserver is defined and siftrem_webserver == 'nginx'
+- name: Stopping Nginx daemon
+  service: name=nginx state=stopped enabled=no
+  when: siftrem_webserver is defined and siftrem_webserver == 'nginx'
+- name: Configuring Web Server
+  replace:
+    dest=/etc/nginx/nginx.conf regexp='worker_processes 4' replace='worker_processes 1'
+  when: siftrem_webserver is defined and siftrem_webserver == 'nginx'
+- stat: path=/var/www
+  register: www
+- file: dest=/var/www owner=www-data group=www-data mode=0755 state=directory
+  when: siftrem_webserver is defined and siftrem_webserver == 'nginx'
+- replace:
+    dest=/etc/nginx/sites-enabled/default regexp='^\s.*location \/ {' replace='\tlocation \/ {\n\t\tautoindex on;'
+  when: siftrem_webserver is defined and siftrem_webserver == 'nginx'
+- file: src=/usr/share/remnux/fake-forms dest=/var/www/fake-forms state=link
+  when: siftrem_webserver is defined and siftrem_webserver == 'nginx'
+
 
 - name: Install pip packages
   pip: name={{item}} state=present
@@ -267,7 +281,7 @@
     - fuzzywuzzy
 
 - name: Install Ruby Gems
-  gem: name={{item}} state=present
+  gem: name={{item}} state=present user_install=no
   with_items:
     - therubyracer
     - origami
@@ -277,12 +291,12 @@
 - name: Tweaking Ruby Gems Configuration
   file:
 # This is needed for Origami PDF Walker
-    dest=/home/{{ current_user }}/.local/share owner={{ current_user }} group={{ current_user }} mode=700 state=directory
+    dest=/home/{{ sift_user }}/.local/share owner={{ sift_user }} group={{ sift_user }} mode=700 state=directory
 # This is needed for passivedns-client
-- stat: path=/home/{{ current_user }}/.passivedns-client
+- stat: path=/home/{{ sift_user }}/.passivedns-client
   register: passivednsclient
 - file:
-    dest=/home/{{ current_user }}/.passivedns-client owner={{ current_user }} group={{ current_user }} mode=600 state=touch
+    dest=/home/{{ sift_user }}/.passivedns-client owner={{ sift_user }} group={{ sift_user }} mode=600 state=touch
   when: not passivednsclient.stat.exists
 
 - name: Downloading Firefox extensions
@@ -296,6 +310,8 @@
 #  with_items:
 #    - unzip -q -d /usr/lib/firefox/browser/extensions/{E6C1199F-E687-42da-8C24-E7770CC3AE66} /tmp/addon-1237-latest.xpi
 #    - unzip -q -d /usr/lib/firefox/browser/extensions/firebug@software.joehewitt.com /tmp/addon-1843-latest.xpi
+- file: dest=/usr/lib/firefox-addons/extensions state=directory mode=0755
+- file: src=/usr/lib/firefox-addons/extensions dest=/usr/lib/firefox/browser/extensions state=link
 - stat: path=/usr/lib/firefox/browser/extensions/{E6C1199F-E687-42da-8C24-E7770CC3AE66}
   register: addon1237
 - stat: path=/usr/lib/firefox/browser/extensions/firebug@software.joehewitt.com
@@ -307,7 +323,7 @@
   when: not addon1843.stat.exists
 
 - name: Updating REMnux documentation
-  file: path=/home/{{ current_user }}/Desktop owner={{ current_user }} state=directory mode=0700
+  file: path=/home/{{ sift_user }}/Desktop owner={{ sift_user }} state=directory mode=0700
 - stat: path=/usr/share/remnux/docs/sitemap.xml
   register: remnuxdocs
 - name: git clone Remnux docs
@@ -316,11 +332,11 @@
     dest=/usr/share/remnux/docs
     version=gh-pages
   when: not remnuxdocs.stat.exists
-- file: src=/usr/share/applications/show-remnux-docs.desktop path='/home/{{ current_user }}/Desktop/REMnux Docs' state=link force=yes
+- file: src=/usr/share/applications/show-remnux-docs.desktop path='/home/{{ sift_user }}/Desktop/REMnux Docs' state=link force=yes
 - file: path=/var/www state=directory mode=0755
 - file: src=/usr/share/remnux/docs path=/var/www/remnux-docs state=link
-- file: src=/usr/share/remnux/remnux-tools-sheet.html path='/home/{{ current_user }}/Desktop/REMnux Tools Sheet' state=link
-- file: src=/usr/share/remnux/remnux-malware-analysis-tips.pdf path='/home/{{ current_user }}/Desktop/REMnux CheatSheet' state=link
+- file: src=/usr/share/remnux/remnux-tools-sheet.html path='/home/{{ sift_user }}/Desktop/REMnux Tools Sheet' state=link
+- file: src=/usr/share/remnux/remnux-malware-analysis-tips.pdf path='/home/{{ sift_user }}/Desktop/REMnux CheatSheet' state=link
 
 - name: Creating mount points and other directories
   file:
@@ -340,8 +356,6 @@
 - name: Stopping Docker daemon
   service: name=docker state=stopped enabled=no
 - lineinfile: dest=/etc/init/docker.override regexp='^manual' line='manual'
-- name: Stopping Nginx daemon
-  service: name=nginx state=stopped enabled=no
 - name: Stopping InspIRCd daemon
   service: name=inspircd state=stopped enabled=no
 
@@ -366,7 +380,7 @@
 #    - { regexp: '^/dev/fd0', line: '#/dev/fd0' }
 - name: Setting up USB auto-mount options
   lineinfile: dest=/etc/usbmount/usbmount.conf regexp='\"$' line=' ntfs exfat\"'
-- lineinfile: dest=/home/{{ current_user }}/.bashrc regexp='^set -o noclobber' line='set -o noclobber'
+- lineinfile: dest=/home/{{ sift_user }}/.bashrc regexp='^set -o noclobber' line='set -o noclobber'
 - name: Configuring packet capture capabilities for non-root users
 #  command: setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap     ## NOK
 #  capabilities: path=/usr/bin/dumpcap capability='CAP_NET_RAW+eip CAP_NET_ADMIN+eip' state=present     ## NOK
@@ -375,7 +389,7 @@
     - CAP_NET_RAW+eip
     - CAP_NET_ADMIN+eip
 - name: Configuring sudo
-  lineinfile: "dest=/etc/sudoers regexp='^{{ current_user }} ALL=NOPASSWD: ALL' line='{{ current_user }} ALL=NOPASSWD: ALL'"
+  lineinfile: "dest=/etc/sudoers regexp='^{{ sift_user }} ALL=NOPASSWD: ALL' line='{{ sift_user }} ALL=NOPASSWD: ALL'"
 ## why ?
 - replace:
     dest='/etc/sudoers' regexp='^Defaults        secure_path=' replace='#Defaults       secure_path='
@@ -402,21 +416,11 @@
     - /var/log/inetsim/main.log
   when: not inetsimlog.stat.exists
 
-- name: Configuring Web Server
-  replace:
-    dest=/etc/nginx/nginx.conf regexp='worker_processes 4' replace='worker_processes 1'
-- stat: path=/var/www
-  register: www
-- file: dest=/var/www owner=www-data group=www-data mode=0755 state=directory
-- replace:
-    dest=/etc/nginx/sites-enabled/default regexp='^\s.*location \/ {' replace='\tlocation \/ {\n\t\tautoindex on;'
-- file: src=/usr/share/remnux/fake-forms dest=/var/www/fake-forms state=link
-
 #- name: Setting up aliases
-#  lineinfile: dest=/home/{{ current_user }}/.bash_aliases regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
+#  lineinfile: dest=/home/{{ sift_user }}/.bash_aliases regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
 #    - { regexp: "alias mountwin='mount -o ro,loop,show_sys_files,streams_interface=windows'", line: "alias mountwin='mount -o ro,loop,show_sys_files,streams_interface=windows" }
 #    - { regexp: '', line: '' }
-#- lineinfile: dest=/home/{{ current_user }}/.bashrc regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
+#- lineinfile: dest=/home/{{ sift_user }}/.bashrc regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
 #    - { regexp: 'source /usr/share/remnux/remnux-aliases.sh', line: 'source /usr/share/remnux/remnux-aliases.sh' }
 #- lineinfile: dest=/root/bashrc regexp={{ item.regexp }} line="{{ item.line }}" state={{ item.state | default("present") }}
 #    - { regexp: 'source /usr/share/remnux/remnux-aliases.sh', line: 'source /usr/share/remnux/remnux-aliases.sh' }
@@ -424,9 +428,13 @@
 - name: Configuring global PATH
   replace:
     dest=/etc/environment regexp='^PATH="/usr/local/sbin' replace='PATH="/opt/remnux-procdot:/opt/remnux-ratdecoders:/opt/remnux-rabcdasm:/opt/remnux-vivisect:/opt/remnux-peepdf:/opt/remnux-thug/src:/opt/remnux-pdfxray-lite:/opt/remnux-viper:/opt/remnux-oletools:/opt/remnux-balbuzard:/opt/remnux-didier:/opt/remnux-scripts:/usr/local/sbin'
-- replace:
+
+- stat: path=/etc/apt/apt.conf.d/10periodic
+  register: apt10periodic
+- name: disable automatic updates
+  replace:
     dest=/etc/apt/apt.conf.d/10periodic regexp='^APT::Periodic::Update-Package-Lists \"1\"' replace='APT::Periodic::Update-Package-Lists \"0\";'
-- file: src=/usr/share/remnux/fake-forms dest=/var/www/fake-forms state=link
+  when: apt10periodic.stat.exists
 
 - name: Setting up symlinks, permissions and options for useful tools
   file: src=/usr/bin/vol.py dest=/usr/bin/vol state=link
@@ -434,85 +442,84 @@
 - file: src=/usr/share/remnux/inspircd.conf dest=/etc/inspircd/inspircd.conf
 - replace: dest=/etc/epic5/servers regexp='^irc.debian.org:6667' replace='localhost:6667'
 - file: src=/usr/share/remnux/scalpel.conf dest=/etc/scalpel/scalpel.conf
-- file: path=/home/{{ current_user }}/.wireshark owner={{ current_user }} state=directory mode=0700
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/wireshark-preferences /home/{{ current_user }}/.wireshark/preferences"
+- file: path=/home/{{ sift_user }}/.wireshark owner={{ sift_user }} state=directory mode=0700
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/wireshark-preferences /home/{{ sift_user }}/.wireshark/preferences"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
-- file: path=/home/{{ current_user }}/.procdot owner={{ current_user }} state=directory mode=0700
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/procdot.conf /home/{{ current_user }}/.procdot/.procdot"
+- file: path=/home/{{ sift_user }}/.procdot owner={{ sift_user }} state=directory mode=0700
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/procdot.conf /home/{{ sift_user }}/.procdot/.procdot"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
-- stat: path=/home/{{ current_user }}/.procdot/default.pd
+- stat: path=/home/{{ sift_user }}/.procdot/default.pd
   register: procdot
-- file: dest=/home/{{ current_user }}/.procdot/default.pd owner={{ current_user }} state=touch
+- file: dest=/home/{{ sift_user }}/.procdot/default.pd owner={{ sift_user }} state=touch
   when: not procdot.stat.exists
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/scite.conf /home/{{ current_user }}/.SciTEUser.properties"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/scite.conf /home/{{ sift_user }}/.SciTEUser.properties"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
 - file: path=/var/log/network-miner state=directory mode=1777
 - file: src=/var/log/network-miner dest=/opt/remnux-network-miner/AssembledFiles state=link force=yes
 - file: path=/opt/remnux-network-miner/Captures state=directory mode=1777
-- file: path=/home/{{ current_user }}/.config/codef00.com state=directory mode=755 owner={{ current_user }}
+- file: path=/home/{{ sift_user }}/.config/codef00.com state=directory mode=755 owner={{ sift_user }}
 - stat: path=/usr/share/remnux/edb.conf
   register: edb
-- stat: path="/home/{{ current_user }}/.config/codef00.com/edb.conf"
+- stat: path="/home/{{ sift_user }}/.config/codef00.com/edb.conf"
   register: edbu
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/edb.conf /home/{{ current_user }}/.config/codef00.com/edb.conf"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/edb.conf /home/{{ sift_user }}/.config/codef00.com/edb.conf"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
   when: edb.stat.exists and not edbu.stat.exists
-- file: path=/home/{{ current_user }}/.config/codef00.com/edb-symbols state=directory mode=755 owner={{ current_user }}
-- file: path=/home/{{ current_user }}/.config/codef00.com/edb-session state=directory mode=755 owner={{ current_user }}
-- replace: dest="/home/{{ current_user }}/.config/codef00.com/edb.conf" regexp="{{ item.regexp }}" replace="{{ item.replace }}"
+- file: path=/home/{{ sift_user }}/.config/codef00.com/edb-symbols state=directory mode=755 owner={{ sift_user }}
+- file: path=/home/{{ sift_user }}/.config/codef00.com/edb-session state=directory mode=755 owner={{ sift_user }}
+- replace: dest="/home/{{ sift_user }}/.config/codef00.com/edb.conf" regexp="{{ item.regexp }}" replace="{{ item.replace }}"
   with_items:
     - { regexp: /usr/bin/xterm, replace: /usr/bin/lxterminal }
-    - { regexp: '^directory.symbol.path=$', replace: 'directory.symbol.path=/home/{{ current_user }}/.config/codef00.com/edb-symbols' }
-    - { regexp: '^directory.session.path=$', replace: 'directory.session.path=/home/{{ current_user }}/.config/codef00.com/edb-session' }
+    - { regexp: '^directory.symbol.path=$', replace: 'directory.symbol.path=/home/{{ sift_user }}/.config/codef00.com/edb-symbols' }
+    - { regexp: '^directory.session.path=$', replace: 'directory.session.path=/home/{{ sift_user }}/.config/codef00.com/edb-session' }
     - { regexp: '^directory.plugin.path=$', replace: 'directory.plugin.path=/lib64/edb' }
     - { regexp: '^directory.plugin.path=$HOME$', replace: 'directory.plugin.path=/lib64/edb' }
 # Allow non-privileged users to write to Androwarn's Reports directory
-- command: chown -R {{ current_user }}:{{ current_user }} /opt/remnux-androwarn/Report
+- command: chown -R {{ sift_user }}:{{ sift_user }} /opt/remnux-androwarn/Report
 - file: src=/usr/bin/js24 dest=/etc/alternatives/js state=link
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/wget.conf /home/{{ current_user }}/.wgetrc"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/wget.conf /home/{{ sift_user }}/.wgetrc"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
-- file: dest="/home/{{ current_user }}/.wgetrc" owner="{{ current_user }}"
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/curl.conf /home/{{ current_user }}/.curlrc"
+- file: dest="/home/{{ sift_user }}/.wgetrc" owner="{{ sift_user }}"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/curl.conf /home/{{ sift_user }}/.curlrc"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
-- file: dest="/home/{{ current_user }}/.curlrc" owner="{{ current_user }}"
-- lineinfile: dest=/home/{{ current_user }}/.wxHexEditor regexp='^UpdateCheck=0' line='UpdateCheck=0' owner={{ current_user }} create=yes
+- file: dest="/home/{{ sift_user }}/.curlrc" owner="{{ sift_user }}"
+- lineinfile: dest=/home/{{ sift_user }}/.wxHexEditor regexp='^UpdateCheck=0' line='UpdateCheck=0' owner={{ sift_user }} create=yes
 
 - name: Setting LXDE options
 # Set up LXTerminal to start automatically when the user logs in
-  file: path=/home/{{ current_user }}/.config/autostart state=directory mode=700 owner={{ current_user }}
-- command: "rsync -ci --chown={{ current_user }} /var/lib/menu-xdg/applications/menu-xdg/X-Debian-Applications-Terminal-Emulators-lxterminal.desktop /home/{{ current_user }}/.config/autostart/X-Debian-Applications-Terminal-Emulators-lxterminal.desktop"
+  file: path=/home/{{ sift_user }}/.config/autostart state=directory mode=700 owner={{ sift_user }}
+- command: "rsync -ci --chown={{ sift_user }} /var/lib/menu-xdg/applications/menu-xdg/X-Debian-Applications-Terminal-Emulators-lxterminal.desktop /home/{{ sift_user }}/.config/autostart/X-Debian-Applications-Terminal-Emulators-lxterminal.desktop"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
-- file: path=/home/{{ current_user }}/.config/lxterminal state=directory mode=755 owner={{ current_user }}
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/lxterminal.conf /home/{{ current_user }}/.config/lxterminal/lxterminal.conf"
+- file: path=/home/{{ sift_user }}/.config/lxterminal state=directory mode=755 owner={{ sift_user }}
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/lxterminal.conf /home/{{ sift_user }}/.config/lxterminal/lxterminal.conf"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
 # Set up LXDE app launch bar options, including which icons should be displayed there
-- file: path=/home/{{ current_user }}/.config/lxpanel/LXDE/panels state=directory mode=755 owner={{ current_user }}
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/app-launch-bar.conf /home/{{ current_user }}/.config/lxpanel/LXDE/panels/panel"
+- file: path=/home/{{ sift_user }}/.config/lxpanel/LXDE/panels state=directory mode=755 owner={{ sift_user }}
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/app-launch-bar.conf /home/{{ sift_user }}/.config/lxpanel/LXDE/panels/panel"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
 # Disable console messages that are shown when the system boots up and shuts down
 - replace: dest=/etc/init/rc.conf regexp='^console output' replace='#console output'
 
 # Set up the desktop to user the REMnux logo
-- file: path=/home/{{ current_user }}/.config/pcmanfm/LXDE/panels state=directory mode=755 owner={{ current_user }}
-- stat: path=/home/{{ current_user }}/.config/pcmanfm/LXDE/pcmanfm.conf
+- file: path=/home/{{ sift_user }}/.config/pcmanfm/LXDE/panels state=directory mode=755 owner={{ sift_user }}
+- stat: path=/home/{{ sift_user }}/.config/pcmanfm/LXDE/pcmanfm.conf
   register: pcmanfmconf
 - stat: path=/usr/share/remnux/pcmanfm.conf
   register: pcmanfmconforig
-- command: "rsync -ci --chown={{ current_user }} /usr/share/remnux/pcmanfm.conf /home/{{ current_user }}/.config/pcmanfm/LXDE/pcmanfm.conf"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/remnux/pcmanfm.conf /home/{{ sift_user }}/.config/pcmanfm/LXDE/pcmanfm.conf"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
-  when: not pcmanfmconf.stat.exists and pcmanfmconforig.stat.exists
-# Fix an error that would be otherwise seen when the user logs out using the GUI
-- lineinfile: dest=/etc/pam.d/lxdm regexp='^session required pam_systemd.so' line='session required pam_systemd.so'
+  when: not pcmanfmconf.stat.exists and pcmanfmconforig.stat.exists and siftrem_x11_background is defined and siftrem_x11_background == 'remnux'
+
 # Set up links to match the setup of older REMnux versions
 - name: Applying REMnux backwards compatibility settings
   file: path=/usr/local/etc state=directory mode=755
@@ -528,9 +535,9 @@
 # Just for fun
 - debug: msg="Taking the dog for a walk"
 
-- name: Setting permissions for {{ current_user }}
-  file: dest=/home/{{ current_user }} owner={{ current_user }} group={{ current_user }}
-- user: name={{ current_user }} groups=docker append=yes 
+- name: Setting permissions for {{ sift_user }}
+  file: dest=/home/{{ sift_user }} owner={{ sift_user }} group={{ sift_user }}
+- user: name={{ sift_user }} groups=docker append=yes 
 
 ## cleanup
 - name: Check if packages need to be autoremoved

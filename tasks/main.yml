@@ -1,6 +1,13 @@
 ---
+
+- name: Restrict sshd config
+  lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
+  with_items:
+    - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
+    - { regexp: '^PermitRootLogin', line: 'PermitRootLogin without-password' }
+
 - name: Debian | Extra packages install
-  apt: name={{item}} state=present update_cache=yes
+  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
   with_items:
 ## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
 ## https://major.io/2007/07/01/check-available-entropy-in-linux/
@@ -54,7 +61,6 @@
 #    - node             ## NOK for casperjs
     - nodejs-legacy
     - npm
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - command: dpkg --print-foreign-architectures
   register: archi
@@ -66,13 +72,18 @@
 
 ## https://remnux.org/docs/distro/get/#install-remnux-on-an-existing-system
 - include: remnux.yml
-  when: do_remnux and (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04' and ansible_architecture == 'x86_64')
+  when: siftrem_do_remnux and (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04' and ansible_architecture == 'x86_64')
   tags:
     - remnux
 
 ## https://github.com/sans-dfir/sift-bootstrap/
 - include: sift.yml
-  when: do_sift and (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release >= 12)
+  when: siftrem_do_sift and (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release >= 12)
+  tags:
+    - sift
+
+- include: x11.yml
+  when: siftrem_do_x11 is defined and siftrem_do_x11
   tags:
     - sift
 
@@ -94,17 +105,17 @@
     - cups-client
 
 - name: Review some limits
-  lineinfile: dest=/etc/security/limits.d/openfiles regexp="^{{ current_user }}\t\thard\tnofiles\t\t2048" line="{{ current_user }}\t\thard\tnofiles\t\t2048" state=present create=yes
+  lineinfile: dest=/etc/security/limits.d/openfiles regexp="^{{ sift_user }}\t\thard\tnofiles\t\t2048" line="{{ sift_user }}\t\thard\tnofiles\t\t2048" state=present create=yes
 
 ## Extra tools
 - name: git clone binglide
   git:
     repo=https://github.com/wapiflapi/binglide
-    dest={{ toolsetdir }}/binglide
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/binglide
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: Debian | Binglide Extra packages install
-  apt: name={{item}} state=present update_cache=yes
+  apt: name={{item}} state=present
   with_items:
     - python3-pyqt4
     - python3-pyqt4.qtopengl
@@ -116,23 +127,23 @@
 - name: Afterglow
   git:
     repo=https://github.com/zrlram/afterglow.git
-    dest={{ toolsetdir }}/afterglow
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/afterglow
+  become: yes 
+  become_user: "{{ sift_user }}"
 #    - name: Afterglow install
-#      copy: src={{ toolsetdir }}/afterglow/afterglow.pl dest=/usr/local/bin/afterglow.pl mode=0755
+#      copy: src={{ siftrem_toolsetdir }}/afterglow/afterglow.pl dest=/usr/local/bin/afterglow.pl mode=0755
 - name: Afterglow parsers
   git:
     repo=https://github.com/zrlram/parsers.git
-    dest={{ toolsetdir }}/afterglowparsers
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/afterglowparsers
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: event2timeline
   git:
     repo=https://github.com/certsocietegenerale/event2timeline.git
-    dest={{ toolsetdir }}/event2timeline
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/event2timeline
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: Debian | event2timeline dependencies
   apt: name={{item}} state=present
   with_items:
@@ -140,21 +151,21 @@
 - name: TekDefense-Automater
   git:
     repo=https://github.com/1aN0rmus/TekDefense-Automater.git
-    dest={{ toolsetdir }}/TekDefense-Automater
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/TekDefense-Automater
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: Network-Traffic-Visualization
   git:
     repo=https://github.com/rpt/Network-Traffic-Visualization.git
-    dest={{ toolsetdir }}/Network-Traffic-Visualization
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/Network-Traffic-Visualization
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: faup
   git:
     repo=https://github.com/stricaud/faup
-    dest={{ toolsetdir }}/faup
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/faup
+  become: yes 
+  become_user: "{{ sift_user }}"
 - stat: path=/usr/local/bin/faup
   register: faup
 - name: Debian | faup dependencies
@@ -163,124 +174,124 @@
     - cmake
   when: not faup.stat.exists
 - name: faup | compile
-  command: "{{ item }} chdir={{ toolsetdir }}/faup/build"
+  command: "{{ item }} chdir={{ siftrem_toolsetdir }}/faup/build"
   with_items:
     - cmake ..
     - make
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+  become: yes 
+  become_user: "{{ sift_user }}"
   when: not faup.stat.exists
 - name: faup | install
-  command: "{{ item }} chdir={{ toolsetdir }}/faup/build"
+  command: "{{ item }} chdir={{ siftrem_toolsetdir }}/faup/build"
   with_items:
     - make install
-  sudo: yes 
+  become: yes 
   when: not faup.stat.exists
   notify:
     - run ldconfig
 - name: yavol - GUI for volatility framework and yara
   git:
     repo=https://Ft44k@bitbucket.org/Ft44k/yavol.git
-    dest={{ toolsetdir }}/yavol
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/yavol
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: BinNavi - binary analysis IDE (source+prebuilt)
   git:
     repo=https://github.com/google/binnavi
-    dest={{ toolsetdir }}/binnavi
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/binnavi
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: Install Binwalk - Firmware analysis tool virtualenv
   pip: name=binwalk state=present
-    virtualenv={{ toolsetdir }}/env-binwalk
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    virtualenv={{ siftrem_toolsetdir }}/env-binwalk
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: Usercorn - User-space system emulator
   git:
     repo=https://github.com/lunixbochs/usercorn.git
-    dest={{ toolsetdir }}/usercorn
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/usercorn
+  become: yes 
+  become_user: "{{ sift_user }}"
 #- name: Install Usercorn requirements
-#  pip: requirements={{ toolsetdir }}/usercorn/py/requirements.txt state=present
-#    virtualenv={{ toolsetdir }}/env-usercorn
+#  pip: requirements={{ siftrem_toolsetdir }}/usercorn/py/requirements.txt state=present
+#    virtualenv={{ siftrem_toolsetdir }}/env-usercorn
 
-- include: vortessence.yml
-- include: volatility-win10.yml
+#- include: vortessence.yml
+#- include: volatility-win10.yml
 
 - name: DAMM - Differential Analysis of Malware in Memory
   git:
     repo=https://github.com/504ensicsLabs/DAMM.git
-    dest={{ toolsetdir }}/DAMM
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+    dest={{ siftrem_toolsetdir }}/DAMM
+  become: yes 
+  become_user: "{{ sift_user }}"
 - name: jsunpack-n
   git:
     repo=https://github.com/urule99/jsunpack-n
-    dest={{ toolsetdir }}/jsunpack-n
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
-- stat: path={{ toolsetdir }}/Cytoscape_3_2_1_unix.sh
+    dest={{ siftrem_toolsetdir }}/jsunpack-n
+  become: yes 
+  become_user: "{{ sift_user }}"
+- stat: path={{ siftrem_toolsetdir }}/Cytoscape_3_2_1_unix.sh
   register: cytoscape
 - name: Cytoscape download
   get_url: url=http://chianti.ucsd.edu/cytoscape-3.2.1/Cytoscape_3_2_1_unix.sh
-    dest={{ toolsetdir }}/Cytoscape_3_2_1_unix.sh
+    dest={{ siftrem_toolsetdir }}/Cytoscape_3_2_1_unix.sh
     mode=0400
-    owner={{ current_user }}
+    owner={{ sift_user }}
     sha256sum=9739a240d8f407fb907df7ed624b4c4037288334b581be00a174df32ed4a5a4b
   when: not cytoscape.stat.exists
-- stat: path={{ toolsetdir }}/gephi-0.8.2-beta.tar.gz
+- stat: path={{ siftrem_toolsetdir }}/gephi-0.8.2-beta.tar.gz
   register: gephi
 - name: Gephi download
   get_url: url=https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz
-    dest={{ toolsetdir }}/gephi-0.8.2-beta.tar.gz
+    dest={{ siftrem_toolsetdir }}/gephi-0.8.2-beta.tar.gz
     mode=0400
-    owner={{ current_user }}
+    owner={{ sift_user }}
     sha256sum=cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365
   when: not gephi.stat.exists
-- stat: path={{ toolsetdir }}/Mondrian15b.jar
+- stat: path={{ siftrem_toolsetdir }}/Mondrian15b.jar
   register: mondrian
 - name: Mondrian download
   get_url: url=http://www.theusrus.de/Mondrian/Mondrian15b.jar
-    dest={{ toolsetdir }}/Mondrian15b.jar
+    dest={{ siftrem_toolsetdir }}/Mondrian15b.jar
     mode=0400
-    owner={{ current_user }}
+    owner={{ sift_user }}
 #        sha256sum=
   when: not mondrian.stat.exists
-- stat: path={{ toolsetdir }}/procdot_1_1_47_linux.zip
+- stat: path={{ siftrem_toolsetdir }}/procdot_1_1_47_linux.zip
   register: procdot
 - name: Procdot download
   get_url: url=http://procdot.com/download/procdot/binaries/procdot_1_1_47_linux.zip
-    dest={{ toolsetdir }}/procdot_1_1_47_linux.zip
+    dest={{ siftrem_toolsetdir }}/procdot_1_1_47_linux.zip
     mode=0400
-    owner={{ current_user }}
+    owner={{ sift_user }}
 #        sha256sum=
   when: not procdot.stat.exists
 - name: Maldetect download
   get_url: url=http://www.rfxn.com/downloads/maldetect-current.tar.gz
-    dest={{ toolsetdir }}/maldetect-current.tar.gz
-    owner={{ current_user }}
+    dest={{ siftrem_toolsetdir }}/maldetect-current.tar.gz
+    owner={{ sift_user }}
     mode=0400
 - name: TimeCraver
   get_url: url=http://www.hexacorn.com/tools/TimeCraver.pl
-    dest={{ toolsetdir }}/TimeCraver.pl
-    owner={{ current_user }}
+    dest={{ siftrem_toolsetdir }}/TimeCraver.pl
+    owner={{ sift_user }}
     mode=0700
 - name: find_times.py
   get_url: url=https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py
-    dest={{ toolsetdir }}/find_times.py
-    owner={{ current_user }}
+    dest={{ siftrem_toolsetdir }}/find_times.py
+    owner={{ sift_user }}
     mode=0700
 
 ## https://code.google.com/p/volatility/wiki/SampleMemoryImages
-- file: dest={{ toolsetdir }}/sample state=directory owner={{ current_user }}
+- file: dest={{ siftrem_toolsetdir }}/sample state=directory owner={{ sift_user }}
 
-- stat: path={{ toolsetdir }}/sample/xp-infected.tgz
+- stat: path={{ siftrem_toolsetdir }}/sample/xp-infected.tgz
   register: dldone
 - name: Download memory samples
   get_url: url={{ item }}
-    dest={{ toolsetdir }}/sample
-    owner={{ current_user }}
+    dest={{ siftrem_toolsetdir }}/sample
+    owner={{ sift_user }}
     mode=0600
   with_items:
     - http://www.cfreds.nist.gov/mem/memory-images.rar
@@ -291,25 +302,24 @@
     - http://dl.dropbox.com/u/21148428/xp-infected.tgz
   when: not dldone.stat.exists
 
-- npm: name=casperjs path={{ toolsetdir }}/casperjs
+- npm: name=casperjs path={{ siftrem_toolsetdir }}/casperjs
   ignore_errors: true
 
 - include: volatility-modules.yml
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+  become: yes 
+  become_user: "{{ sift_user }}"
 - include: yara-signature.yml
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+  become: yes 
+  become_user: "{{ sift_user }}"
 - include: iocrepository.yml
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+  become: yes 
+  become_user: "{{ sift_user }}"
 
 # http://blog.didierstevens.com/2015/11/09/byte-stats-py/
 - name: Didier Stevens Byte-Stats
   get_url: url=http://didierstevens.com/files/software/byte-stats_V0_0_3.zip
-    dest={{ toolsetdir }}/byte-stats_V0_0_3.zip
+    dest={{ siftrem_toolsetdir }}/byte-stats_V0_0_3.zip
 
-    owner={{ current_user }}
+    owner={{ sift_user }}
     mode=0700
-- name: find_times.py
-  get_url: url=https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py
+

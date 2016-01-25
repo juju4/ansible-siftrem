@@ -1,7 +1,8 @@
 ---
 
 ## used as samba guest
-- user: name=sansforensics password=forensics group=admin update_password=on_create
+- name: Creating sansforensics generic account
+  user: name={{ sift_user }} password={{ sift_pass }} group=sudo update_password=on_create
 
 - name: adding SIFT repository
   apt_repository: repo='ppa:sift/stable' state=present
@@ -33,7 +34,7 @@
   debconf: name=ttf-mscorefonts-installer question='msttcorefonts/accepted-mscorefonts-eula' value=true vtype='select'
 
 - name: SIFT | packages install
-  apt: name={{item}} state=present update_cache=yes
+  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
   with_items:
     - python-software-properties
     - aeskeyfind
@@ -42,7 +43,6 @@
     - aircrack-ng
     - arp-scan
     - autopsy
-    - apache2
     - bitpim
     - bitpim-lib
     - bless
@@ -237,6 +237,12 @@
   notify:
     - Updating ClamAV Signatures
 
+- name: SIFT | apache2 packages install
+  apt: name={{item}} state=present
+  with_items:
+    - apache2
+  when: siftrem_webserver is defined and siftrem_webserver == 'apache2'
+
 ## missing dependencies in some case?
 - name: Debian | gedit install
   apt: name={{item}} state=present
@@ -252,14 +258,14 @@
     - pev
   when: not rpev.stat.exists
 
-##- name: Setting up auto-login for user {{ current_user }}
-##- name: Setting up auto-login for user {{ current_user }}
+##- name: Setting up auto-login for user {{ sift_user }}
+##- name: Setting up auto-login for user {{ sift_user }}
 ##  replace: dest='/etc/lxdm/lxdm.conf' regexp={{ item.regexp }} replace={{ item.replace }}
 ##  with_items:
-##    - { regexp: '^#\ autologin=dgod', replace: "autologin={{ current_user }}" }
+##    - { regexp: '^#\ autologin=dgod', replace: "autologin={{ sift_user }}" }
 ##    - { regexp: '^disable=0$', replace: 'disable=1' }
-#- name: Setting up auto-login for user {{ current_user }}
-#  replace: dest='/etc/lxdm/lxdm.conf' regexp='^#\ autologin=dgod' replace="autologin={{ current_user }}"
+#- name: Setting up auto-login for user {{ sift_user }}
+#  replace: dest='/etc/lxdm/lxdm.conf' regexp='^#\ autologin=dgod' replace="autologin={{ sift_user }}"
 #- replace: dest='/etc/lxdm/lxdm.conf' regexp='^disable=0$' replace='disable=1'
 
 - name: Install pip packages
@@ -296,7 +302,7 @@
 - include: sift-files-install.yml
 
 - name: Create SIFT folders
-  file: path="{{ item }}" state=directory mode=1775 owner={{ current_user }} group={{ current_user }}
+  file: path="{{ item }}" state=directory mode=1775 owner={{ sift_user }} group={{ sift_user }}
   with_items:
     - /cases
 - name: Create SIFT folders
@@ -351,9 +357,12 @@
   lineinfile: dest=/etc/apt/apt.conf.d/10periodic regexp='^APT::Periodic::Update-Package-Lists' line='APT::Periodic::Update-Package-Lists "0";'
 
 - hostname: name=siftworkstation
+- name: Add new hostname in /etc/hosts (local resolv)
+  replace:
+    "dest='/etc/hosts' regexp='^127.0.0.1       localhost' replace='127.0.0.1       localhost siftworkstation'"
 
 - name: ensure current user is used for samba
-  replace: dest=/etc/samba/smb.conf regexp='SIFT_USER' replace="{{ current_user }}"
+  replace: dest=/etc/samba/smb.conf regexp='SIFT_USER' replace="{{ sift_user }}"
   notify:
     - restart samba smbd
     - restart samba nmbd
@@ -379,34 +388,36 @@
 - command: mv /usr/share/regripper/plugins/ntuser-all /usr/share/regripper/plugins/ntuser
   when: rrnt.stat.exists
 - file: path="/usr/share/regripper/rip.pl" mode=0775
-- command: chmod -R 755 /usr/share/regripper/plugins
+#- command: chmod -R 755 /usr/share/regripper/plugins
+- file: dest=/usr/share/regripper/plugins state=directory mode=0755 recurse=yes
 
-- name: Setting noclobber for {{ current_user }} and root
+- name: Setting noclobber for {{ sift_user }} and root
   lineinfile: dest="{{ item }}" regexp='^set -o noclobber' line='set -o noclobber'
   with_items:
-    - "/home/{{ current_user }}/.bashrc"
+    - "/home/{{ sift_user }}/.bashrc"
     - /root/.bashrc
-- name: Configuring Aliases for {{ current_user }} and root
+- name: Configuring Aliases for {{ sift_user }} and root
   lineinfile: dest="{{ item }}" regexp='^alias mountwin=' line='alias mountwin="mount -o ro,loop,show_sys_files,streams_interface=windows"' create=yes
   with_items:
-    - "/home/{{ current_user }}/.bash_aliases"
+    - "/home/{{ sift_user }}/.bash_aliases"
     - /root/.bash_aliases
 
 - name: Sanity check for Desktop folder
-  file: path="/home/{{ current_user }}/Desktop" state=directory mode=0700
+  file: path="/home/{{ sift_user }}/Desktop" state=directory mode=0700
 
-- name: Setting up useful links on {{ current_user }} Desktop
+- name: Setting up useful links on {{ sift_user }} Desktop
   file: src="{{ item.src }}" path="{{ item.path }}" state=link
   with_items:
-    - { src: '/cases', path: "/home/{{ current_user }}/Desktop/cases" }
-    - { src: '/mnt', path: "/home/{{ current_user }}/Desktop/mount_points" }
+    - { src: '/cases', path: "/home/{{ sift_user }}/Desktop/cases" }
+    - { src: '/mnt', path: "/home/{{ sift_user }}/Desktop/mount_points" }
 
 ## FIXME! not idempotent
 #- name: Cleaning up broken symlinks on Desktop
-#  command: "find -L /home/{{ current_user }}/Desktop -type l -delete"
+#  command: "find -L /home/{{ sift_user }}/Desktop -type l -delete"
 
+- file: dest="/home/{{ sift_user }}/Desktop" state=directory mode=0755
 - name: Adding all SIFT Resources to Desktop
-  file: src="{{ item }}" path="/home/{{ current_user }}/Desktop" state=link
+  file: src="{{ item }}" dest="/home/{{ sift_user }}/Desktop/{{ item | basename }}" state=link
   with_fileglob:
     - /usr/share/sift/resources/*.pdf
 
@@ -416,37 +427,50 @@
 ## Manual or alternative
 ## https://github.com/jistr/ansible-gsetting
 ## https://github.com/JBKahn/provisioning-local/tree/master/ansible_modules/{dconf,gconftool-2,gsettings}
+- name: SIFT VM Wallpaper Configuration
+  command: "{{ item }}"
+  with_items:
+    - "gsettings set org.gnome.desktop.background picture-uri file:///usr/share/sift/images/forensics_blue.jpg"
+  ignore_errors: true
+  become: yes
+  become_user: "{{ sift_user }}"
+  when: siftrem_x11_background is defined and siftrem_x11_background == 'sift'
+- command: gsettings set com.canonical.unity-greeter background file:///usr/share/sift/images/forensics_blue.jpg
+  when: ansible_distribution_version == '12.04' and siftrem_x11_background is defined and siftrem_x11_background == 'sift'
+
 - name: SIFT VM Configuration Function
   command: "{{ item }}"
   with_items:
-    - "sudo -u {{ current_user }} gsettings set org.gnome.desktop.background picture-uri file:///usr/share/sift/images/forensics_blue.jpg"
+    - "gsettings set org.gnome.desktop.background picture-uri file:///usr/share/sift/images/forensics_blue.jpg"
 ## stderr: No such schema 'com.canonical.Unity.Launcher'
-    - "sudo -u {{ current_user }}  gsettings set com.canonical.Unity.Launcher favorites \"['application://nautilus.desktop', 'application://gnome-terminal.desktop', 'application://firefox.desktop', 'application://gnome-screenshot.desktop', 'application://gcalctool.desktop', 'application://bless.desktop', 'application://autopsy.desktop', 'application://wireshark.desktop']\""
+    - "gsettings set com.canonical.Unity.Launcher favorites \"['application://nautilus.desktop', 'application://gnome-terminal.desktop', 'application://firefox.desktop', 'application://gnome-screenshot.desktop', 'application://gcalctool.desktop', 'application://bless.desktop', 'application://autopsy.desktop', 'application://wireshark.desktop']\""
   ignore_errors: true
-- command: gsettings set com.canonical.unity-greeter background file:///usr/share/sift/images/forensics_blue.jpg
-  when: ansible_distribution_version == '12.04'
+  become: yes
+  become_user: "{{ sift_user }}"
+  when: siftrem_x11_env is defined and siftrem_x11_env == 'sift'
 
 - name: Autostart folder
-  file: path="{{ item }}" state=directory mode=0700 owner={{ current_user }} group={{ current_user }}
+  file: path="{{ item }}" state=directory mode=0700 owner={{ sift_user }} group={{ sift_user }}
   with_items:
-    - "/home/{{ current_user }}/.config/autostart"
+    - "/home/{{ sift_user }}/.config/autostart"
 
 - stat: path=/usr/share/sift/other/gnome-terminal.desktop
   register: gtd
-- command: "rsync -ci --chown={{ current_user }} /usr/share/sift/other/gnome-terminal.desktop /home/{{ current_user }}/.config/autostart/gnome-terminal.desktop"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/sift/other/gnome-terminal.desktop /home/{{ sift_user }}/.config/autostart/gnome-terminal.desktop"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
   when: gtd.stat.exists
 - stat: path=/usr/share/unity-greeter/logo.png.ubuntu
   register: logoubuntu
-- command: "rsync -ci --chown={{ current_user }} /usr/share/unity-greeter/logo.png /usr/share/unity-greeter/logo.png.ubuntu"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/unity-greeter/logo.png /usr/share/unity-greeter/logo.png.ubuntu"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
   when: not logoubuntu.stat.exists
-- command: "rsync -ci --chown={{ current_user }} /usr/share/sift/images/login_logo.png /usr/share/unity-greeter/logo.png"
+- command: "rsync -ci --chown={{ sift_user }} /usr/share/sift/images/login_logo.png /usr/share/unity-greeter/logo.png"
   register: rsync_result
   changed_when: 'rsync_result.stdout != ""'
   when: not logoubuntu.stat.exists
 - file: src=/usr/share/sift/images/forensics_blue.jpg dest=/usr/share/backgrounds/warty-final-ubuntu.png mode=0644 state=link force=yes
+  when: siftrem_x11_background is defined and siftrem_x11_background == 'sift'
 
 

@@ -1,6 +1,6 @@
 ---
 - name: Debian | Extra packages install
-  apt: name={{item}} state=present update_cache=yes
+  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
   with_items:
 ## Vortessence
     - mysql-server
@@ -10,11 +10,11 @@
 - name: Vortessence - Automated memory forensics analysis 
   git:
     repo=https://github.com/vortessence/vortessence.git
-    dest={{ toolsetdir }}/vortessence
+    dest={{ siftrem_toolsetdir }}/vortessence
     force=no
   ignore_errors: true
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+  become: yes 
+  become_user: "{{ sift_user }}"
 
 - name: Install Vortessence requirements
   pip: name={{item}} state=present
@@ -25,16 +25,18 @@
     - pycrypto
     - django-pure-pagination
     - distorm3
-  sudo: yes 
+  become: yes 
 - mysql_db: name=vortessence state=present
 - mysql_user: name=vortessence password=vortessence priv=*.*:USAGE/vortessence.*:ALL state=present
 ## Database settings should be reflected in ~/Toolset/vortessence/vortessence/vortessence/settings.py
-- replace: dest="{{ toolsetdir }}/vortessence/vortessence/vortessence/settings.py" regexp="{{ item.regexp }}" replace="{{ item.replace }}"
+- name: Review vortessence directories config
+  replace: dest="{{ siftrem_toolsetdir }}/vortessence/vortessence/vortessence/settings.py" regexp="{{ item.regexp }}" replace="{{ item.replace }}"
   with_items:
     - { regexp: '/vagrant/data/upload', replace: "/cases/vortessence_upload" }
     - { regexp: '/vagrant/data/target', replace: '/cases/vortessence_target' }
 #    - { regexp: '/media/tmpfs', replace: '/path/to/ramdisk' }
-- file: dest="{{ item }}" state=directory mode=0755 owner={{ current_user }}
+- name: Ensure directories exist
+  file: dest="{{ item }}" state=directory mode=0755 owner={{ sift_user }}
   with_items:
     - /cases/vortessence_upload
     - /cases/vortessence_target
@@ -42,14 +44,14 @@
 - stat: path=/root/.vortessence-setup
   register: vs
 - name: Vortessence - setup
-  command: "{{ item }} chdir={{ toolsetdir }}/vortessence/vortessence"
+  command: "{{ item }} chdir={{ siftrem_toolsetdir }}/vortessence/vortessence"
   with_items:
     - python manage.py migrate
     - python manage.py loaddata profile_fixture.json
 ## interactive (password)
 #    - python manage.py createsuperuser --username admin --email root@localhost
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+  become: yes 
+  become_user: "{{ sift_user }}"
   when: not vs.stat.exists
 - file: dest=/root/.vortessence-setup state=touch
   when: not vs.stat.exists

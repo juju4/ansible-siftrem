@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=AndroGuard (GUI)
+Exec=/usr/bin/androgui.py
+Comment=
+Icon=
+NoDisplay=false
+Categories=REMNUX;
+Type=Application
+

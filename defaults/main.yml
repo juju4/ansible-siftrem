@@ -1,11 +1,27 @@
 ---
 tz: Etc/UTC
-current_user: vagrant
 
-do_sift: true
-do_remnux: true
+siftrem_do_sift: true
+siftrem_do_remnux: true
 
-toolsetdir: "/home/{{ current_user }}/Toolset"
+siftrem_do_x11: true
+#siftrem_x11_background: sift
+siftrem_x11_background: remnux
+
+## partially implemented
+## sift = unity, remnux = lxde (default)
+#siftrem_x11_env: sift
+siftrem_x11_env: remnux
+
+#siftrem_webserver: apache2
+siftrem_webserver: nginx
+
+sift_user: vagrant
+#sift_user: sansforensics
+sift_pass: forensics
+
+
+siftrem_toolsetdir: "/home/{{ sift_user }}/Toolset"
 
 ## for a volatility/vortessence usage, you want it maxmemfilesize+300MB
 ## define size to enable

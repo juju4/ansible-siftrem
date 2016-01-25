@@ -1,0 +1,12 @@
+---
+
+- file: dest=/home/{{ sift_user }}/.config/menus mode=0700 owner={{ sift_user }} state=directory
+- file: dest=/home/{{ sift_user }}/.local/share/desktop-directories mode=0700 owner={{ sift_user }} state=directory
+- file: dest=/home/{{ sift_user }}/.local/share/applications mode=0700 owner={{ sift_user }} state=directory
+- name: Adding submenus in LXDE
+  copy: src=lxde-applications.menu dest=/home/{{ sift_user }}/.config/menus/lxde-applications.menu mode=0644 owner={{ sift_user }}
+- copy: src=remnux.directory dest=/home/{{ sift_user }}/.local/share/desktop-directories/remnux.directory mode=0644 owner={{ sift_user }}
+- copy: src=sift.directory dest=/home/{{ sift_user }}/.local/share/desktop-directories/sift.directory mode=0644 owner={{ sift_user }}
+- copy: src=ruleeditor.desktop dest=/home/{{ sift_user }}/.local/share/applications/ruleeditor.desktop mode=0644 owner={{ sift_user }}
+- copy: src=androgui.desktop dest=/home/{{ sift_user }}/.local/share/applications/androgui.desktop mode=0644 owner={{ sift_user }}
+

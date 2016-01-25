@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Rule Editor
+Exec=/usr/bin/rule-editor
+Comment=
+Icon=
+NoDisplay=false
+Categories=REMNUX;
+Type=Application
+

@@ -2,16 +2,16 @@
 - name: git clone binglide
   git:
     repo=https://github.com/volatilityfoundation/volatility.git
-    dest={{ toolsetdir }}/volatility-win10tp
+    dest={{ siftrem_toolsetdir }}/volatility-win10tp
     version=win10tp
-  sudo: yes 
-  sudo_user: "{{ current_user }}"
+  become: yes 
+  become_user: "{{ current_user }}"
 
-- stat: path={{ toolsetdir }}/sample/Win10TPx64.vmem.zip
+- stat: path={{ siftrem_toolsetdir }}/sample/Win10TPx64.vmem.zip
   register: win10m
 - name: Win10 memory sample
   get_url: url=https://www.sendspace.com/pro/dl/0cte2h
-    dest={{ toolsetdir }}/sample/Win10TPx64.vmem.zip
+    dest={{ siftrem_toolsetdir }}/sample/Win10TPx64.vmem.zip
     mode=0400
     owner={{ current_user }}
   when: not win10m.stat.exists

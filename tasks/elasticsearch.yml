@@ -15,5 +15,6 @@
 #- command: update-rc.d elasticsearch defaults 95 10
 #  when: not rcd.stat.exists
 
-- service: name=elasticsearch state=started enabled=yes
+## don't load it by default
+- service: name=elasticsearch state=stopped enabled=no
 

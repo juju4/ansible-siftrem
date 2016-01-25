@@ -1,0 +1,42 @@
+---
+
+- name: Debian | x11 packages install
+  apt: name={{item}} state=present
+  with_items:
+    - xinit
+
+- name: Debian | SIFT x11 packages install (unity)
+  apt: name={{item}} state=present
+  with_items:
+    - xinit
+    - ubuntu-desktop
+  when: siftrem_x11_env is defined and siftrem_x11_env == 'sift'
+
+- name: Debian | REMNUX x11 packages install (lxde)
+  apt: name={{item}} state=present
+  with_items:
+    - xinit
+#    - lubuntu-desktop
+#    - lightgdm
+    - lxde
+    - lxdm
+  when: siftrem_x11_env is defined and siftrem_x11_env == 'remnux'
+
+- include: menus-lxde.yml
+  when: siftrem_x11_env is defined and siftrem_x11_env == 'remnux'
+
+#- name: Setting up auto-login for user {{ sift_user }}
+#  replace: dest='/etc/lxdm/lxdm.conf' regexp={{ item.regexp }} replace={{ item.replace }}
+#  with_items:
+#    - { regexp: '^#\ autologin=dgod', replace: "autologin={{ sift_user }}" }
+#    - { regexp: '^disable=0$', replace: 'disable=1' }
+#  when: siftrem_x11_env is defined and siftrem_x11_env == 'remnux'
+- name: Setting up auto-login for user {{ sift_user }}
+  replace: dest='/etc/lxdm/lxdm.conf' regexp='^#\ autologin=dgod' replace="autologin={{ sift_user }}"
+  when: siftrem_x11_env is defined and siftrem_x11_env == 'remnux'
+- replace: dest='/etc/lxdm/lxdm.conf' regexp='^disable=0$' replace='disable=1'
+  when: siftrem_x11_env is defined and siftrem_x11_env == 'remnux'
+# Fix an error that would be otherwise seen when the user logs out using the GUI
+- lineinfile: dest=/etc/pam.d/lxdm regexp='^session required pam_systemd.so' line='session required pam_systemd.so'
+  when: siftrem_x11_env is defined and siftrem_x11_env == 'remnux'
+

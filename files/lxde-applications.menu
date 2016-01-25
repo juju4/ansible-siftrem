@@ -1,0 +1,20 @@
+<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN" "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">
+<Menu>
+   <Name>My Menu Extension</Name>
+   <MergeFile type="parent">/etc/xdg/menus/lxde-applications.menu</MergeFile>
+   <Menu>
+      <Name>REMNUX</Name>
+      <Directory>custom_menu.directory</Directory>
+      <Include>
+         <And><Category>REMNUX</Category></And>
+      </Include>
+   </Menu>
+   <Menu>
+      <Name>SIFT</Name>
+      <Directory>custom_menu.directory</Directory>
+      <Include>
+         <And><Category>SIFT</Category></And>
+      </Include>
+   </Menu>
+</Menu>
+

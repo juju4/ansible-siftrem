@@ -1,26 +1,20 @@
 ---
 
-- file: dest={{ toolsetdir }}/volatilityplugins mode=0755 state=directory
+- file: dest={{ siftrem_toolsetdir }}/volatilityplugins mode=0755 state=directory
 
 - name: Volatility plugins developed and maintained by the community
   git: repo=https://github.com/volatilityfoundation/community.git
-       dest={{ toolsetdir }}/volatilityplugins/community
+       dest={{ siftrem_toolsetdir }}/volatilityplugins/community
 
 - name: editbox - extracts the text from Windows Edit controls
   git: repo=https://github.com/volatilityfoundation/community.git
-       dest={{ toolsetdir }}/volatilityplugins/editbox
+       dest={{ siftrem_toolsetdir }}/volatilityplugins/editbox
 
 - name: editbox - extracts the text from Windows Edit controls
   git: repo=https://github.com/bridgeythegeek/editbox.git
-       dest={{ toolsetdir }}/volatilityplugins/editbox
+       dest={{ siftrem_toolsetdir }}/volatilityplugins/editbox
 
 - name: malware config extractor - plugx, andromeda
   git: repo=https://github.com/arbor-jjones/volatility_plugins.git
-       dest={{ toolsetdir }}/volatilityplugins/plugx+andromeda
-
-- name: ngkogkos facebook_extractor
-  git: repo=https://github.com/ngkogkos/volatility-plugins.git
-       dest={{ toolsetdir }}/volatilityplugins/facebook
-
-# https://github.com/JPCERTCC/aa-tools
+       dest={{ siftrem_toolsetdir }}/volatilityplugins/plugx+andromeda
 
