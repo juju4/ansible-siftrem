@@ -323,3 +323,5 @@
     owner={{ sift_user }}
     mode=0700
 
+- include: powershell.yml
+

@@ -161,7 +161,7 @@
     - libjavassist-java
     - tcpflow
     - geany
-    - sysdig
+#    - sysdig
     - yara
     - libyara3
     - python-yara
