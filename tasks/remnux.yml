@@ -4,9 +4,11 @@
 - name: adding REMnux repository
   apt_repository: repo='ppa:remnux/stable' state=present
   when: ansible_distribution == 'Ubuntu'
+- name: adding Inetsim archive signing key
+  apt_key: url=http://www.inetsim.org/inetsim.org-archive-signing-key.asc state=present
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 - name: adding Inetsim repository
   apt_repository: repo='deb http://www.inetsim.org/debian/ binary/' state=present
-- apt_key: url=http://www.inetsim.org/inetsim.org-archive-signing-key.asc state=present
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 - name: adding SIFT repository
   apt_repository: repo='ppa:sift/stable' state=present
