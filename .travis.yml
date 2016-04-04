@@ -3,11 +3,16 @@ dist: trusty
 language: python
 python: "2.7"
 before_install:
+ - uname -a
  - sudo apt-get update -qq
  - sudo apt-get install -qq python-apt python-pycurl
+ - ln -s ansible-siftrem ../siftrem
 ## FIXME! under travis, 'adding REMnux repository' fails whereas it works with kitchen...
  - sudo add-apt-repository ppa:remnux/stable -y
- - ln -s ansible-siftrem ../siftrem
+## http://www.webupd8.org/2016/03/fix-failed-to-fetch-google-chrome_3.html
+ - sudo sed -i -e 's/deb http/deb [arch=amd64] http/' "/etc/apt/sources.list.d/google-chrome.list"
+ - cat /etc/apt/sources.list
+ - ls /etc/apt/sources.list.d/
 install:
   - pip install ansible
   - ansible --version
