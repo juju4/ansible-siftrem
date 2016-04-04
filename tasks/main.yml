@@ -301,6 +301,7 @@
     - http://dl.dropbox.com/u/21148428/xp-clean.tgz
     - http://dl.dropbox.com/u/21148428/xp-infected.tgz
   when: not dldone.stat.exists
+  ignore_errors: true
 
 - npm: name=casperjs path={{ siftrem_toolsetdir }}/casperjs
   ignore_errors: true

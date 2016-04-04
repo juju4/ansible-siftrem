@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)
 # Sift+Remnux ansible role
 
 A simple ansible role to setup both ISC SANS SIFT and Remnux on a box.

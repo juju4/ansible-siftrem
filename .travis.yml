@@ -5,9 +5,12 @@ python: "2.7"
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq python-apt python-pycurl
+## FIXME! under travis, 'adding REMnux repository' fails whereas it works with kitchen...
+ - sudo add-apt-repository ppa:remnux/stable -y
  - ln -s ansible-siftrem ../siftrem
 install:
   - pip install ansible
+  - ansible --version
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 script:
   - "echo \"[test-kitchen]\nlocalhost\" > inventory"
