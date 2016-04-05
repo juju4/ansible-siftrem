@@ -236,6 +236,8 @@
     - ubuntu-wallpapers
   notify:
     - Updating ClamAV Signatures
+  async: 3600
+  poll: 300
 
 - name: SIFT | apache2 packages install
   apt: name={{item}} state=present
