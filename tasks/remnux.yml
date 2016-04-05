@@ -297,7 +297,8 @@
 # This is needed for passivedns-client
 - stat: path=/home/{{ sift_user }}/.passivedns-client
   register: passivednsclient
-- file:
+- name: Review permissions for passivedns client
+  file:
     dest=/home/{{ sift_user }}/.passivedns-client owner={{ sift_user }} group={{ sift_user }} mode=600 state=touch
   when: not passivednsclient.stat.exists
 

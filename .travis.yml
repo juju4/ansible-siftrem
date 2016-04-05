@@ -8,7 +8,7 @@ before_install:
  - sudo apt-get install -qq python-apt python-pycurl
  - ln -s ansible-siftrem ../siftrem
 ## FIXME! under travis, 'adding REMnux repository' fails whereas it works with kitchen...
- - sudo add-apt-repository ppa:remnux/stable -y
+# - sudo add-apt-repository ppa:remnux/stable -y
 ## http://www.webupd8.org/2016/03/fix-failed-to-fetch-google-chrome_3.html
  - sudo sed -i -e 's/deb http/deb [arch=amd64] http/' "/etc/apt/sources.list.d/google-chrome.list"
  - cat /etc/apt/sources.list
@@ -21,16 +21,11 @@ script:
   - "echo \"[test-kitchen]\nlocalhost\" > inventory"
 
 # Check the role/playbook's syntax.
-  - "ansible-playbook -i inventory --syntax-check test/integration/default/default.yml"
+  - "ansible-playbook -i inventory --syntax-check test/integration/default/travis.yml"
 
 # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i inventory --connection=local --sudo -vvvv test/integration/default/default.yml"
+  - "ansible-playbook -i inventory --connection=local --sudo -vvvv test/integration/default/travis.yml"
 
 # Run the role/playbook again, checking to make sure it's idempotent.
-  - "ansible-playbook -i inventory test/integration/default/default.yml --connection=local --sudo | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && exit 1)"
-#  - >
-#  ansible-playbook -i inventory test/integration/default/default.yml --connection=local --sudo
-#  | grep -q 'changed=0.*failed=0'
-#  && (echo 'Idempotence test: pass' && exit 0)
-#  || (echo 'Idempotence test: fail' && exit 1)
+  - "ansible-playbook -i inventory test/integration/default/travis.yml --connection=local --sudo | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 1)"
 
