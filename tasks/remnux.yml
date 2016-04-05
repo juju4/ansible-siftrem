@@ -237,6 +237,8 @@
     - lxterminal
   notify:
     - Updating ClamAV Signatures
+  async: 3600
+  poll: 300
 
 - name: REMNUX | nginx packages install
   apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
