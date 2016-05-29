@@ -236,7 +236,7 @@
     - ubuntu-wallpapers
   notify:
     - Updating ClamAV Signatures
-  async: 3600
+  async: 7200
   poll: 300
 
 - name: SIFT | apache2 packages install
@@ -274,7 +274,7 @@
   pip: name={{item}} state=present
   with_items:
     - bitstring
-    - rekall
+#    - rekall
     - docopt
     - python-evtx
     - python-registry

@@ -55,6 +55,7 @@
     - python-hachoir-subfile
     - python-hachoir-urwid
     - python-hachoir-wx
+    - python-virtualenv
     - firefox
     - xmlstarlet
     - inspircd
@@ -237,7 +238,8 @@
     - lxterminal
   notify:
     - Updating ClamAV Signatures
-  async: 3600
+## Note: sometimes can be longer than 1h ...
+  async: 7200
   poll: 300
 
 - name: REMNUX | nginx packages install
@@ -267,9 +269,10 @@
   pip: name={{item}} state=present
   with_items:
     - distorm3
+    - git+https://github.com/gdabah/distorm#egg=distorm3
     - cryptography
     - pyelftools
-    - rekall
+#    - rekall
     - jsbeautifier
     - xortool
     - cybox

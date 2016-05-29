@@ -1,5 +1,12 @@
 ---
 
+- hostname: name={{ siftrem_hostname }}
+  when: siftrem_hostname is defined
+- name: Add new hostname in /etc/hosts (local resolv)
+  replace:
+    "dest='/etc/hosts' regexp='^127.0.0.1       localhost' replace='127.0.0.1       localhost {{ siftrem_hostname }}'"
+  when: siftrem_hostname is defined
+
 - name: Restrict sshd config
   lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
   with_items:
@@ -295,9 +302,9 @@
     mode=0600
   with_items:
     - http://www.cfreds.nist.gov/mem/memory-images.rar
-    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/1/zeus.vmem.zip
+#    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/1/zeus.vmem.zip
     - http://www.mediafire.com/file/yxqodp1p2aca91x/0zapftis.rar
-    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/11/sality.vmem.zip
+#    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/11/sality.vmem.zip
     - http://dl.dropbox.com/u/21148428/xp-clean.tgz
     - http://dl.dropbox.com/u/21148428/xp-infected.tgz
   when: not dldone.stat.exists
@@ -309,6 +316,7 @@
 - include: volatility-modules.yml
   become: yes 
   become_user: "{{ sift_user }}"
+- include: rekall.yml
 - include: yara-signature.yml
   become: yes 
   become_user: "{{ sift_user }}"
@@ -320,9 +328,21 @@
 - name: Didier Stevens Byte-Stats
   get_url: url=http://didierstevens.com/files/software/byte-stats_V0_0_3.zip
     dest={{ siftrem_toolsetdir }}/byte-stats_V0_0_3.zip
-
     owner={{ sift_user }}
     mode=0700
 
 - include: powershell.yml
+
+- name: git clone threatnote
+  git:
+    repo=https://github.com/defpoint/threat_note.git
+    dest={{ siftrem_toolsetdir }}/threat_note
+  become: yes 
+  become_user: "{{ sift_user }}"
+
+- name: download logstalgia (web log visualization)
+  get_url: url=https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz
+    dest={{ siftrem_toolsetdir }}/logstalgia-1.0.7.tar.gz
+    owner={{ sift_user }}
+    mode=0700
 

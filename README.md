@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)
+[![Build Status](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)(Fails because of maximum execution time)
 # Sift+Remnux ansible role
 
 A simple ansible role to setup both ISC SANS SIFT and Remnux on a box.
@@ -14,6 +14,7 @@ Some settings/permissions/packages were aligned between the two to avoid unecess
 ### Ansible
 It was tested on the following versions:
  * 1.9
+ * 2.0
 
 ### Operating systems
 
@@ -46,6 +47,7 @@ $ vagrant provision siftrem
 [OK]
 * menu entries are not available be it for sift (unity-based?) or remnux(lxde)
 * remnux use nginx, sift apache2...
+* travis fails because whole role take more than maximum time limit (50min)
 
 ## License
 

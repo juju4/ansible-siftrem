@@ -1,6 +1,7 @@
 ---
 tz: Etc/UTC
 
+siftrem_hostname: siftworkstation
 siftrem_do_sift: true
 siftrem_do_remnux: true
 

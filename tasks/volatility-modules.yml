@@ -18,3 +18,31 @@
   git: repo=https://github.com/arbor-jjones/volatility_plugins.git
        dest={{ siftrem_toolsetdir }}/volatilityplugins/plugx+andromeda
 
+- name: autoruns
+  git: repo=https://github.com/tomchop/volatility-autoruns
+       dest={{ siftrem_toolsetdir }}/volatilityplugins/volatility-autoruns
+
+- name: bitlocker keys retrieving
+  git: repo=https://github.com/elceef/bitlocker
+       dest={{ siftrem_toolsetdir }}/volatilityplugins/elceef-bitlocker
+
+- stat: path=/usr/lib/python2.7/dist-packages/volatility/plugins
+  register: plugins1
+- stat: path=/usr/local/lib/python2.7/dist-packages/volatility/plugins
+  register: plugins2
+- set_fact:
+    vol_plugins: /usr/lib/python2.7/dist-packages/volatility/plugins
+  when: plugins1.stat.exists
+- set_fact:
+    vol_plugins: /usr/local/lib/python2.7/dist-packages/volatility/plugins
+  when: plugins2.stat.exists
+
+- stat: path="{{ vol_plugins }}/autoruns.py"
+  register: autoruns
+- name: map autoruns in volatility plugins tree
+  file:
+    src: "{{ siftrem_toolsetdir }}/volatilityplugins/volatility-autoruns/autoruns.py"
+    dest: "{{ vol_plugins }}/autoruns.py"
+    state: link
+  when: not autoruns.stat.exists
+
