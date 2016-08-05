@@ -6,6 +6,10 @@ before_install:
  - uname -a
  - sudo apt-get update -qq
  - sudo apt-get install -qq python-apt python-pycurl
+  # role dependencies
+ - git clone https://github.com/geerlingguy/ansible-role-java.git ../geerlingguy.java
+ - git clone https://github.com/juju4/ansible-sift.git ../sift
+ - git clone https://github.com/juju4/ansible-remnux.git ../remnux
  - ln -s ansible-siftrem ../siftrem
 ## FIXME! under travis, 'adding REMnux repository' fails whereas it works with kitchen...
 # - sudo add-apt-repository ppa:remnux/stable -y
