@@ -13,5 +13,8 @@ galaxy_info:
   - system
   - security
 
-dependencies: []
+dependencies:
+  - geerlingguy.java
+  - sift
+  - remnux
 

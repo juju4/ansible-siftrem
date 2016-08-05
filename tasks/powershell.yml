@@ -6,7 +6,7 @@
     dest={{ siftrem_toolsetdir }}/empire
     force=no
   ignore_errors: true
-  become: yes 
+  become: yes
   become_user: "{{ sift_user }}"
 
 ## interactive

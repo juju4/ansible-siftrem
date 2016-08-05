@@ -4,7 +4,7 @@
     repo=https://github.com/volatilityfoundation/volatility.git
     dest={{ siftrem_toolsetdir }}/volatility-win10tp
     version=win10tp
-  become: yes 
+  become: yes
   become_user: "{{ current_user }}"
 
 - stat: path={{ siftrem_toolsetdir }}/sample/Win10TPx64.vmem.zip

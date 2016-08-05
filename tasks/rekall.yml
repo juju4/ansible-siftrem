@@ -6,8 +6,10 @@
 #    - python3
     - python-virtualenv
 
+## FIXME! html5lib requires setuptools version 18.5 or above; please upgrade before installing (you have 8.0)
 - name: Install recent setuptools inside virtualenv
   pip: "name=setuptools version=8.0 state=present virtualenv=/home/{{ sift_user }}/env-rekall"
+#  pip: "name=setuptools state=present virtualenv=/home/{{ sift_user }}/env-rekall"
 
 - name: Install rekal inside virtualenv
   pip: "name={{item}} state=present virtualenv=/home/{{ sift_user }}/env-rekall"

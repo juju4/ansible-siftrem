@@ -39,10 +39,11 @@
 
 - stat: path="{{ vol_plugins }}/autoruns.py"
   register: autoruns
+  when: vol_plugins is defined
 - name: map autoruns in volatility plugins tree
   file:
     src: "{{ siftrem_toolsetdir }}/volatilityplugins/volatility-autoruns/autoruns.py"
     dest: "{{ vol_plugins }}/autoruns.py"
     state: link
-  when: not autoruns.stat.exists
+  when: vol_plugins is defined and not autoruns.stat.exists
 

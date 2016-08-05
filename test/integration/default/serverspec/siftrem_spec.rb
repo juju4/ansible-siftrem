@@ -42,6 +42,8 @@ describe command('xvfb-run --server-args="-screen 0, 1024x768x24" cutycapt --url
   its(:exit_status) { should eq 0 }
 end
 ## FIXME! yara.SyntaxError: /opt/remnux-thug/src/Classifier/rules/urlclassifier/sweetorange.yar(19): greedy and ungreedy quantifiers can't be mixed in a regular expression
-describe command('thug.py -FZM -u win7ie90 -w 10 -T 60 -n /tmp/thuglogdir -o /tmp/thuglog.txt "http://www.google.com"') do
+#describe command('thug.py -FZM -u win7ie90 -w 10 -T 60 -n /tmp/thuglogdir -o /tmp/thuglog.txt "http://www.google.com"') do
+describe command('docker run --rm -it -v /tmp:/tmp remnux/thug ./thug.py -FZM -u win7ie90 -w 10 -T 60 -n /tmp/thuglogdir -o /tmp/thuglog.txt "http://www.google.com"') do
+  its(:stdout) { should match /Thug analysis logs saved at \/tmp\/thuglogdir/ }
   its(:exit_status) { should eq 0 }
 end

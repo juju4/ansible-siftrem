@@ -1,28 +1,8 @@
 ---
 tz: Etc/UTC
 
-siftrem_hostname: siftworkstation
-siftrem_do_sift: true
-siftrem_do_remnux: true
-
-siftrem_do_x11: true
-#siftrem_x11_background: sift
-siftrem_x11_background: remnux
-
-## partially implemented
-## sift = unity, remnux = lxde (default)
-#siftrem_x11_env: sift
-siftrem_x11_env: remnux
-
-#siftrem_webserver: apache2
-siftrem_webserver: nginx
-
-sift_user: vagrant
-#sift_user: sansforensics
-sift_pass: forensics
-
-
-siftrem_toolsetdir: "/home/{{ sift_user }}/Toolset"
+#siftrem_toolsetdir: "/home/{{ sift_user }}/Toolset"
+siftrem_toolsetdir: "/usr/local/share/Toolset"
 
 ## for a volatility/vortessence usage, you want it maxmemfilesize+300MB
 ## define size to enable
@@ -30,5 +10,104 @@ ramdisk_path: /media/tmpfs
 #ramdisk_size: 2048m
 
 ## is it vmware virtual machine? (OpenVM)
-vm: 1 
+vm: 1
+
+siftrem_extra_pkgs:
+## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
+## https://major.io/2007/07/01/check-available-entropy-in-linux/
+## https://blog.cloudflare.com/ensuring-randomness-with-linuxs-random-number-generator/
+    - rng-tools
+    - python-pip
+    - git
+    - argus-client
+    - tshark
+    - graphviz
+    - snort
+    - suricata
+    - librrds-perl
+    - libnet-ip-perl
+    - tcptrace
+    - xplot
+    - chaosreader
+    - picviz
+    - python-pip
+    - cmake
+    - make
+    - g++
+    - python-hachoir-wx
+    - sqlite3
+    - lynx
+    - fcrackzip
+    - pdfcrack
+    - john
+    - wamerican-insane
+    - wcanadian-insane
+    - wngerman
+    - wfrench
+    - steghide
+    - python-xlrd
+    - python-netaddr
+    - python-virtualenv
+    - build-essential
+    - python-dev
+    - python-setuptools
+    - python-lzma       # BinWalk
+    - phantomjs
+    - wkhtmltopdf
+## cutycapt and its dependencies
+    - cutycapt
+    - xvfb
+    - xauth
+    - xfonts-base
+#    - node             ## NOK for casperjs
+    - nodejs-legacy
+    - npm
+## Binglide Extra packages install
+    - python3-pyqt4
+    - python3-pyqt4.qtopengl
+    - python3-opengl
+    - python3-pip
+    - python3-numpy
+## event2timeline
+    - python-dateutil
+## faup
+    - cmake
+## moved to vars/Ubuntu-*
+#    - libqt4-webkit
+#    - libqt4-dev
+
+
+siftrem_extra_git:
+    - https://github.com/wapiflapi/binglide
+    - https://github.com/zrlram/afterglow
+    - https://github.com/zrlram/parsers
+    - https://github.com/certsocietegenerale/event2timeline
+    - https://github.com/1aN0rmus/TekDefense-Automater
+    - https://github.com/rpt/Network-Traffic-Visualization
+    - https://github.com/urule99/jsunpack-n
+    - https://github.com/stricaud/faup
+    - https://github.com/google/binnavi
+    - https://github.com/lunixbochs/usercorn
+    - https://Ft44k@bitbucket.org/Ft44k/yavol
+    - https://github.com/504ensicsLabs/DAMM
+    - https://github.com/defpoint/threat_note
+    - https://github.com/mattgwwalker/msg-extractor
+
+siftrem_extra_git_python_build:
+    - msg-extractor
+
+siftrem_extra_dl:
+    - { url: 'http://chianti.ucsd.edu/cytoscape-3.2.1/Cytoscape_3_2_1_unix.sh', s: '9739a240d8f407fb907df7ed624b4c4037288334b581be00a174df32ed4a5a4b' }
+    - { url: 'https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz', s: 'cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365' }
+    - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a.' }
+    - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz', s: '5553fd03fb7be564538fe56e871eac6e3caf56f40e8abc4602d2553964f8f0e1' }
+    - { url: 'http://procdot.com/download/procdot/binaries/procdot_1_1_47_linux.zip', s: '09bb89e6b9427a94c7edfcc0efba3097ff9223e77938b3a07af0820f86eba8aa.' }
+    - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: '47f110079e450332fe47d406797d4b3e61bc1ad9d49c85d7a6fd1ba3e8fe5fef' }
+    - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'd555328f3182c811f83764e1442122010a1837c727bc67cbadc47e9b393d7017.' }
+    - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9.' }
+    - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5.' }
+    - { url: 'https://www.paterva.com/malv36/community/MaltegoChlorineCE.3.6.0.6640.deb', s: 'cb1d85ad84769472e0c0434e53d9c7232436b9733658a4b49161c658c499ccd8.' }
+    - { url: 'https://www.paterva.com/malv4/classic/Maltego.v4.0.0.8846.deb', s: 'b2691e013443a3c81cbf147efda87fcb71624501ac97c4d1dcd4325eed1affaf.' }
+#    - { url: '', s: '' }
+
 
