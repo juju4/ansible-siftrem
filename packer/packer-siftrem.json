@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "do_api_token": "{{env `DO_TOKEN`}}"
+  },
   "provisioners": [
     {
       "type": "shell",
@@ -11,11 +14,17 @@
       "script": "ansible.sh"
     },
     {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "setup-roles.sh"
+    },
+    {
       "type": "ansible-local",
       "playbook_file": "../test/integration/default/default.yml",
       "role_paths": [
-        "/etc/ansible/roles"
-      ]
+        "/etc/ansible/roles/siftrem"
+      ],
+      "extra_arguments": [ "--become" ]
     },
     {
       "type": "shell",
@@ -113,10 +122,12 @@
     },
     {
       "type": "digitalocean",
-      "api_token": "YOUR API KEY",
+      "api_token": "{{user `do_api_token`}}",
       "image": "ubuntu-14-04-x64",
       "region": "nyc2",
-      "size": "512mb"
+      "size": "512mb",
+      "droplet_name": "adduser",
+      "snapshot_name": "siftrem-packer-{{isotime \"2006-01-02\"}}"
     }
   ],
   "post-processors": [

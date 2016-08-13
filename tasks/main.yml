@@ -104,6 +104,7 @@
     owner={{ sift_user }}
     sha256sum={{ item.s }}
   with_items: "{{ siftrem_extra_dl }}"
+  ignore_errors: true
 
 ## https://code.google.com/p/volatility/wiki/SampleMemoryImages
 - file: dest={{ siftrem_toolsetdir }}/sample state=directory owner={{ sift_user }}
