@@ -1,6 +1,9 @@
 ---
 
 - hosts: all
+## lighten the load for test instance
+  vars:
+    - remnux_docker_images: []
   roles:
     - siftrem
 

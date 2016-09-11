@@ -2,19 +2,20 @@
 driver:
   name: lxd_cli
 
+transport:
+  name: sftp
+## try to avoid random "TIMING: scp async upload (Kitchen::Transport::Ssh)"
+## default timeout 15s, alternate sftp/kitchen-sync
+#transport:
+#  name: ssh
+#  keepalive: true
+#  keepalive_interval: 5
+#  timout: 30
+
 driver_config:
   customize:
 #  cpus: 2
   memory: 1024
-
-## try to avoid random "TIMING: scp async upload (Kitchen::Transport::Ssh)"
-## default timeout 15s, alternate sftp/kitchen-sync
-transport:
-  name: ssh
-  keepalive: true
-  keepalive_interval: 5
-  timout: 30
-#  name: sftp
 
 provisioner:
   name: ansible_playbook
@@ -33,12 +34,6 @@ provisioner:
 platforms:
 #  - name: ubuntu-16.04
   - name: ubuntu-14.04
-#  - name: ubuntu-12.04
-#  - name: centos-7
-#  - name: centos-6
-## "Failed to complete #create action: [Broken pipe] on default-alpine-34"
-## do we have python2 in default image?
-#  - name: alpine-3.4
 
 suites:
   - name: default
