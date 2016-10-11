@@ -1,6 +1,11 @@
 ---
 driver:
   name: lxd_cli
+## docker.io need specificl profile else 'PermissionError: [Errno 13] Permission denied: '/sys/kernel/security/apparmor/profiles''
+## https://www.stgraber.org/2016/04/13/lxd-2-0-docker-in-lxd-712/
+  profile: [ default, docker ]
+  config:
+    security.privileged: true
 
 transport:
   name: sftp

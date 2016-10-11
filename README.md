@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)(Fails because of maximum execution time)
+[![Build Status](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)(Fails because of No space left on device)
 # Sift+Remnux ansible role
 
 Ansible role to setup both ISC SANS SIFT and Remnux on a box.
@@ -33,6 +33,13 @@ For example
 
 Nothing specific for now.
 
+
+## FAQ
+
+* role has bigger disk requirements than usual and might need bigger disk image than usual whatever provider is used (lxc, virtualbox, ...)
+kitchen might end with error "IOError: [Errno 28] No space left on device"
+
+
 ## Known issues
 
 * A few times, got packages install failing and at next run working fine...
@@ -43,8 +50,9 @@ $ vagrant provision siftrem
 [OK]
 * menu entries are not available be it for sift (unity-based?) or remnux(lxde)
 * remnux use nginx, sift apache2...
-* travis fails because whole role take more than maximum time limit (50min)
+* travis fails because whole role take more than maximum time limit (50min) or no space left on device
 https://github.com/travis-ci/travis-ci/issues/3810
+* packer build generate a vdi increasing to 250GB+ for unknown reason.
 
 ## Continuous integration
 

@@ -106,32 +106,9 @@
   with_items: "{{ siftrem_extra_dl }}"
   ignore_errors: true
 
-## https://code.google.com/p/volatility/wiki/SampleMemoryImages
-- file: dest={{ siftrem_toolsetdir }}/sample state=directory owner={{ sift_user }}
-
-- stat: path={{ siftrem_toolsetdir }}/sample/xp-infected.tgz
-  register: dldone
-- name: Download memory samples
-  get_url: url={{ item }}
-    dest={{ siftrem_toolsetdir }}/sample
-    owner={{ sift_user }}
-    mode=0600
-  with_items:
-    - http://www.cfreds.nist.gov/mem/memory-images.rar
-#    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/1/zeus.vmem.zip
-    - http://www.mediafire.com/file/yxqodp1p2aca91x/0zapftis.rar
-#    - http://malwarecookbook.googlecode.com/svn-history/r26/trunk/17/11/sality.vmem.zip
-    - http://dl.dropbox.com/u/21148428/xp-clean.tgz
-    - http://dl.dropbox.com/u/21148428/xp-infected.tgz
-  when: not dldone.stat.exists
-  ignore_errors: true
-
 - npm: name=casperjs path={{ siftrem_toolsetdir }}/casperjs
   ignore_errors: true
 
-- include: volatility-modules.yml
-  become: yes
-  become_user: "{{ sift_user }}"
 #- include: rekall.yml
 - include: yara-signature.yml
   become: yes
