@@ -72,31 +72,6 @@
   with_items: "{{ siftrem_extra_git_python_build }}"
   become: yes
 
-- stat: path=/usr/local/bin/faup
-  register: faup
-- name: Debian | faup dependencies
-  apt: name={{item}} state=present
-  with_items:
-    - cmake
-  when: not faup.stat.exists
-- name: faup | compile
-  command: "{{ item }} chdir={{ siftrem_toolsetdir }}/faup/build"
-  with_items:
-    - cmake ..
-    - make
-  become: yes
-  become_user: "{{ sift_user }}"
-  when: not faup.stat.exists
-- name: ensure appropriate path for shared libraries
-  lineinfile: dest=/etc/ld.so.conf.d/x86_64-linux-gnu.conf line='^/usr/local/lib/x86_64-linux-gnu'
-- name: faup | install
-  command: "{{ item }} chdir={{ siftrem_toolsetdir }}/faup/build"
-  with_items:
-    - make install
-  become: yes
-  when: not faup.stat.exists
-  notify:
-    - run ldconfig
 - name: download {{ item.url | basename }}
   get_url: url={{ item.url }}
     dest={{ siftrem_toolsetdir }}/{{ item.url | basename }}

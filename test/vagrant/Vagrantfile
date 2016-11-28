@@ -16,13 +16,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        ansible.sudo = true
        ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
        ansible.groups = {
-          "myrole" => ["vhost" ],
+          "myrole" => ["vsiftrem" ],
        }
     end
 
-    config.vm.define "vhost" do |vhost|
-        vhost.vm.hostname = "vhost"
-        vhost.vm.provider "virtualbox" do |v|
+    config.vm.define "vsiftrem" do |vsiftrem|
+        vsiftrem.vm.hostname = "vsiftrem"
+        vsiftrem.vm.provider "virtualbox" do |v|
           v.memory = 2048
         end
     end

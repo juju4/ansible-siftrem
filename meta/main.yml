@@ -16,6 +16,8 @@ galaxy_info:
 dependencies:
   - geerlingguy.java
 #  - volatility
-  - sift
-  - remnux
+  - juju4.sift
+  - juju4.remnux
+  - juju4.faup
+  - juju4.floss
 
