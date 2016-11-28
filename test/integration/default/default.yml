@@ -5,5 +5,5 @@
   vars:
     - remnux_docker_images: []
   roles:
-    - siftrem
+    - juju4.siftrem
 
