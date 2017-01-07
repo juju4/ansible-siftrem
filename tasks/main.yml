@@ -1,7 +1,10 @@
 ---
 
-- hostname: name={{ siftrem_hostname }}
+## fails under lxd+systemd, https://github.com/ansible/ansible-modules-core/issues/5582
+- name: set hostname
+  hostname: name={{ siftrem_hostname }}
   when: siftrem_hostname is defined
+  ignore_errors: true
 - name: Add new hostname in /etc/hosts (local resolv)
   replace:
     "dest='/etc/hosts' regexp='^127.0.0.1       localhost' replace='127.0.0.1       localhost {{ siftrem_hostname }}'"

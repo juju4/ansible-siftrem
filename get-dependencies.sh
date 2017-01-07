@@ -17,4 +17,10 @@ fi
 [ ! -d $rolesdir/juju4.faup ] && git clone https://github.com/juju4/ansible-faup $rolesdir/juju4.faup
 [ ! -d $rolesdir/juju4.vivisect ] && git clone https://github.com/juju4/ansible-vivisect $rolesdir/juju4.vivisect
 [ ! -d $rolesdir/juju4.floss ] && git clone https://github.com/juju4/ansible-floss $rolesdir/juju4.floss
+## galaxy naming: kitchen fails to transfer symlink folder
+#[ ! -e $rolesdir/juju4.siftrem ] && ln -s ansible-siftrem $rolesdir/juju4.siftrem
+[ ! -e $rolesdir/juju4.siftrem ] && cp -R $rolesdir/ansible-siftrem $rolesdir/juju4.siftrem
+
+## don't stop build on this script return code
+true
 

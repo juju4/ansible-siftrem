@@ -80,6 +80,7 @@ siftrem_extra_git:
     - https://github.com/zrlram/afterglow
     - https://github.com/zrlram/parsers
     - https://github.com/certsocietegenerale/event2timeline
+    - https://github.com/tomchop/malcom.git
     - https://github.com/1aN0rmus/TekDefense-Automater
     - https://github.com/rpt/Network-Traffic-Visualization
     - https://github.com/urule99/jsunpack-n
@@ -89,6 +90,7 @@ siftrem_extra_git:
     - https://github.com/504ensicsLabs/DAMM
     - https://github.com/defpoint/threat_note
     - https://github.com/mattgwwalker/msg-extractor
+    - https://github.com/williballenthin/EVTXtract
 
 siftrem_extra_git_python_build:
     - msg-extractor
@@ -106,10 +108,14 @@ siftrem_extra_dl:
     - { url: 'https://www.paterva.com/malv36/community/MaltegoChlorineCE.3.6.0.6640.deb', s: 'cb1d85ad84769472e0c0434e53d9c7232436b9733658a4b49161c658c499ccd8.' }
     - { url: 'https://www.paterva.com/malv4/classic/Maltego.v4.0.0.8846.deb', s: 'b2691e013443a3c81cbf147efda87fcb71624501ac97c4d1dcd4325eed1affaf.' }
     - { url: 'http://downloads.sourceforge.net/project/capanalysis/version%201.2.2/capanalysis_1.2.2_amd64.deb', s: 'a9b4c56e80f1d53edbe0ad0158ccd05beab0d789e326f5201a6871598c8d7f52' }
+    - { url: 'https://didierstevens.com/files/software/base64dump_V0_0_5.zip', s: 'B4AB7B3A9D2947F08C6CC94F88CD825C9B2B63EE65AF7475E66BE9565EC4337A' }
+    - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '0bf42819dc21a2bb011eaa7c7220145abd2ce9954a868c9310f5c1be3e6e45f1' }
 #    - { url: '', s: '' }
 
 siftrem_extra_docker:
     - "radare/radare2"
     - "owasp/zap2docker-stable"
     - "owasp/zap2docker-weekly"
+## 201612 Last pushed: a year ago
+    - "tomchop/malcom"
 
