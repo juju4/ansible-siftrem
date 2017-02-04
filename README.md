@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)(Fails because of No space left on device)
+[![Build Status - Master](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)
+[![Build Status - Devel](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=devel)](https://travis-ci.org/juju4/ansible-siftrem/branches)
 # Sift+Remnux ansible role
 
 Ansible role to setup both ISC SANS SIFT and Remnux on a box.
@@ -12,6 +13,7 @@ SIFT and Remnux has been moved to separate role each include as meta. Pay attent
 ### Ansible
 It was tested on the following versions:
  * 2.0
+ * 2.2
 
 ### Operating systems
 
@@ -26,7 +28,7 @@ For example
 ```
 - host: dfir
   roles:
-    - siftrem
+    - juju4.siftrem
 ```
 
 ## Variables
@@ -61,14 +63,14 @@ Default kitchen config (.kitchen.yml) is lxd-based, while (.kitchen.vagrant.yml)
 
 Once you ensured all necessary roles are present, You can test with:
 ```
-$ cd /path/to/roles/siftrem
+$ cd /path/to/roles/juju4.siftrem
 $ kitchen verify
 $ kitchen login
 $ KITCHEN_YAML=".kitchen.vagrant.yml" kitchen verify
 ```
 or
 ```
-$ cd /path/to/roles/siftrem/test/vagrant
+$ cd /path/to/roles/juju4.siftrem/test/vagrant
 $ vagrant up
 $ vagrant ssh
 ```
