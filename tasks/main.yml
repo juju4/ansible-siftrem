@@ -87,7 +87,6 @@
 - npm: name=casperjs path={{ siftrem_toolsetdir }}/casperjs
   ignore_errors: true
 
-#- include: rekall.yml
 - include: yara-signature.yml
   become: yes
   become_user: "{{ sift_user }}"
@@ -97,5 +96,4 @@
 
 - include: powershell.yml
 - include: maltego.yml
-
 

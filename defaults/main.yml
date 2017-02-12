@@ -73,6 +73,8 @@ siftrem_extra_pkgs:
 ## moved to vars/Ubuntu-*
 #    - libqt4-webkit
 #    - libqt4-dev
+## manipulate vmware vmdk files
+    - libvmdk-tools
 
 
 siftrem_extra_git:

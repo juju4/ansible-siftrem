@@ -1,5 +1,5 @@
 [![Build Status - Master](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=master)](https://travis-ci.org/juju4/ansible-siftrem)
-[![Build Status - Devel](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=devel)](https://travis-ci.org/juju4/ansible-siftrem/branches)
+[![Build Status - Devel](https://travis-ci.org/juju4/ansible-siftrem.svg?branch=devel)](https://travis-ci.org/juju4/ansible-siftrem/branches)(Not going to work - too long >60min, see sift & remnux)
 # Sift+Remnux ansible role
 
 Ansible role to setup both ISC SANS SIFT and Remnux on a box.

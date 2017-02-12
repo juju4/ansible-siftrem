@@ -20,4 +20,5 @@ dependencies:
   - juju4.remnux
   - juju4.faup
   - juju4.floss
+  - juju4.rekall
 
