@@ -32,7 +32,7 @@ script:
 ## some part of the install are greater than default 10min travis timeout
 ## https://docs.travis-ci.com/user/common-build-problems/#My-builds-are-timing-out
 #  - "ansible-playbook -i inventory --connection=local --sudo -vvvv test/integration/default/default.yml"
-  - "ansible-playbook -i inventory --connection=local --sudo -vv test/integration/default/default.yml"
+  - "travis_wait 50 ansible-playbook -i inventory --connection=local --sudo -vv test/integration/default/default.yml"
 
 ## = one play of siftrem ~ 40min... too long for idempotence test. to be checked in sub roles
 ## FIXME! https://github.com/travis-ci/travis-ci/issues/3810
