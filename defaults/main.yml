@@ -93,6 +93,8 @@ siftrem_extra_git:
     - https://github.com/defpoint/threat_note
     - https://github.com/mattgwwalker/msg-extractor
     - https://github.com/williballenthin/EVTXtract
+## hidviz, in-depth analysis of USB HID devices communication. requires cmake3.2/xenial+
+    - https://github.com/ondrejbudai/hidviz.git
 
 siftrem_extra_git_python_build:
     - msg-extractor
@@ -105,7 +107,7 @@ siftrem_extra_dl:
     - { url: 'http://procdot.com/download/procdot/binaries/procdot_1_2_55_linux.zip', s: '2a80d7ac9bead30786a4c391f87e4a8036dd977c8fe5811292c69f73b6caed73' }
     - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: 'c1673db4753014e6f15fa3317d96026779ac5901783cd116343f080eaaf22d41' }
     - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
-    - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eaaa1861c2975a595e09b4e7b9' }
+    - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
     - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5' }
     - { url: 'https://www.paterva.com/malv36/community/MaltegoChlorineCE.3.6.0.6640.deb', s: 'cb1d85ad84769472e0c0434e53d9c7232436b9733658a4b49161c658c499ccd8' }
     - { url: 'https://www.paterva.com/malv4/classic/Maltego.v4.0.0.8846.deb', s: 'b2691e013443a3c81cbf147efda87fcb71624501ac97c4d1dcd4325eed1affaf' }
