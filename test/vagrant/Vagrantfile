@@ -27,6 +27,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
     config.vm.synced_folder "/tmp", "/home/vagrant/tmp"
+    config.vm.synced_folder "/opt/tmp/security-test/challenges/", "/challenges"
+#    config.vm.synced_folder "/tmp", "/home/vagrant/tmp", type: "rsync", rsync__exclude: ".git/"
 
 end
 

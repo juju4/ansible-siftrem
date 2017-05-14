@@ -100,15 +100,15 @@ siftrem_extra_git_python_build:
 siftrem_extra_dl:
     - { url: 'http://chianti.ucsd.edu/cytoscape-3.2.1/Cytoscape_3_2_1_unix.sh', s: '9739a240d8f407fb907df7ed624b4c4037288334b581be00a174df32ed4a5a4b' }
     - { url: 'https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz', s: 'cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365' }
-    - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a.' }
+    - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
     - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz', s: '5553fd03fb7be564538fe56e871eac6e3caf56f40e8abc4602d2553964f8f0e1' }
     - { url: 'http://procdot.com/download/procdot/binaries/procdot_1_2_55_linux.zip', s: '2a80d7ac9bead30786a4c391f87e4a8036dd977c8fe5811292c69f73b6caed73' }
-    - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: '1cb9e971aad4652349d81609dd66b6a2d51e415f410ea34e0d62fd402be1ffe7' }
+    - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: 'c1673db4753014e6f15fa3317d96026779ac5901783cd116343f080eaaf22d41' }
     - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
-    - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9.' }
-    - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5.' }
-    - { url: 'https://www.paterva.com/malv36/community/MaltegoChlorineCE.3.6.0.6640.deb', s: 'cb1d85ad84769472e0c0434e53d9c7232436b9733658a4b49161c658c499ccd8.' }
-    - { url: 'https://www.paterva.com/malv4/classic/Maltego.v4.0.0.8846.deb', s: 'b2691e013443a3c81cbf147efda87fcb71624501ac97c4d1dcd4325eed1affaf.' }
+    - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eaaa1861c2975a595e09b4e7b9' }
+    - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5' }
+    - { url: 'https://www.paterva.com/malv36/community/MaltegoChlorineCE.3.6.0.6640.deb', s: 'cb1d85ad84769472e0c0434e53d9c7232436b9733658a4b49161c658c499ccd8' }
+    - { url: 'https://www.paterva.com/malv4/classic/Maltego.v4.0.0.8846.deb', s: 'b2691e013443a3c81cbf147efda87fcb71624501ac97c4d1dcd4325eed1affaf' }
     - { url: 'http://downloads.sourceforge.net/project/capanalysis/version%201.2.2/capanalysis_1.2.2_amd64.deb', s: 'a9b4c56e80f1d53edbe0ad0158ccd05beab0d789e326f5201a6871598c8d7f52' }
     - { url: 'https://didierstevens.com/files/software/base64dump_V0_0_5.zip', s: 'B4AB7B3A9D2947F08C6CC94F88CD825C9B2B63EE65AF7475E66BE9565EC4337A' }
     - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '0bf42819dc21a2bb011eaa7c7220145abd2ce9954a868c9310f5c1be3e6e45f1' }
