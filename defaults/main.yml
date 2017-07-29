@@ -75,10 +75,18 @@ siftrem_extra_pkgs:
 #    - libqt4-dev
 ## manipulate vmware vmdk files
     - libvmdk-tools
-
+## visualization
+    - gource
+## veles
+    - cmake
+    - zlib
+    - zlib-dev
+    - qtbase5
+    - qtbase5-dev
 
 siftrem_extra_git:
     - https://github.com/wapiflapi/binglide
+    - https://github.com/wapiflapi/veles.git
     - https://github.com/zrlram/afterglow
     - https://github.com/zrlram/parsers
     - https://github.com/certsocietegenerale/event2timeline
@@ -95,6 +103,10 @@ siftrem_extra_git:
     - https://github.com/williballenthin/EVTXtract
 ## hidviz, in-depth analysis of USB HID devices communication. requires cmake3.2/xenial+
     - https://github.com/ondrejbudai/hidviz.git
+## https://www1.cs.fau.de/content/forensic-email-visualization
+    - https://github.com/libyal/libpff.git
+## https://www.obsidianforensics.com/blog/visualizing-activity-from-metadata (iOS)
+    - https://github.com/halpomeranz/mbdbls.git
 
 siftrem_extra_git_python_build:
     - msg-extractor
@@ -114,6 +126,9 @@ siftrem_extra_dl:
     - { url: 'http://downloads.sourceforge.net/project/capanalysis/version%201.2.2/capanalysis_1.2.2_amd64.deb', s: 'a9b4c56e80f1d53edbe0ad0158ccd05beab0d789e326f5201a6871598c8d7f52' }
     - { url: 'https://didierstevens.com/files/software/base64dump_V0_0_5.zip', s: 'B4AB7B3A9D2947F08C6CC94F88CD825C9B2B63EE65AF7475E66BE9565EC4337A' }
     - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '0bf42819dc21a2bb011eaa7c7220145abd2ce9954a868c9310f5c1be3e6e45f1' }
+    - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: 'aaaa' }
+    - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
+    - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
 #    - { url: '', s: '' }
 
 siftrem_extra_docker:
