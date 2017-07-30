@@ -24,6 +24,13 @@
     - vivisect_virtualenv_user: "{{ sift_user }}"
     - vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
     - vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    - vivisect_pip: pip3
+    - vivisect_vcommand: virtualenv3
+    - vivisect_deps:
+      - python3
+      - python3-pip
+    - vivisect_virtualenv:
+      - python3-virtualenv
   roles:
     - juju4.siftrem
 
