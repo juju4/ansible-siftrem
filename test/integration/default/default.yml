@@ -31,6 +31,15 @@
       - python3-pip
     - vivisect_virtualenv:
       - python3-virtualenv
+    - floss_virtualenv_user: "{{ sift_user }}"
+    - floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    - floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+  pre_tasks:
+    - set_fact:
+        vivisect_virtualenv:
+          - python-virtualenv
+      when: ansible_distribution_release == 'trusty'
+  roles:
   roles:
     - juju4.siftrem
 
