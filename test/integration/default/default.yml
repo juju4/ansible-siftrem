@@ -38,6 +38,8 @@
     - set_fact:
         vivisect_virtualenv:
           - python-virtualenv
+        floss_virtualenv:
+          - python-virtualenv
       when: ansible_distribution_release == 'trusty'
   roles:
   roles:

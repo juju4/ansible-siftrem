@@ -79,8 +79,8 @@ siftrem_extra_pkgs:
     - gource
 ## veles
     - cmake
-    - zlib
-    - zlib-dev
+    - zlib1g
+    - zlib1g-dev
     - qtbase5
     - qtbase5-dev
 
