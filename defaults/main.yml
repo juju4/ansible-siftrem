@@ -81,7 +81,6 @@ siftrem_extra_pkgs:
     - cmake
     - zlib1g
     - zlib1g-dev
-    - qtbase5
     - qtbase5-dev
 
 siftrem_extra_git:
