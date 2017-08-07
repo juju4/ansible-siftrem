@@ -38,21 +38,27 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/default/default.yml --syntax-check'
 
   # Test role.
-  - 'travis_wait 45 sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/default/default.yml -vv'
+  - 'travis_wait 45 sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/default/default.yml -vv | tee /tmp/log'
 
   # Test role idempotence.
-## known fail
-  - >
-    sudo docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/default/default.yml
-    | tee /tmp/idempotency.log
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
+## too long, rely on sub roles
+#  - >
+#    sudo docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/default/default.yml
+#    | tee /tmp/idempotency.log
+#    | grep -q 'changed=0.*failed=0'
+#    && (echo 'Idempotence test: pass' && exit 0)
+#    || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
 
   # serverspec tests
 ## travis/docker: Errno::EROFS: Read-only file system @ dir_s_mkdir - /etc/ansible/roles/juju4.siftrem/test/integration/default/serverspec/.bundle
 #  - 'sudo docker exec --tty "$(cat ${container_id})" /etc/ansible/roles/juju4.siftrem/test/integration/default/serverspec/run-local-tests.sh'
 
+after_failure:
+  # Check what happened on systemd systems.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm journalctl -xe --no-pager'
+  - more /tmp/log
+
+after_script:
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
 
