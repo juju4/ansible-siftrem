@@ -42,6 +42,5 @@
           - python-virtualenv
       when: ansible_distribution_release == 'trusty'
   roles:
-  roles:
     - juju4.siftrem
 
