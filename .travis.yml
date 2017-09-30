@@ -51,7 +51,7 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/${suite}/default.yml --syntax-check'
 
   # Test role.
-  - 'travis_wait 45 sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/${suite}/default.yml -vv | tee /tmp/log'
+  - 'travis_wait 45 sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/${suite}/default.yml -vvv'
 
   # Test role idempotence.
 ## too long, rely on sub roles
@@ -69,7 +69,8 @@ script:
 after_failure:
   # Check what happened on systemd systems.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm journalctl -xe --no-pager'
-  - more /tmp/log
+## upstream for remnux, gift repo for sift...
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm apt-cache rdepends libolecf1'
 
 after_script:
   # Clean up
