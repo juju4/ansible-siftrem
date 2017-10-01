@@ -76,11 +76,13 @@
   become: yes
 
 - name: download {{ item.url | basename }}
-  get_url: url={{ item.url }}
-    dest={{ siftrem_toolsetdir }}/{{ item.url | basename }}
-    mode=0400
-    owner={{ sift_user }}
-    sha256sum={{ item.s }}
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ siftrem_toolsetdir }}/{{ item.url | basename }}"
+    mode: '0400'
+    owner: "{{ sift_user }}"
+    sha256sum: "{{ item.s }}"
+    validate_certs: "{{ item.v | default(true) }}"
   with_items: "{{ siftrem_extra_dl }}"
   ignore_errors: true
 
