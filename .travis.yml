@@ -51,7 +51,7 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/${suite}/default.yml --syntax-check'
 
   # Test role.
-  - 'travis_wait 45 sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/${suite}/default.yml -vvv'
+  - 'travis_wait 45 sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/${suite}/default.yml -vv'
 
   # Test role idempotence.
 ## too long, rely on sub roles
