@@ -9,6 +9,8 @@ galaxy_info:
     versions:
   #  - precise
     - trusty
+    - xenial
+    - bionic
   galaxy_tags:
   - system
   - security
@@ -21,4 +23,3 @@ dependencies:
   - juju4.faup
   - juju4.floss
   - juju4.rekall
-
