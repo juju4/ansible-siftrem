@@ -106,6 +106,8 @@ siftrem_extra_git:
     - https://github.com/libyal/libpff.git
 ## https://www.obsidianforensics.com/blog/visualizing-activity-from-metadata (iOS)
     - https://github.com/halpomeranz/mbdbls.git
+## from sift-saltstack
+    - https://github.com/threeplanetssoftware/sqlite_miner
 
 siftrem_extra_git_python_build:
     - msg-extractor
