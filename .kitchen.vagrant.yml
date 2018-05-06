@@ -14,7 +14,7 @@ driver_config:
 
 provisioner:
   name: ansible_playbook
-  roles_path: ../../roles
+  roles_path: ../
   hosts: test-kitchen
   ansible_verbose: false
   ansible_verbosity: 2
@@ -22,8 +22,9 @@ provisioner:
 #  name: chef_solo
 
 platforms:
+  - name: ubuntu-18.04
+  - name: ubuntu-16.04
   - name: ubuntu-14.04
-#  - name: ubuntu-16.04
 
 suites:
   - name: default

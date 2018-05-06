@@ -4,31 +4,37 @@ sudo: required
 
 env:
   - distribution: ubuntu
+    version: 18.04
+    init: /lib/systemd/systemd
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default
+    ansible_version: 2.5.2.0
+  - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.4.3.0
+    ansible_version: 2.5.2.0
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
     suite: default
-    ansible_version: 2.4.3.0
+    ansible_version: 2.5.2.0
 ## past ansible versions
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.3.3.0
+    ansible_version: 2.4.3.0
 # upcoming ansible
-  - distribution: ubuntu
-    version: 16.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.5.0rc3
+#  - distribution: ubuntu
+#    version: 18.04
+#    init: /lib/systemd/systemd
+#    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+#    suite: default
+#    ansible_version: 2.5.0rc3
 
 services:
   - docker
@@ -45,7 +51,7 @@ before_install:
   # Customize container
   - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible test'
 
-script:
+before_script:
   - container_id=$(mktemp)
     # Run container in detached state
   - 'sudo docker run --detach --volume="${PWD%/*}":/etc/ansible/roles:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
@@ -54,6 +60,7 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm pip install ansible==${ansible_version}'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible --version'
 
+script:
   # Ansible syntax check.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.siftrem/test/integration/${suite}/default.yml --syntax-check'
 
@@ -75,6 +82,7 @@ script:
 
 after_failure:
   # Check what happened on systemd systems.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl -l --no-pager status'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm journalctl -xe --no-pager'
 ## upstream for remnux, gift repo for sift...
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm apt-cache rdepends libolecf1'
