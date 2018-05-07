@@ -4,6 +4,7 @@
 ## lighten the load for test instance
   vars:
     - sift_docker: false
+    - remnux_docker_enable: false
 ## ensure consistency between sift and remnux values
     - sift_hostname: 'siftremworkstation'
     - sift_user: 'sansforensics'
