@@ -15,12 +15,12 @@ env:
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
     ansible_version: 2.5.2.0
-  - distribution: ubuntu
-    version: 14.04
-    init: /sbin/init
-    run_opts: ""
-    suite: default
-    ansible_version: 2.5.2.0
+#  - distribution: ubuntu
+#    version: 14.04
+#    init: /sbin/init
+#    run_opts: ""
+#    suite: default
+#    ansible_version: 2.5.2.0
 ## past ansible versions
   - distribution: ubuntu
     version: 16.04
