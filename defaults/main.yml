@@ -60,7 +60,7 @@ siftrem_extra_pkgs:
     - xauth
     - xfonts-base
 #    - node             ## NOK for casperjs
-    - nodejs-legacy
+#    - nodejs-legacy    ## OK trusty, xenial but not bionic
     - npm
 ## Binglide Extra packages install
     - python3-pyqt4
@@ -74,7 +74,10 @@ siftrem_extra_pkgs:
 #    - libqt4-webkit
 #    - libqt4-dev
 ## manipulate vmware vmdk files
-    - libvmdk-tools
+## trusty, xenial
+#    - libvmdk-tools
+## bionic
+#    - libvmdk-utils
 ## visualization
     - gource
 ## veles
