@@ -17,7 +17,7 @@
 
 - name: Ensure Microsoft apt repository is present
   apt_repository:
-    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main"
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-{{ ansible_distribution_release }}-prod {{ ansible_distribution_release }} main"
     state: present
     filename: powershell
 
