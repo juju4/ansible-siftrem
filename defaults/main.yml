@@ -115,6 +115,7 @@ siftrem_extra_git:
     - https://github.com/ctxis/RDP-Replay
     - https://github.com/DominicBreuker/stego-toolkit
     - https://github.com/Aorimn/dislocker
+    - https://github.com/regit/suriwire
 
 siftrem_extra_git_python_build:
     - msg-extractor
