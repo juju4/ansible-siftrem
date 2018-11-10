@@ -1,0 +1,27 @@
+---
+# https://www.kali.org/tutorials/installing-powershell-on-kali-linux/
+
+- name: Ensure apt dependencies are present
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - gnupg
+    - apt-transport-https
+
+- name: Ensure Microsoft apt repository key is present
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Ensure Microsoft apt repository is present
+  apt_repository:
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main"
+    state: present
+    filename: powershell
+
+- name: Ensure Powershell package is present
+  package:
+    name: powershell
+    state: present

@@ -98,4 +98,4 @@
 
 - include: powershell.yml
 - include: maltego.yml
-
+- include: powershell-core.yml
