@@ -2,8 +2,9 @@
 
 - name: Powershell Empire
   git:
-    repo=https://github.com/PowerShellEmpire/Empire.git
-    dest={{ siftrem_toolsetdir }}/empire
+    repo: https://github.com/PowerShellEmpire/Empire.git
+    dest: "{{ siftrem_toolsetdir }}/empire"
+    version: HEAD
     force=no
   ignore_errors: true
   become: yes
@@ -12,4 +13,3 @@
 ## interactive
 #- name: Powershell Empire - setup
 #  command: "./install.sh chdir={{ siftrem_toolsetdir }}/empire/setup"
-

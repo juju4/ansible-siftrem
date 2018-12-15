@@ -46,4 +46,3 @@
     dest: "{{ vol_plugins }}/autoruns.py"
     state: link
   when: vol_plugins is defined and not autoruns.stat.exists
-

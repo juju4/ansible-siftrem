@@ -1,7 +1,9 @@
 ---
+
 __ubuntu_packages:
 ## for cutycapt
   - libqt5webkit5
   - libqt5webkit5-dev
+
 ## https://answers.launchpad.net/ubuntu/+source/snort/+question/262496
 __ubuntu_if: enp0s3

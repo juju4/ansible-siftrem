@@ -1,11 +1,12 @@
 ---
 
 - name: git clone maltego transforms
-  git: repo={{ item }}
-       dest={{ siftrem_toolsetdir }}/maltegotransforms/
+  git:
+    repo: "{{ item }}"
+    dest: "{{ siftrem_toolsetdir }}/maltegotransforms/"
+    version: HEAD
   with_items:
     - https://github.com/brianwarehime/gavel
     - https://github.com/brianwarehime/Threat_note-Maltego
     - https://github.com/MISP/MISP-maltego
     - https://github.com/digital4rensics/Malformity
-

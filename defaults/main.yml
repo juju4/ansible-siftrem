@@ -146,4 +146,3 @@ siftrem_extra_docker:
     - "owasp/zap2docker-weekly"
 ## 201612 Last pushed: a year ago
     - "tomchop/malcom"
-

@@ -56,7 +56,12 @@
     - cups-client
 
 - name: Review some limits
-  lineinfile: dest=/etc/security/limits.d/openfiles regexp="^{{ sift_user }}\t\thard\tnofiles\t\t2048" line="{{ sift_user }}\t\thard\tnofiles\t\t2048" state=present create=yes
+  lineinfile:
+    dest: /etc/security/limits.d/openfiles
+    regexp: "^{{ sift_user }}\t\thard\tnofiles\t\t2048"
+    line: "{{ sift_user }}\t\thard\tnofiles\t\t2048"
+    state: present
+    create: yes
 
 ## Extra tools
 - name: create toolset root dir
@@ -64,8 +69,9 @@
 
 - name: git clone extra tools
   git:
-    repo={{ item }}
-    dest={{ siftrem_toolsetdir }}/{{ item | basename }}
+    repo: "{{ item }}"
+    dest: "{{ siftrem_toolsetdir }}/{{ item | basename }}"
+    version: HEAD
   with_items: "{{ siftrem_extra_git }}"
   become: yes
   become_user: "{{ sift_user }}"

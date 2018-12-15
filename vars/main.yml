@@ -29,4 +29,3 @@ remnux_webserver: nginx
 
 remnux_user: sansforensics
 remnux_pass: forensics
-
