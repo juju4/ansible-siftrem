@@ -5,7 +5,7 @@
     repo: https://github.com/PowerShellEmpire/Empire.git
     dest: "{{ siftrem_toolsetdir }}/empire"
     version: HEAD
-    force=no
+    force: no
   ignore_errors: true
   become: yes
   become_user: "{{ sift_user }}"
