@@ -9,11 +9,15 @@
     - curl
     - gnupg
     - apt-transport-https
+  register: pkg_result
+  until: pkg_result is success
 
 - name: Ensure Microsoft apt repository key is present
   apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc
     state: present
+  register: pkg_result
+  until: pkg_result is success
 
 - name: Ensure Microsoft apt repository is present
   apt_repository:
@@ -25,3 +29,5 @@
   package:
     name: powershell
     state: present
+  register: pkg_result
+  until: pkg_result is success

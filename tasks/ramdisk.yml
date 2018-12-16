@@ -2,7 +2,15 @@
 ## create a ramdisk
 
 - name: Ensure ramdisk directory exists
-  file: dest="{{ ramdisk_path }}" mode=1777 state=directory
+  file:
+    dest: "{{ ramdisk_path }}"
+    mode: '1777'
+    state: directory
 
 - name: Ensure ramdisk is mounted
-  mount: name="{{ ramdisk_path }}" src=tmpfs fstype=tmpfs opts="size={{ ramdisk_size }}" state=mounted
+  mount:
+    name: "{{ ramdisk_path }}"
+    src: tmpfs
+    fstype: tmpfs
+    opts: "size={{ ramdisk_size }}"
+    state: mounted

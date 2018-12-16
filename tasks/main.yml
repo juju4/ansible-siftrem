@@ -33,10 +33,12 @@
     - "DEBIAN_SNORT_INTERFACE=\"{{ __ubuntu_if }}\""
 
 - name: Debian | Extra packages install
-  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
   with_items:
     - "{{ siftrem_extra_pkgs }}"
     - "{{ __ubuntu_packages }}"
+  register: pkg_result
+  until: pkg_result is success
 
 - include: ramdisk.yml
   when: ramdisk_path is defined and ramdisk_size is defined
@@ -46,6 +48,8 @@
   with_items:
     - open-vm-tools
   when: vm
+  register: pkg_result
+  until: pkg_result is success
 
 - name: Debian | Remove some packages
   apt: name={{item}} state=absent
@@ -54,6 +58,8 @@
     - xterm
 #    - netcat-traditional
     - cups-client
+  register: pkg_result
+  until: pkg_result is success
 
 - name: Review some limits
   lineinfile:
@@ -92,7 +98,10 @@
   with_items: "{{ siftrem_extra_dl }}"
   ignore_errors: true
 
-- npm: name=casperjs path={{ siftrem_toolsetdir }}/casperjs
+- name: Ensure casperjs is present
+  npm:
+    name: casperjs
+    path: "{{ siftrem_toolsetdir }}/casperjs"
   ignore_errors: true
 
 - include: yara-signature.yml

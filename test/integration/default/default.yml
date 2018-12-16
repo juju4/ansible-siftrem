@@ -44,4 +44,3 @@
       when: ansible_distribution_release == 'trusty'
   roles:
     - juju4.siftrem
-
