@@ -7,4 +7,4 @@
   git:
     repo: https://github.com/AlienVault-Labs/AlienVaultLabs.git
     dest: "{{ siftrem_toolsetdir }}/ioc/AlienVaultLabs"
-    version: HEAD
+    version: "{{ siftrem_alienvaultlabs_version | default('347a57b31829b6f8e3280e0fd6a0ed49e5453c67') }}"

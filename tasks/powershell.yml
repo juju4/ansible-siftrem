@@ -4,7 +4,7 @@
   git:
     repo: https://github.com/PowerShellEmpire/Empire.git
     dest: "{{ siftrem_toolsetdir }}/empire"
-    version: HEAD
+    version: "{{ siftrem_empire_version | default('5aae31e7de591282773d2c8498af04ee4e8778f5') }}"
     force: no
   ignore_errors: true
   become: yes

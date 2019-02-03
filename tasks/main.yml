@@ -44,15 +44,13 @@
   when: ramdisk_path is defined and ramdisk_size is defined
 
 - name: Debian | open-vm-tools install
-  apt: name={{item}} state=present
-  with_items:
-    - open-vm-tools
+  apt: name=open-vm-tools state=present
   when: vm
   register: pkg_result
   until: pkg_result is success
 
 - name: Debian | Remove some packages
-  apt: name={{item}} state=absent
+  apt: name={{ item }} state=absent
   with_items:
     - rpcbind
     - xterm
@@ -103,6 +101,8 @@
     name: casperjs
     path: "{{ siftrem_toolsetdir }}/casperjs"
   ignore_errors: true
+  register: pkg_result
+  until: pkg_result is success
 
 - include: yara-signature.yml
   become: yes
