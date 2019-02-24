@@ -5,7 +5,9 @@ VAGRANTFILE_API_VERSION = "2"
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-    config.vm.box = "ubuntu/trusty64"
+    config.vm.box = "ubuntu/bionic64"
+    #config.vm.box = "ubuntu/xenial64"
+    #config.vm.box = "ubuntu/trusty64"
     #config.vm.box = "centos/7"
 
     config.vm.provision :ansible do |ansible|
@@ -14,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        #ansible.host_key_checking = false
        #ansible.limit = 'all'
        ansible.become = true
-       ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
+       ansible.extra_vars = { ansible_ssh_user: 'vagrant', ansible_python_interpreter: '/usr/bin/python3' }
        ansible.groups = {
           "myrole" => ["vsiftrem" ],
        }
@@ -27,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
     config.vm.synced_folder "/tmp", "/home/vagrant/tmp"
-    config.vm.synced_folder "/opt/tmp/security-test/challenges/", "/challenges"
+#    config.vm.synced_folder "/opt/tmp/security-test/challenges/", "/challenges"
 #    config.vm.synced_folder "/tmp", "/home/vagrant/tmp", type: "rsync", rsync__exclude: ".git/"
 
 end
