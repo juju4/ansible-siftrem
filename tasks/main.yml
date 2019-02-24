@@ -33,10 +33,11 @@
     - "DEBIAN_SNORT_INTERFACE=\"{{ __ubuntu_if }}\""
 
 - name: Debian | Extra packages install
-  apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
-  with_items:
-    - "{{ siftrem_extra_pkgs }}"
-    - "{{ __ubuntu_packages }}"
+  apt:
+    name: ["{{ siftrem_extra_pkgs }}", "{{ __ubuntu_packages }}"]
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
   register: pkg_result
   until: pkg_result is success
 
@@ -81,7 +82,9 @@
   become_user: "{{ sift_user }}"
 
 - name: python build extra tools
-  command: "python setup.py install chdir={{ siftrem_toolsetdir }}/{{ item }}"
+  command: "python setup.py install"
+  args:
+    chdir: "{{ siftrem_toolsetdir }}/{{ item }}"
   with_items: "{{ siftrem_extra_git_python_build }}"
   become: yes
 

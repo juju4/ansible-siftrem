@@ -4,7 +4,7 @@
 - name: Ensure ramdisk directory exists
   file:
     dest: "{{ ramdisk_path }}"
-    mode: '1777'
+    mode: '01777'
     state: directory
 
 - name: Ensure ramdisk is mounted
