@@ -116,6 +116,7 @@ siftrem_extra_git:
     - https://github.com/DominicBreuker/stego-toolkit
     - https://github.com/Aorimn/dislocker
     - https://github.com/regit/suriwire
+    - https://github.com/JohnLaTwC/PyPowerShellXray
 
 siftrem_extra_git_python_build:
     - msg-extractor
@@ -146,3 +147,6 @@ siftrem_extra_docker:
     - "owasp/zap2docker-weekly"
 ## 201612 Last pushed: a year ago
     - "tomchop/malcom"
+
+# snort default listening interface
+#ubuntu_if:

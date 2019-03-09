@@ -5,4 +5,4 @@ __ubuntu_packages:
   - libqt4-webkit
   - libqt4-dev
 
-__ubuntu_if: eth0
+__ubuntu_if: "{{ ubuntu_if | default('eth0') }}"
