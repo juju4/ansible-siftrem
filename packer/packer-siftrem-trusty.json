@@ -132,7 +132,7 @@
   ],
   "post-processors": [
     {
-      "output": "builds/{{.Provider}}-siftrem-ubuntu1404-{{isotime \"2006-01-02\"}}.box",
+      "output": "builds/{{.Provider}}-juju4.siftrem-ubuntu1404-{{isotime \"2006-01-02\"}}.box",
       "type": "vagrant"
     }
   ]
