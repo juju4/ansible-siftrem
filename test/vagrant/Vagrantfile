@@ -10,6 +10,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #config.vm.box = "ubuntu/trusty64"
     #config.vm.box = "centos/7"
 
+    # requires vagrant-disksize plugin as default 10GB space is too small
+    config.disksize.size = '50GB'
+
     config.vm.provision :ansible do |ansible|
        ansible.playbook = "site.yml"
        #ansible.verbose = "vvvv"
@@ -29,8 +32,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
     config.vm.synced_folder "/tmp", "/home/vagrant/tmp"
-#    config.vm.synced_folder "/opt/tmp/security-test/challenges/", "/challenges"
 #    config.vm.synced_folder "/tmp", "/home/vagrant/tmp", type: "rsync", rsync__exclude: ".git/"
 
 end
-
