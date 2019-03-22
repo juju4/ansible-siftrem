@@ -102,6 +102,11 @@
   with_items: "{{ siftrem_extra_dl }}"
   ignore_errors: true
 
+- name: Extra pip install
+  pip:
+    name: "{{ siftrem_extra_pip }}"
+    state: present
+
 - name: Ensure casperjs is present
   npm:
     name: casperjs
