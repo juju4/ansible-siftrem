@@ -34,13 +34,10 @@
 
 - name: Debian | Extra packages install
   apt:
-    name: "{{ item }}"
+    name: "{{ siftrem_extra_pkgs + __ubuntu_packages }}"
     state: present
     update_cache: yes
     cache_valid_time: 3600
-  with_items:
-    - "{{ siftrem_extra_pkgs }}"
-    - "{{ __ubuntu_packages }}"
   register: pkg_result
   until: pkg_result is success
 
