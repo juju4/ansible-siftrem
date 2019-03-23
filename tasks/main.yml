@@ -54,12 +54,13 @@
   until: pkg_result is success
 
 - name: Debian | Remove some packages
-  apt: name={{ item }} state=absent
-  with_items:
-    - rpcbind
-    - xterm
-#    - netcat-traditional
-    - cups-client
+  apt:
+    name:
+      - rpcbind
+      - xterm
+#      - netcat-traditional
+      - cups-client
+    state: absent
   register: pkg_result
   until: pkg_result is success
 
