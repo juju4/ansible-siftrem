@@ -106,6 +106,7 @@
   pip:
     name: "{{ siftrem_extra_pip }}"
     state: present
+    executable: pip3
 
 - name: Ensure casperjs is present
   npm:
