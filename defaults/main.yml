@@ -118,6 +118,10 @@ siftrem_extra_git:
     - https://github.com/regit/suriwire
     - https://github.com/JohnLaTwC/PyPowerShellXray
     - https://github.com/THIBER-ORG/userline.git
+    - https://github.com/JPCERTCC/LogonTracer.git
+    - https://github.com/insanitybit/grapl.git
+    - https://github.com/yampelo/beagle.git
+    - https://github.com/BurntSushi/ripgrep.git
 
 siftrem_extra_git_python_build:
     - msg-extractor
@@ -143,6 +147,8 @@ siftrem_extra_dl:
 
 siftrem_extra_pip:
     - oletools
+    - pybeagle
+    - visidata
 
 siftrem_extra_docker:
     - "radare/radare2"
