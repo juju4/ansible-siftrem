@@ -1,0 +1,18 @@
+---
+
+- name: Guymager | add pinguin.lu repository key
+  apt_key:
+    url: http://deb.pinguin.lu/debsign_public.key
+    state: present
+
+- name: Guymager | add pinguin.lu apt repository
+  apt_repository:
+    repo: 'deb http://deb.pinguin.lu/$(ARCH)/ ./'
+    filename: pinguin.lu
+    state: present
+
+- name: Guymager | packages install
+  apt:
+    name: guymager-beta
+    state: present
+    update_cache: yes

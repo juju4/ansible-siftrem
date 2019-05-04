@@ -1,0 +1,31 @@
+---
+# https://airbus-cyber-security.com/mounting-bitlocker-volumes-linux/
+
+- name: git clone dislocker
+  git:
+    repo: https://github.com/Aorimn/dislocker.git
+    dest: "{{ siftrem_toolsetdir }}/dislocker"
+    version: HEAD
+
+- name: Ensure dislocker dependencies are present
+  apt:
+    name:
+      - gcc
+      - cmake
+      - make
+      - libfuse-dev
+      - libpolarssl-dev
+      - ruby-dev
+
+- name: build dislocker
+  command: "{{ item }}"
+  args:
+    chdir: "{{ siftrem_toolsetdir }}/dislocker"
+  with_items:
+    - cmake
+    - make
+
+- name: install dislocker
+  command: make install
+  args:
+    chdir: "{{ siftrem_toolsetdir }}/dislocker"
