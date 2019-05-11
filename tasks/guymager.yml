@@ -16,3 +16,5 @@
     name: guymager-beta
     state: present
     update_cache: yes
+  register: pkg_result
+  until: pkg_result is success

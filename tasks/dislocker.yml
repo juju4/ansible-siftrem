@@ -16,6 +16,8 @@
       - libfuse-dev
       - libpolarssl-dev
       - ruby-dev
+  register: pkg_result
+  until: pkg_result is success
 
 - name: build dislocker
   command: "{{ item }}"
