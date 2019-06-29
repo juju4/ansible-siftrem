@@ -122,6 +122,7 @@ siftrem_extra_git:
     - https://github.com/insanitybit/grapl.git
     - https://github.com/yampelo/beagle.git
     - https://github.com/BurntSushi/ripgrep.git
+    - https://github.com/sosreport/sos.git
 
 siftrem_extra_git_python_build:
     - msg-extractor
