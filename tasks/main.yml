@@ -31,6 +31,12 @@
   with_items:
     - 'DEBIAN_SNORT_HOME_NET="any"'
     - "DEBIAN_SNORT_INTERFACE=\"{{ __ubuntu_if }}\""
+- name: Check current network interfaces
+  command: ip addr
+  register: ipaddr
+  changed_when: false
+- name: Current network interfaces
+  debug: var=ipaddr.stdout_lines
 
 - name: Debian | Extra packages install
   apt:
