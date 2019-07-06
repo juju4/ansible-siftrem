@@ -14,6 +14,7 @@
 
 - name: Updating ClamAV Signatures
   command: freshclam --quiet
+  ignore_errors: true
 
 - name: run ldconfig
   command: ldconfig
