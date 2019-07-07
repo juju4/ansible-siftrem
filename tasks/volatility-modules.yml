@@ -26,18 +26,23 @@
   git: repo=https://github.com/elceef/bitlocker
        dest={{ siftrem_toolsetdir }}/volatilityplugins/elceef-bitlocker
 
-- stat: path=/usr/lib/python2.7/dist-packages/volatility/plugins
+- name: Check if volatility plugins path 1 exists
+  stat: path=/usr/lib/python2.7/dist-packages/volatility/plugins
   register: plugins1
-- stat: path=/usr/local/lib/python2.7/dist-packages/volatility/plugins
+- name: Check if volatility plugins path 2 exists
+  stat: path=/usr/local/lib/python2.7/dist-packages/volatility/plugins
   register: plugins2
-- set_fact:
+- name: Set target volatility plugins path 1
+  set_fact:
     vol_plugins: /usr/lib/python2.7/dist-packages/volatility/plugins
   when: plugins1.stat.exists
-- set_fact:
+- name: Set target volatility plugins path 2
+  set_fact:
     vol_plugins: /usr/local/lib/python2.7/dist-packages/volatility/plugins
   when: plugins2.stat.exists
 
-- stat: path="{{ vol_plugins }}/autoruns.py"
+- name: Check if autoruns.py volatility plugins exists
+  stat: path="{{ vol_plugins }}/autoruns.py"
   register: autoruns
   when: vol_plugins is defined
 - name: map autoruns in volatility plugins tree

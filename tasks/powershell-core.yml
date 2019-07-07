@@ -3,12 +3,11 @@
 
 - name: Ensure apt dependencies are present
   package:
-    name: "{{ item }}"
+    name:
+      - curl
+      - gnupg
+      - apt-transport-https
     state: present
-  with_items:
-    - curl
-    - gnupg
-    - apt-transport-https
   register: pkg_result
   until: pkg_result is success
 
