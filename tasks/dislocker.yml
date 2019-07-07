@@ -24,7 +24,7 @@
   args:
     chdir: "{{ siftrem_toolsetdir }}/dislocker"
   with_items:
-    - cmake
+    - cmake .
     - make
 
 - name: install dislocker
