@@ -14,7 +14,7 @@
       - cmake
       - make
       - libfuse-dev
-      - libpolarssl-dev
+      - libmbedtls-dev
       - ruby-dev
   register: pkg_result
   until: pkg_result is success
