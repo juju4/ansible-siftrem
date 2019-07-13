@@ -1,30 +1,40 @@
 ---
 
-- file: dest={{ siftrem_toolsetdir }}/volatilityplugins mode=0755 state=directory
+- name: Ensure directory for volatility plugins repository exists
+  file:
+    dest: "{{ siftrem_toolsetdir }}/volatilityplugins"
+    mode: '0755'
+    state: directory
 
 - name: Volatility plugins developed and maintained by the community
-  git: repo=https://github.com/volatilityfoundation/community.git
-       dest={{ siftrem_toolsetdir }}/volatilityplugins/community
+  git:
+    repo: https://github.com/volatilityfoundation/community.git
+    dest: "{{ siftrem_toolsetdir }}/volatilityplugins/community"
+    version: "{{ volatilityplugins_version | default('099619c76e751296e688cfec22197af82fe38504') }}"
 
 - name: editbox - extracts the text from Windows Edit controls
-  git: repo=https://github.com/volatilityfoundation/community.git
-       dest={{ siftrem_toolsetdir }}/volatilityplugins/editbox
-
-- name: editbox - extracts the text from Windows Edit controls
-  git: repo=https://github.com/bridgeythegeek/editbox.git
-       dest={{ siftrem_toolsetdir }}/volatilityplugins/editbox
+  git:
+    repo: https://github.com/bridgeythegeek/editbox.git
+    dest: "{{ siftrem_toolsetdir }}/volatilityplugins/editbox"
+    version: "{{ editbox_version | default('0baed53c37eb6d3822dd50fc29078c908a20054e') }}"
 
 - name: malware config extractor - plugx, andromeda
-  git: repo=https://github.com/arbor-jjones/volatility_plugins.git
-       dest={{ siftrem_toolsetdir }}/volatilityplugins/plugx+andromeda
+  git:
+    repo: https://github.com/arbor-jjones/volatility_plugins.git
+    dest: "{{ siftrem_toolsetdir }}/volatilityplugins/plugx+andromeda"
+    version: "{{ plugxandromeda_version | default('0399a57480ad8a1968465647ebb47c1b740abf35') }}"
 
 - name: autoruns
-  git: repo=https://github.com/tomchop/volatility-autoruns
-       dest={{ siftrem_toolsetdir }}/volatilityplugins/volatility-autoruns
+  git:
+    repo: https://github.com/tomchop/volatility-autoruns
+    dest: "{{ siftrem_toolsetdir }}/volatilityplugins/volatility-autoruns"
+    version: "{{ autoruns_version | default('aa9a5103aa78367ce7f58c973223eeff4b48738c') }}"
 
 - name: bitlocker keys retrieving
-  git: repo=https://github.com/elceef/bitlocker
-       dest={{ siftrem_toolsetdir }}/volatilityplugins/elceef-bitlocker
+  git:
+    repo: https://github.com/elceef/bitlocker
+    dest: "{{ siftrem_toolsetdir }}/volatilityplugins/elceef-bitlocker"
+    version: "{{ bitlocker_version | default('d1c1790045ea935678bafb5f2f933a884120429f') }}"
 
 - name: Check if volatility plugins path 1 exists
   stat: path=/usr/lib/python2.7/dist-packages/volatility/plugins
