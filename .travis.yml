@@ -35,6 +35,12 @@ env:
 #    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
 #    suite: default
 #    ansible_version: 2.5.0rc3
+  - distribution: ubuntu
+    version: 18.04
+    init: /lib/systemd/systemd
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default-HEAD
+    ansible_version: 2.7.1.0
 
 services:
   - docker

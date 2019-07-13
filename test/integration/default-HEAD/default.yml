@@ -1,0 +1,54 @@
+---
+
+- hosts: all
+## lighten the load for test instance
+  vars:
+    - sift_docker: false
+    - remnux_docker_enable: false
+## ensure consistency between sift and remnux values
+    - sift_hostname: 'siftremworkstation'
+    - sift_user: 'sansforensics'
+    - sift_pass: 'forensics'
+    - sift_do_x11: false
+    - sift_webserver: nginx
+    - remnux_hostname: 'siftremworkstation'
+    - remnux_user: 'sansforensics'
+    - remnux_pass: 'forensics'
+    - remnux_do_x11: true
+    - remnux_webserver: nginx
+    - remnux_docker_images:
+        - remnux/thug
+## pkg_resources.VersionConflict: (six 1.5.2 (/usr/lib/python2.7/dist-packages), Requirement.parse('six>=1.6.0'))
+    - faup_virtualenv_user: "{{ sift_user }}"
+    - faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    - faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    - vivisect_virtualenv_user: "{{ sift_user }}"
+    - vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    - vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    - vivisect_pip: pip3
+    - vivisect_vcommand: virtualenv3
+    - vivisect_deps:
+      - python3
+      - python3-pip
+    - vivisect_virtualenv:
+      - python3-virtualenv
+    - floss_virtualenv_user: "{{ sift_user }}"
+    - floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    - floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    - floss_pyinstaller_version: 3.3.1
+## force git HEAD
+    - dislocker_version: HEAD
+    - volatilityplugins_version: HEAD
+    - editbox_version: HEAD
+    - plugxandromeda_version: HEAD
+    - autoruns_version: HEAD
+    - bitlocker_version: HEAD
+  pre_tasks:
+    - set_fact:
+        vivisect_virtualenv:
+          - python-virtualenv
+        floss_virtualenv:
+          - python-virtualenv
+      when: ansible_distribution_release == 'trusty'
+  roles:
+    - juju4.siftrem
