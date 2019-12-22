@@ -147,6 +147,8 @@ siftrem_extra_dl:
     - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
 #    - { url: '', s: '' }
 
+siftrem_extra_pip_version:
+    - { n: defang, v: 0.5.2 }
 siftrem_extra_pip:
     - oletools
     - pybeagle
