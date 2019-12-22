@@ -126,6 +126,8 @@ siftrem_extra_git:
 
 siftrem_extra_git_python_build:
     - msg-extractor
+    # https://github.com/HurricaneLabs/machinae
+    - machinae
 
 siftrem_extra_dl:
     - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
@@ -144,6 +146,7 @@ siftrem_extra_dl:
     - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
     - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
     - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
+    - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
 #    - { url: '', s: '' }
 
 siftrem_extra_pip:
