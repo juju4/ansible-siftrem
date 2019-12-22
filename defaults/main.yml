@@ -126,8 +126,6 @@ siftrem_extra_git:
 
 siftrem_extra_git_python_build:
     - msg-extractor
-    # https://github.com/HurricaneLabs/machinae
-    - machinae
 
 siftrem_extra_dl:
     - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
@@ -153,6 +151,8 @@ siftrem_extra_pip:
     - oletools
     - pybeagle
     - visidata
+    # https://github.com/HurricaneLabs/machinae
+    - machinae
 
 siftrem_extra_docker:
     - "radare/radare2"
