@@ -16,10 +16,11 @@ It was tested on the following versions:
  * 2.2
  * 2.4
  * 2.5
+ * 2.9
 
 ### Operating systems
 
-Tested on Ubuntu 14.04, 16.04 and 18.04 (limited support for latter as depending on upstream ppa)
+Tested on Ubuntu 18.04.
 Some applications might required a big ramdisk
 
 ## Example Playbook
