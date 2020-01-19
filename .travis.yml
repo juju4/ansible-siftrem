@@ -11,7 +11,7 @@ env:
     ansible_version: 2.9.3.0
 ## past ansible versions
   - distribution: ubuntu
-    version: 16.04
+    version: 18.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
