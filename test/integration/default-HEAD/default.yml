@@ -22,6 +22,10 @@
     - faup_virtualenv_user: "{{ sift_user }}"
     - faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
     - faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    - faup_ownership:
+        - { d: /home/sansforensics/.cache/pip, s: directory, m: '0755', o: "{{ sift_user }}" }
+        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/build", s: directory, m: '0755', o: "{{ sift_user }}" }
+        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/pyfaup.egg-info", s: directory, m: '0755', o: "{{ sift_user }}" }
     - vivisect_virtualenv_user: "{{ sift_user }}"
     - vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
     - vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
