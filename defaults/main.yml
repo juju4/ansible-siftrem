@@ -85,8 +85,11 @@ siftrem_extra_pkgs:
     - zlib1g
     - zlib1g-dev
     - qtbase5-dev
+    - reglookup
+    - xrdp
 
 siftrem_extra_git:
+    - https://github.com/keydet89/RegRipper2.8.git
     - https://github.com/wapiflapi/binglide
     - https://github.com/wapiflapi/veles.git
     - https://github.com/zrlram/afterglow
