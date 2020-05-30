@@ -86,10 +86,18 @@ siftrem_extra_pkgs:
     - zlib1g-dev
     - qtbase5-dev
     - reglookup
+    - binwalk
+    - apktool
     - xrdp
+    - gparted
+    - chromium-browser
+    - vlc
+    - audacity
+# morse code/decode?
 
 siftrem_extra_git:
     - https://github.com/keydet89/RegRipper2.8.git
+    - https://github.com/keydet89/RegRipper3.0.git
     - https://github.com/wapiflapi/binglide
     - https://github.com/wapiflapi/veles.git
     - https://github.com/zrlram/afterglow
@@ -126,6 +134,9 @@ siftrem_extra_git:
     - https://github.com/yampelo/beagle.git
     - https://github.com/BurntSushi/ripgrep.git
     - https://github.com/sosreport/sos.git
+    - https://github.com/volatilityfoundation/volatility3.git
+    - https://github.com/pwndbg/pwndbg.git
+    - https://github.com/longld/peda.git
 
 siftrem_extra_git_python_build:
     - msg-extractor
@@ -148,6 +159,7 @@ siftrem_extra_dl:
     - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
     - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
     - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
+    - { url: 'https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip', s: 'ebe3fa4e1afd7d97650990b27777bb78bd0427e8e70c1d0ee042aeb52decac61' }
 #    - { url: '', s: '' }
 
 siftrem_extra_pip_version:
@@ -158,6 +170,9 @@ siftrem_extra_pip:
     - visidata
     # https://github.com/HurricaneLabs/machinae
     - machinae
+    - pandas
+    - matplotlib
+    - jupyterlab
 
 siftrem_extra_docker:
     - "radare/radare2"
@@ -168,3 +183,5 @@ siftrem_extra_docker:
 
 # snort default listening interface
 #ubuntu_if:
+
+x11_background: /usr/share/sift/images/forensics_blue.jpg
