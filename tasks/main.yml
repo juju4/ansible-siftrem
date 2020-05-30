@@ -52,7 +52,7 @@
 
 - name: Debian | open-vm-tools install
   apt: name=open-vm-tools state=present
-  when: vm
+  when: vm|bool
   register: pkg_result
   until: pkg_result is success
 

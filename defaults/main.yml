@@ -10,7 +10,7 @@ ramdisk_path: /media/tmpfs
 #ramdisk_size: 2048m
 
 ## is it vmware virtual machine? (OpenVM)
-vm: 1
+vm: true
 
 siftrem_extra_pkgs:
 ## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
