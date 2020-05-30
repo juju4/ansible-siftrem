@@ -135,6 +135,7 @@
   become: yes
   become_user: "{{ sift_user }}"
 
+- include: regripper.yml
 - include: powershell.yml
 - include: maltego.yml
 - include: powershell-core.yml
