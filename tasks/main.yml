@@ -140,6 +140,7 @@
 - include: maltego.yml
 - include: powershell-core.yml
 - include: dislocker.yml
+- include: peda.yml
 - include: guymager.yml
   when:
     - ansible_distribution == 'Ubuntu'
