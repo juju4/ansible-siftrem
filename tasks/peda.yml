@@ -5,4 +5,4 @@
     dest: "/home/{{ sift_user }}/.gdbinit"
     regexp: "^source {{ siftrem_toolsetdir }}/peda/.*"
     line: "source {{ siftrem_toolsetdir }}/peda/peda.py"
-    dest: "{{ siftrem_toolsetdir }}/RegRipper3.0/rip.pl"
+    create: yes
