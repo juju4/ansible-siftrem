@@ -3,15 +3,15 @@
 
 - name: RegRipper 3.0 | ensure linux setup
   replace:
-    dest: "{{ siftrem_toolsetdir }}/RegRipper3.0/rip.pl"
+    dest: "{{ siftrem_toolsetdir }}/RegRipper3.0.git/rip.pl"
     regexp: "{{ item.re }}"
     replace: "{{ item.rep }}"
   with_items:
     - { re: ' c:\perl\bin\perl.exe', rep: '/usr/bin/perl' }
-    - { re: '->catfile("plugins")', rep: '->catfile("{{ siftrem_toolsetdir }}/RegRipper3.0/plugins")'}
+    - { re: '->catfile("plugins")', rep: '->catfile("{{ siftrem_toolsetdir }}/RegRipper3.0.git/plugins")'}
 
 - name: RegRipper 3.0 | symlink in PATH
   file:
-    src: "{{ siftrem_toolsetdir }}/RegRipper3.0/rip.pl"
+    src: "{{ siftrem_toolsetdir }}/RegRipper3.0.git/rip.pl"
     dest: "/usr/local/bin/rip.pl"
     state: link
