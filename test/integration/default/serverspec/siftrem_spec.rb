@@ -42,3 +42,9 @@ describe command('xvfb-run --server-args="-screen 0, 1024x768x24" cutycapt --url
   its(:exit_status) { should eq 0 }
 end
 
+describe command('/usr/local/bin/rip.pl -h') do
+  its(:stdout) { should match /Parse Windows Registry files/ }
+  its(:stderr) { should match /^$/ }
+  its(:exit_status) { should eq 0 }
+end
+
