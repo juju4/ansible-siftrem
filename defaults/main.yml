@@ -151,10 +151,10 @@ siftrem_extra_dl:
     - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
     - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
     - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5' }
-    - { url: 'https://www.paterva.com/malv428/Maltego.v4.2.8.12786.linux.zip', s: 'c35db822ffb88c7807b9ea694821a3af3ca4f872ad44908dba695c53293a0c21' }
+    - { url: 'https://www.paterva.com/malv428/Maltego.v4.2.8.12786.linux.zip', s: 'ef4f30964e78522e55c669650648c7380907968080b7f567863ddebb36927601' }
     - { url: 'http://downloads.sourceforge.net/project/capanalysis/version%201.2.2/capanalysis_1.2.2_amd64.deb', s: 'a9b4c56e80f1d53edbe0ad0158ccd05beab0d789e326f5201a6871598c8d7f52' }
     - { url: 'https://didierstevens.com/files/software/base64dump_V0_0_5.zip', s: 'B4AB7B3A9D2947F08C6CC94F88CD825C9B2B63EE65AF7475E66BE9565EC4337A' }
-    - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '84c60ebe022b4af2cb643860db8fdd8c34cc89718cd7bf130a827c5297660fa1' }
+    - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
     - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
     - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
     - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
