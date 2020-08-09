@@ -84,6 +84,8 @@
     repo: "{{ item }}"
     dest: "{{ siftrem_toolsetdir }}/{{ item | basename }}"
     version: HEAD
+    update: no
+    force: no
   with_items: "{{ siftrem_extra_git }}"
   become: yes
   become_user: "{{ sift_user }}"
