@@ -96,7 +96,6 @@ siftrem_extra_pkgs:
 # morse code/decode?
 
 siftrem_extra_git:
-    - https://github.com/keydet89/RegRipper2.8.git
     - https://github.com/keydet89/RegRipper3.0.git
     - https://github.com/wapiflapi/binglide
     - https://github.com/wapiflapi/veles.git
@@ -137,6 +136,7 @@ siftrem_extra_git:
     - https://github.com/volatilityfoundation/volatility3.git
     - https://github.com/pwndbg/pwndbg.git
     - https://github.com/longld/peda.git
+    - https://github.com/blackberry/pe_tree.git
 
 siftrem_extra_git_python_build:
     - msg-extractor
@@ -160,6 +160,7 @@ siftrem_extra_dl:
     - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
     - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
     - { url: 'https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip', s: 'ebe3fa4e1afd7d97650990b27777bb78bd0427e8e70c1d0ee042aeb52decac61' }
+    - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/blob/master/target/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar?raw=true', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
 #    - { url: '', s: '' }
 
 siftrem_extra_pip_version:
