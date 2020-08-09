@@ -22,5 +22,4 @@ dependencies:
   - juju4.sift
   - juju4.remnux
   - juju4.faup
-  - juju4.floss
   - juju4.rekall
