@@ -91,7 +91,7 @@
   become_user: "{{ sift_user }}"
 
 - name: python build extra tools
-  command: "python setup.py install"
+  command: "python3 setup.py install"
   args:
     chdir: "{{ siftrem_toolsetdir }}/{{ item }}"
   with_items: "{{ siftrem_extra_git_python_build }}"
