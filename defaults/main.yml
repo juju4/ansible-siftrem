@@ -139,6 +139,7 @@ siftrem_extra_git:
     - https://github.com/blackberry/pe_tree.git
 
 siftrem_extra_git_python_build:
+    - pathlib2
     - msg-extractor
 
 siftrem_extra_dl:
