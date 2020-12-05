@@ -11,5 +11,5 @@
   become_user: "{{ sift_user }}"
 
 ## interactive
-#- name: Powershell Empire - setup
-#  command: "./install.sh chdir={{ siftrem_toolsetdir }}/empire/setup"
+# - name: Powershell Empire - setup
+#   command: "./install.sh chdir={{ siftrem_toolsetdir }}/empire/setup"

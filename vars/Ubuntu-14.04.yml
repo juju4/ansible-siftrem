@@ -1,7 +1,7 @@
 ---
 
 __ubuntu_packages:
-## for cutycapt
+  ## for cutycapt
   - libqt4-webkit
   - libqt4-dev
 

@@ -3,14 +3,14 @@
 ## SIFT
 
 sift_hostname: siftworkstation
-#sift_do_x11: true
-#sift_x11_background: false
-#sift_x11_env: false
+# sift_do_x11: true
+# sift_x11_background: false
+# sift_x11_env: false
 
-#sift_webserver: apache2
+# sift_webserver: apache2
 sift_webserver: nginx
 
-#sift_user: vagrant
+# sift_user: vagrant
 sift_user: sansforensics
 sift_pass: forensics
 
@@ -19,12 +19,12 @@ sift_pass: forensics
 remnux_hostname: siftworkstation
 remnux_do_remnux: true
 
-#remnux_do_x11: true
-#remnux_x11_background: true
+# remnux_do_x11: true
+# remnux_x11_background: true
 ## lxde
-#remnux_x11_env: true
+# remnux_x11_env: true
 
-#remnux_webserver: apache2
+# remnux_webserver: apache2
 remnux_webserver: nginx
 
 remnux_user: sansforensics

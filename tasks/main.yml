@@ -61,7 +61,7 @@
     name:
       - rpcbind
       - xterm
-#      - netcat-traditional
+      # - netcat-traditional
       - cups-client
     state: absent
   register: pkg_result

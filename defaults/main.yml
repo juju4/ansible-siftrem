@@ -1,190 +1,190 @@
 ---
 tz: Etc/UTC
 
-#siftrem_toolsetdir: "/home/{{ sift_user }}/Toolset"
+# siftrem_toolsetdir: "/home/{{ sift_user }}/Toolset"
 siftrem_toolsetdir: "/usr/local/share/Toolset"
 
 ## for a volatility/vortessence usage, you want it maxmemfilesize+300MB
 ## define size to enable
 ramdisk_path: /media/tmpfs
-#ramdisk_size: 2048m
+# ramdisk_size: 2048m
 
 ## is it vmware virtual machine? (OpenVM)
 vm: true
 
 siftrem_extra_pkgs:
-## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
-## https://major.io/2007/07/01/check-available-entropy-in-linux/
-## https://blog.cloudflare.com/ensuring-randomness-with-linuxs-random-number-generator/
-    - rng-tools
-    - python-pip
-    - git
-    - argus-client
-    - tshark
-    - graphviz
-    - snort
-    - suricata
-    - librrds-perl
-    - libnet-ip-perl
-    - tcptrace
-    - xplot
-    - chaosreader
-    - picviz
-    - python-pip
-    - cmake
-    - make
-    - g++
-    - python-hachoir-wx
-    - sqlite3
-    - lynx
-    - fcrackzip
-    - pdfcrack
-    - john
-    - wamerican-insane
-    - wcanadian-insane
-    - wngerman
-    - wfrench
-    - steghide
-    - python-xlrd
-    - python-netaddr
-    - python-virtualenv
-    - build-essential
-    - python-dev
-    - python-setuptools
-    - python-lzma       # BinWalk
-    - phantomjs
-    - wkhtmltopdf
-## cutycapt and its dependencies
-    - cutycapt
-    - xvfb
-    - xauth
-    - xfonts-base
-#    - node             ## NOK for casperjs
-#    - nodejs-legacy    ## OK trusty, xenial but not bionic
-    - npm
-## Binglide Extra packages install
-    - python3-pyqt4
-    - python3-pyqt4.qtopengl
-    - python3-opengl
-    - python3-pip
-    - python3-numpy
-## event2timeline
-    - python-dateutil
-## moved to vars/Ubuntu-*
-#    - libqt4-webkit
-#    - libqt4-dev
-## manipulate vmware vmdk files
-## trusty, xenial
-#    - libvmdk-tools
-## bionic
-#    - libvmdk-utils
-## visualization
-    - gource
-## veles
-    - cmake
-    - zlib1g
-    - zlib1g-dev
-    - qtbase5-dev
-    - reglookup
-    - binwalk
-    - apktool
-    - xrdp
-    - gparted
-    - chromium-browser
-    - vlc
-    - audacity
-    - smbclient
-# morse code/decode?
+  ## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
+  ## https://major.io/2007/07/01/check-available-entropy-in-linux/
+  ## https://blog.cloudflare.com/ensuring-randomness-with-linuxs-random-number-generator/
+  - rng-tools
+  - python-pip
+  - git
+  - argus-client
+  - tshark
+  - graphviz
+  - snort
+  - suricata
+  - librrds-perl
+  - libnet-ip-perl
+  - tcptrace
+  - xplot
+  - chaosreader
+  - picviz
+  - python-pip
+  - cmake
+  - make
+  - g++
+  - python-hachoir-wx
+  - sqlite3
+  - lynx
+  - fcrackzip
+  - pdfcrack
+  - john
+  - wamerican-insane
+  - wcanadian-insane
+  - wngerman
+  - wfrench
+  - steghide
+  - python-xlrd
+  - python-netaddr
+  - python-virtualenv
+  - build-essential
+  - python-dev
+  - python-setuptools
+  - python-lzma       # BinWalk
+  - phantomjs
+  - wkhtmltopdf
+  ## cutycapt and its dependencies
+  - cutycapt
+  - xvfb
+  - xauth
+  - xfonts-base
+  # - node  ## NOK for casperjs
+  # - nodejs-legacy  ## OK trusty, xenial but not bionic
+  - npm
+  ## Binglide Extra packages install
+  - python3-pyqt4
+  - python3-pyqt4.qtopengl
+  - python3-opengl
+  - python3-pip
+  - python3-numpy
+  ## event2timeline
+  - python-dateutil
+  ## moved to vars/Ubuntu-*
+  # - libqt4-webkit
+  # - libqt4-dev
+  ## manipulate vmware vmdk files
+  ## trusty, xenial
+  # - libvmdk-tools
+  ## bionic
+  # - libvmdk-utils
+  ## visualization
+  - gource
+  ## veles
+  - cmake
+  - zlib1g
+  - zlib1g-dev
+  - qtbase5-dev
+  - reglookup
+  - binwalk
+  - apktool
+  - xrdp
+  - gparted
+  - chromium-browser
+  - vlc
+  - audacity
+  - smbclient
+  # morse code/decode?
 
 siftrem_extra_git:
-    - https://github.com/keydet89/RegRipper3.0.git
-    - https://github.com/wapiflapi/binglide
-    - https://github.com/wapiflapi/veles.git
-    - https://github.com/zrlram/afterglow
-    - https://github.com/zrlram/parsers
-    - https://github.com/certsocietegenerale/event2timeline
-    - https://github.com/tomchop/malcom.git
-    - https://github.com/1aN0rmus/TekDefense-Automater
-    - https://github.com/rpt/Network-Traffic-Visualization
-    - https://github.com/urule99/jsunpack-n
-    - https://github.com/google/binnavi
-    - https://github.com/lunixbochs/usercorn
-    - https://Ft44k@bitbucket.org/Ft44k/yavol
-    - https://github.com/504ensicsLabs/DAMM
-    - https://github.com/defpoint/threat_note
-    - https://github.com/mattgwwalker/msg-extractor
-    - https://github.com/williballenthin/EVTXtract
-## hidviz, in-depth analysis of USB HID devices communication. requires cmake3.2/xenial+
-    - https://github.com/ondrejbudai/hidviz.git
-## https://www1.cs.fau.de/content/forensic-email-visualization
-    - https://github.com/libyal/libpff.git
-## https://www.obsidianforensics.com/blog/visualizing-activity-from-metadata (iOS)
-    - https://github.com/halpomeranz/mbdbls.git
-## from sift-saltstack
-    - https://github.com/threeplanetssoftware/sqlite_miner
-#
-    - https://github.com/ctxis/RDP-Replay
-    - https://github.com/DominicBreuker/stego-toolkit
-    - https://github.com/Aorimn/dislocker
-    - https://github.com/regit/suriwire
-    - https://github.com/JohnLaTwC/PyPowerShellXray
-    - https://github.com/THIBER-ORG/userline.git
-    - https://github.com/JPCERTCC/LogonTracer.git
-    - https://github.com/insanitybit/grapl.git
-    - https://github.com/yampelo/beagle.git
-    - https://github.com/BurntSushi/ripgrep.git
-    - https://github.com/sosreport/sos.git
-    - https://github.com/volatilityfoundation/volatility3.git
-    - https://github.com/pwndbg/pwndbg.git
-    - https://github.com/longld/peda.git
-    - https://github.com/blackberry/pe_tree.git
-    - https://github.com/memoryforensics1/VolExp
+  - https://github.com/keydet89/RegRipper3.0.git
+  - https://github.com/wapiflapi/binglide
+  - https://github.com/wapiflapi/veles.git
+  - https://github.com/zrlram/afterglow
+  - https://github.com/zrlram/parsers
+  - https://github.com/certsocietegenerale/event2timeline
+  - https://github.com/tomchop/malcom.git
+  - https://github.com/1aN0rmus/TekDefense-Automater
+  - https://github.com/rpt/Network-Traffic-Visualization
+  - https://github.com/urule99/jsunpack-n
+  - https://github.com/google/binnavi
+  - https://github.com/lunixbochs/usercorn
+  - https://Ft44k@bitbucket.org/Ft44k/yavol
+  - https://github.com/504ensicsLabs/DAMM
+  - https://github.com/defpoint/threat_note
+  - https://github.com/mattgwwalker/msg-extractor
+  - https://github.com/williballenthin/EVTXtract
+  ## hidviz, in-depth analysis of USB HID devices communication. requires cmake3.2/xenial+
+  - https://github.com/ondrejbudai/hidviz.git
+  ## https://www1.cs.fau.de/content/forensic-email-visualization
+  - https://github.com/libyal/libpff.git
+  ## https://www.obsidianforensics.com/blog/visualizing-activity-from-metadata (iOS)
+  - https://github.com/halpomeranz/mbdbls.git
+  ## from sift-saltstack
+  - https://github.com/threeplanetssoftware/sqlite_miner
+  #
+  - https://github.com/ctxis/RDP-Replay
+  - https://github.com/DominicBreuker/stego-toolkit
+  - https://github.com/Aorimn/dislocker
+  - https://github.com/regit/suriwire
+  - https://github.com/JohnLaTwC/PyPowerShellXray
+  - https://github.com/THIBER-ORG/userline.git
+  - https://github.com/JPCERTCC/LogonTracer.git
+  - https://github.com/insanitybit/grapl.git
+  - https://github.com/yampelo/beagle.git
+  - https://github.com/BurntSushi/ripgrep.git
+  - https://github.com/sosreport/sos.git
+  - https://github.com/volatilityfoundation/volatility3.git
+  - https://github.com/pwndbg/pwndbg.git
+  - https://github.com/longld/peda.git
+  - https://github.com/blackberry/pe_tree.git
+  - https://github.com/memoryforensics1/VolExp
 
 siftrem_extra_git_python_build:
-    - msg-extractor
+  - msg-extractor
 
 siftrem_extra_dl:
-    - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
-    - { url: 'https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz', s: 'cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365' }
-    - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
-    - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz', s: '5553fd03fb7be564538fe56e871eac6e3caf56f40e8abc4602d2553964f8f0e1' }
-    - { url: 'http://procdot.com/download/procdot/binaries/procdot_1_2_55_linux.zip', s: '2a80d7ac9bead30786a4c391f87e4a8036dd977c8fe5811292c69f73b6caed73' }
-    - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: '8572cf7fee179b211fe12f829dad83ac36d040bcc105af38888a01189dae4945' }
-    - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
-    - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
-    - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5' }
-    - { url: 'https://www.paterva.com/malv428/Maltego.v4.2.8.12786.linux.zip', s: 'ef4f30964e78522e55c669650648c7380907968080b7f567863ddebb36927601' }
-    - { url: 'http://downloads.sourceforge.net/project/capanalysis/version%201.2.2/capanalysis_1.2.2_amd64.deb', s: 'a9b4c56e80f1d53edbe0ad0158ccd05beab0d789e326f5201a6871598c8d7f52' }
-    - { url: 'https://didierstevens.com/files/software/base64dump_V0_0_5.zip', s: 'B4AB7B3A9D2947F08C6CC94F88CD825C9B2B63EE65AF7475E66BE9565EC4337A' }
-    - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
-    - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
-    - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
-    - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
-    - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
-    - { url: 'https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip', s: 'ebe3fa4e1afd7d97650990b27777bb78bd0427e8e70c1d0ee042aeb52decac61' }
-    - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/blob/master/target/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar?raw=true', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
-#    - { url: '', s: '' }
+  - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
+  - { url: 'https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz', s: 'cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365' }
+  - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
+  - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz', s: '5553fd03fb7be564538fe56e871eac6e3caf56f40e8abc4602d2553964f8f0e1' }
+  - { url: 'http://procdot.com/download/procdot/binaries/procdot_1_2_55_linux.zip', s: '2a80d7ac9bead30786a4c391f87e4a8036dd977c8fe5811292c69f73b6caed73' }
+  - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: '8572cf7fee179b211fe12f829dad83ac36d040bcc105af38888a01189dae4945' }
+  - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
+  - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
+  - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5' }
+  - { url: 'https://www.paterva.com/malv428/Maltego.v4.2.8.12786.linux.zip', s: 'ef4f30964e78522e55c669650648c7380907968080b7f567863ddebb36927601' }
+  - { url: 'http://downloads.sourceforge.net/project/capanalysis/version%201.2.2/capanalysis_1.2.2_amd64.deb', s: 'a9b4c56e80f1d53edbe0ad0158ccd05beab0d789e326f5201a6871598c8d7f52' }
+  - { url: 'https://didierstevens.com/files/software/base64dump_V0_0_5.zip', s: 'B4AB7B3A9D2947F08C6CC94F88CD825C9B2B63EE65AF7475E66BE9565EC4337A' }
+  - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
+  - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
+  - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
+  - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
+  - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
+  - { url: 'https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip', s: 'ebe3fa4e1afd7d97650990b27777bb78bd0427e8e70c1d0ee042aeb52decac61' }
+  - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/blob/master/target/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar?raw=true', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
+  # - { url: '', s: '' }
 
 siftrem_extra_pip_version:
-    - { n: defang, v: 0.5.2 }
+  - { n: defang, v: 0.5.2 }
 siftrem_extra_pip:
-    - oletools
-    - pybeagle
-    - visidata
-    # https://github.com/HurricaneLabs/machinae
-    - machinae
-    - pandas
-    - matplotlib
-    - jupyterlab
+  - oletools
+  - pybeagle
+  - visidata
+  # https://github.com/HurricaneLabs/machinae
+  - machinae
+  - pandas
+  - matplotlib
+  - jupyterlab
 
 siftrem_extra_docker:
-    - "radare/radare2"
-    - "owasp/zap2docker-stable"
-    - "owasp/zap2docker-weekly"
-## 201612 Last pushed: a year ago
-    - "tomchop/malcom"
+  - "radare/radare2"
+  - "owasp/zap2docker-stable"
+  - "owasp/zap2docker-weekly"
+  ## 201612 Last pushed: a year ago
+  - "tomchop/malcom"
 
 # snort default listening interface
-#ubuntu_if:
+# ubuntu_if:
 
 x11_background: /usr/share/sift/images/forensics_blue.jpg

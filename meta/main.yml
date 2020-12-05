@@ -5,20 +5,19 @@ galaxy_info:
   license: BSD
   min_ansible_version: 1.9
   platforms:
-  - name: Ubuntu
-    versions:
-  #  - precise
-    - trusty
-    - xenial
-    - bionic
-    - focal
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+        - focal
   galaxy_tags:
-  - system
-  - security
+    - system
+    - security
 
 dependencies:
   - geerlingguy.java
-#  - volatility
+  # - volatility
   - juju4.sift
   - juju4.remnux
   - juju4.faup

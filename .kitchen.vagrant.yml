@@ -8,9 +8,9 @@ transport:
   name: sftp
 
 driver_config:
-    customize:
-#      cpus: 2
-      memory: 1024
+  customize:
+    # cpus: 2
+    memory: 1024
 
 provisioner:
   name: ansible_playbook

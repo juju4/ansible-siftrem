@@ -18,4 +18,4 @@
   when: not win10m.stat.exists
 
 ## https://gist.github.com/iMHLv2/8def92d6c3d604273f41
-#$ python vol.py --profile=Win10TPx64 -f Win10TPx64.vmem --kdbg=0xf80369db8284 pslist
+# $ python vol.py --profile=Win10TPx64 -f Win10TPx64.vmem --kdbg=0xf80369db8284 pslist
