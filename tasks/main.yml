@@ -72,6 +72,7 @@
     dest: /etc/security/limits.d/openfiles
     regexp: "^{{ sift_user }}\t\thard\tnofiles\t\t2048"
     line: "{{ sift_user }}\t\thard\tnofiles\t\t2048"
+    mode: '0644'
     state: present
     create: yes
 
@@ -81,16 +82,16 @@
 
 - name: git clone extra tools
   git:
-    repo: "{{ item }}"
+    repo: "{{ item.r }}"
     dest: "{{ siftrem_toolsetdir }}/{{ item | basename }}"
-    version: HEAD
+    version: "{{ item.v }}"
     update: no
     force: no
   with_items: "{{ siftrem_extra_git }}"
   become: yes
   become_user: "{{ sift_user }}"
 
-- name: python build extra tools
+- name: python build extra tools  # noqa 301
   command: "python3 setup.py install"
   args:
     chdir: "{{ siftrem_toolsetdir }}/{{ item }}"

@@ -1,7 +1,10 @@
 ---
 
 - name: Ensure ioc directory exists
-  file: dest={{ siftrem_toolsetdir }}/ioc state=directory
+  file:
+    dest: "{{ siftrem_toolsetdir }}/ioc"
+    state: directory
+    mode: '0755'
 
 - name: Alienvault repository - IOC in malware_analysis
   git:

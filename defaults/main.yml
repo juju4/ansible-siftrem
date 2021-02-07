@@ -97,48 +97,54 @@ siftrem_extra_pkgs:
   # morse code/decode?
 
 siftrem_extra_git:
-  - https://github.com/keydet89/RegRipper3.0.git
-  - https://github.com/wapiflapi/binglide
-  - https://github.com/wapiflapi/veles.git
-  - https://github.com/zrlram/afterglow
-  - https://github.com/zrlram/parsers
-  - https://github.com/certsocietegenerale/event2timeline
-  - https://github.com/tomchop/malcom.git
-  - https://github.com/1aN0rmus/TekDefense-Automater
-  - https://github.com/rpt/Network-Traffic-Visualization
-  - https://github.com/urule99/jsunpack-n
-  - https://github.com/google/binnavi
-  - https://github.com/lunixbochs/usercorn
-  - https://Ft44k@bitbucket.org/Ft44k/yavol
-  - https://github.com/504ensicsLabs/DAMM
-  - https://github.com/defpoint/threat_note
-  - https://github.com/mattgwwalker/msg-extractor
-  - https://github.com/williballenthin/EVTXtract
+  - { r: 'https://github.com/keydet89/RegRipper3.0.git', v: HEAD }
+  - { r: 'https://github.com/wapiflapi/binglide', v: HEAD }
+  - { r: 'https://github.com/wapiflapi/veles.git', v: HEAD }
+  - { r: 'https://github.com/zrlram/afterglow', v: HEAD }
+  - { r: 'https://github.com/zrlram/parsers', v: HEAD }
+  - { r: 'https://github.com/certsocietegenerale/event2timeline', v: HEAD }
+  - { r: 'https://github.com/tomchop/malcom.git', v: HEAD }
+  - { r: 'https://github.com/1aN0rmus/TekDefense-Automater', v: HEAD }
+  - { r: 'https://github.com/rpt/Network-Traffic-Visualization', v: HEAD }
+  - { r: 'https://github.com/urule99/jsunpack-n', v: HEAD }
+  - { r: 'https://github.com/google/binnavi', v: HEAD }
+  - { r: 'https://github.com/lunixbochs/usercorn', v: HEAD }
+  - { r: 'https://Ft44k@bitbucket.org/Ft44k/yavol', v: HEAD }
+  - { r: 'https://github.com/504ensicsLabs/DAMM', v: HEAD }
+  - { r: 'https://github.com/defpoint/threat_note', v: HEAD }
+  - { r: 'https://github.com/mattgwwalker/msg-extractor', v: HEAD }
+  - { r: 'https://github.com/williballenthin/EVTXtract', v: HEAD }
   ## hidviz, in-depth analysis of USB HID devices communication. requires cmake3.2/xenial+
-  - https://github.com/ondrejbudai/hidviz.git
+  - { r: 'https://github.com/ondrejbudai/hidviz.git', v: HEAD }
   ## https://www1.cs.fau.de/content/forensic-email-visualization
-  - https://github.com/libyal/libpff.git
+  - { r: 'https://github.com/libyal/libpff.git', v: HEAD }
   ## https://www.obsidianforensics.com/blog/visualizing-activity-from-metadata (iOS)
-  - https://github.com/halpomeranz/mbdbls.git
+  - { r: 'https://github.com/halpomeranz/mbdbls.git', v: HEAD }
   ## from sift-saltstack
-  - https://github.com/threeplanetssoftware/sqlite_miner
+  - { r: 'https://github.com/threeplanetssoftware/sqlite_miner', v: HEAD }
   #
-  - https://github.com/ctxis/RDP-Replay
-  - https://github.com/DominicBreuker/stego-toolkit
-  - https://github.com/Aorimn/dislocker
-  - https://github.com/regit/suriwire
-  - https://github.com/JohnLaTwC/PyPowerShellXray
-  - https://github.com/THIBER-ORG/userline.git
-  - https://github.com/JPCERTCC/LogonTracer.git
-  - https://github.com/insanitybit/grapl.git
-  - https://github.com/yampelo/beagle.git
-  - https://github.com/BurntSushi/ripgrep.git
-  - https://github.com/sosreport/sos.git
-  - https://github.com/volatilityfoundation/volatility3.git
-  - https://github.com/pwndbg/pwndbg.git
-  - https://github.com/longld/peda.git
-  - https://github.com/blackberry/pe_tree.git
-  - https://github.com/memoryforensics1/VolExp
+  - { r: 'https://github.com/ctxis/RDP-Replay', v: HEAD }
+  - { r: 'https://github.com/DominicBreuker/stego-toolkit', v: HEAD }
+  - { r: 'https://github.com/Aorimn/dislocker', v: HEAD }
+  - { r: 'https://github.com/regit/suriwire', v: HEAD }
+  - { r: 'https://github.com/JohnLaTwC/PyPowerShellXray', v: HEAD }
+  - { r: 'https://github.com/THIBER-ORG/userline.git', v: HEAD }
+  - { r: 'https://github.com/JPCERTCC/LogonTracer.git', v: HEAD }
+  - { r: 'https://github.com/insanitybit/grapl.git', v: HEAD }
+  - { r: 'https://github.com/yampelo/beagle.git', v: HEAD }
+  - { r: 'https://github.com/BurntSushi/ripgrep.git', v: HEAD }
+  - { r: 'https://github.com/sosreport/sos.git', v: HEAD }
+  - { r: 'https://github.com/volatilityfoundation/volatility3.git', v: HEAD }
+  - { r: 'https://github.com/pwndbg/pwndbg.git', v: HEAD }
+  - { r: 'https://github.com/longld/peda.git', v: HEAD }
+  - { r: 'https://github.com/blackberry/pe_tree.git', v: HEAD }
+  - { r: 'https://github.com/memoryforensics1/VolExp', v: HEAD }
+
+siftrem_git_maltego:
+  - { r: 'https://github.com/brianwarehime/gavel', v: HEAD }
+  - { r: 'https://github.com/brianwarehime/Threat_note-Maltego', v: HEAD }
+  - { r: 'https://github.com/MISP/MISP-maltego', v: HEAD }
+  - { r: 'https://github.com/digital4rensics/Malformity', v: HEAD }
 
 siftrem_extra_git_python_build:
   - msg-extractor
