@@ -28,7 +28,6 @@ jobs:
           python-version: '3.x'
       - name: Install dependencies
         run: |
-          sudo /usr/bin/python -m pip install setuptools
           python3 -m pip install --upgrade pip
           pip3 install ansible-lint flake8 yamllint
           ansible --version
