@@ -59,6 +59,7 @@ jobs:
           ls -l /usr/bin/ | egrep '(python|pip|ansible)'
           pip freeze
           pip3 freeze
+          dpkg -l |grep setuptools
           ip addr
           cat /etc/resolv.conf
           host www.google.com
