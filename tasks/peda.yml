@@ -5,4 +5,5 @@
     dest: "/home/{{ sift_user }}/.gdbinit"
     regexp: "^source {{ siftrem_toolsetdir }}/peda/.*"
     line: "source {{ siftrem_toolsetdir }}/peda/peda.py"
+    mode: '0600'
     create: yes
