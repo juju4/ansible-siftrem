@@ -39,7 +39,8 @@
     - floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
     - floss_pyinstaller_version: 3.3.1
   pre_tasks:
-    - set_fact:
+    - name: Trusty | set fact
+      set_fact:
         vivisect_virtualenv:
           - python-virtualenv
         floss_virtualenv:

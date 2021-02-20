@@ -68,7 +68,7 @@
   until: pkg_result is success
 
 - name: Review some limits
-  lineinfile:
+  lineinfile:  # noqa no-tabs
     dest: /etc/security/limits.d/openfiles
     regexp: "^{{ sift_user }}\t\thard\tnofiles\t\t2048"
     line: "{{ sift_user }}\t\thard\tnofiles\t\t2048"
