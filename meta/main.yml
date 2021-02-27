@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: siftrem
   author: juju4
   description: SIFT+Remnux+Extra role for Ubuntu-based system
   license: BSD
