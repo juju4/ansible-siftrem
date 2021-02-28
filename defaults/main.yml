@@ -170,7 +170,7 @@ siftrem_extra_pip_version:
   - { n: defang, v: 0.5.2 }
 siftrem_extra_pip:
   - oletools
-  - pybeagle
+  # - pybeagle  # failing on grpcio dependency, https://github.com/grpc/grpc/issues/19964
   - visidata
   # https://github.com/HurricaneLabs/machinae
   - machinae
