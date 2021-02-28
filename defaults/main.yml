@@ -28,7 +28,8 @@ siftrem_extra_pkgs:
   - tshark
   - graphviz
   - snort
-  - suricata
+  # xenial and bionic; but not focal
+  # - suricata
   - librrds-perl
   - libnet-ip-perl
   - tcptrace
