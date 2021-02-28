@@ -88,7 +88,7 @@
 - name: git clone extra tools
   git:
     repo: "{{ item.r }}"
-    dest: "{{ siftrem_toolsetdir }}/{{ item | basename }}"
+    dest: "{{ siftrem_toolsetdir }}/{{ item.r | basename }}"
     version: "{{ item.v }}"
     update: no
     force: no
