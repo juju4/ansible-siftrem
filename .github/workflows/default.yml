@@ -24,7 +24,7 @@ jobs:
             experimental: false
     env:
       ANSIBLE_CALLBACK_WHITELIST: profile_tasks
-      ANSIBLE_EXTRA_VARS: ""
+      ANSIBLE_EXTRA_VARS: "-e ubuntu_if=eth0"
 
     steps:
       - uses: actions/checkout@v2
