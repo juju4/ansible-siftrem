@@ -16,7 +16,7 @@ jobs:
       max-parallel: 4
     env:
       ANSIBLE_CALLBACK_WHITELIST: profile_tasks
-      ANSIBLE_EXTRA_VARS: ""
+      ANSIBLE_EXTRA_VARS: "-e remnux_pip_packages_version='[]'"
 
     steps:
       - uses: actions/checkout@v2
