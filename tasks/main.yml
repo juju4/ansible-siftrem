@@ -27,7 +27,12 @@
 - name: Ubuntu | snort noninteractive settings - dir
   file: dest=/etc/snort state=directory mode=0755
 - name: Ubuntu | snort noninteractive settings - conf
-  lineinfile: dest=/etc/snort/snort.debian.conf line="{{ item }}" mode=0755 backup=yes create=yes
+  lineinfile:
+    dest: /etc/snort/snort.debian.conf
+    line: "{{ item }}"
+    mode: '0755'
+    backup: yes
+    create: yes
   with_items:
     - 'DEBIAN_SNORT_HOME_NET="any"'
     - "DEBIAN_SNORT_INTERFACE=\"{{ __ubuntu_if }}\""
