@@ -17,7 +17,12 @@ siftrem_extra_pkgs:
   ## https://major.io/2007/07/01/check-available-entropy-in-linux/
   ## https://blog.cloudflare.com/ensuring-randomness-with-linuxs-random-number-generator/
   - rng-tools
-  - python-pip
+  - python3-pip
+  - python3-xlrd
+  - python3-netaddr
+  - python3-virtualenv
+  - python3-dev
+  - python3-setuptools
   - git
   - argus-client
   - tshark
@@ -30,11 +35,9 @@ siftrem_extra_pkgs:
   - xplot
   - chaosreader
   - picviz
-  - python-pip
   - cmake
   - make
   - g++
-  - python-hachoir-wx
   - sqlite3
   - lynx
   - fcrackzip
@@ -45,13 +48,7 @@ siftrem_extra_pkgs:
   - wngerman
   - wfrench
   - steghide
-  - python-xlrd
-  - python-netaddr
-  - python-virtualenv
   - build-essential
-  - python-dev
-  - python-setuptools
-  - python-lzma       # BinWalk
   - phantomjs
   - wkhtmltopdf
   ## cutycapt and its dependencies
@@ -69,15 +66,12 @@ siftrem_extra_pkgs:
   - python3-pip
   - python3-numpy
   ## event2timeline
-  - python-dateutil
+  - python3-dateutil
   ## moved to vars/Ubuntu-*
   # - libqt4-webkit
   # - libqt4-dev
   ## manipulate vmware vmdk files
-  ## trusty, xenial
-  # - libvmdk-tools
-  ## bionic
-  # - libvmdk-utils
+  - libvmdk-utils
   ## visualization
   - gource
   ## veles
