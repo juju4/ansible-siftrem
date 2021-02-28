@@ -61,8 +61,8 @@ siftrem_extra_pkgs:
   # - nodejs-legacy  ## OK trusty, xenial but not bionic
   - npm
   ## Binglide Extra packages install
-  - python3-pyqt4
-  - python3-pyqt4.qtopengl
+  - python3-pyqt5
+  - python3-pyqt5.qtopengl
   - python3-opengl
   - python3-pip
   - python3-numpy
