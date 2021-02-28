@@ -30,12 +30,12 @@ siftrem_extra_pkgs:
   - snort
   # xenial and bionic; but not focal
   # - suricata
+  # - picviz
   - librrds-perl
   - libnet-ip-perl
   - tcptrace
   - xplot
   - chaosreader
-  - picviz
   - cmake
   - make
   - g++
