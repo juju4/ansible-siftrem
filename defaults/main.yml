@@ -162,7 +162,7 @@ siftrem_extra_dl:
   - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
   - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
   - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
-  - { url: 'https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip', s: 'ebe3fa4e1afd7d97650990b27777bb78bd0427e8e70c1d0ee042aeb52decac61' }
+  - { url: 'https://ghidra-sre.org/ghidra_9.2.2_PUBLIC_20201229.zip', s: '8cf8806dd5b8b7c7826f04fad8b86fc7e07ea380eae497f3035f8c974de72cf8' }
   - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/blob/master/target/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar?raw=true', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
   # - { url: '', s: '' }
 
