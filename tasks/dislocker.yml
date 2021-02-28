@@ -5,7 +5,7 @@
   git:
     repo: https://github.com/Aorimn/dislocker.git
     dest: "{{ siftrem_toolsetdir }}/dislocker"
-    version: "{{ dislocker_version | default('6c70382ce68da0e06fcfce576a88b821e4b69077') }}"
+    version: "{{ dislocker_version | default('c3d4cbcdbaa012bcf9f53555d04827be76cc1dfa') }}"
 
 - name: Ensure dislocker dependencies are present
   apt:
@@ -26,7 +26,7 @@
     creates: "{{ item.t }}"
   with_items:
     - { c: 'cmake .', t: "{{ siftrem_toolsetdir }}/dislocker/Makefile" }
-    - { c: make, t: "{{ siftrem_toolsetdir }}/dislocker/src/dislocker" }
+    - { c: make, t: "{{ siftrem_toolsetdir }}/dislocker/src/dislocker-fuse" }
 
 - name: install dislocker
   command: make install
