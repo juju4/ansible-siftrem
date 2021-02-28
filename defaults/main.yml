@@ -27,7 +27,7 @@ siftrem_extra_pkgs:
   - argus-client
   - tshark
   - graphviz
-  - snort
+  # - snort
   # xenial and bionic; but not focal
   # - suricata
   # - picviz
