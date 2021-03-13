@@ -16,4 +16,4 @@
     src: "{{ siftrem_toolsetdir }}/RegRipper3.0.git/rip.pl"
     dest: "/usr/local/bin/rip.pl"
     state: link
-    mode: '0777'
+    mode: '0755'
