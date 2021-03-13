@@ -17,13 +17,13 @@
     - remnux_do_x11: true
     - remnux_webserver: nginx
     # selection per disk space limit of CI/CD
-    remnux_docker_images:
-      - remnux/thug
-      # - remnux/retdec
-      # - remnux/viper
-      # - remnux/jsdetox
-      - remnux/radare2
-      # - radare/radare2
+    - remnux_docker_images:
+        - remnux/thug
+        # - remnux/retdec
+        # - remnux/viper
+        # - remnux/jsdetox
+        - remnux/radare2
+        # - radare/radare2
     ## pkg_resources.VersionConflict: (six 1.5.2 (/usr/lib/python2.7/dist-packages), Requirement.parse('six>=1.6.0'))
     - faup_virtualenv_user: "{{ sift_user }}"
     - faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
