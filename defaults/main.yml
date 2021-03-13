@@ -89,6 +89,8 @@ siftrem_extra_pkgs:
   - vlc
   - audacity
   - smbclient
+  # for regripper
+  - libparse-win32registry-perl
   # morse code/decode?
 
 siftrem_extra_git:
@@ -142,7 +144,7 @@ siftrem_git_maltego:
   - { r: 'https://github.com/digital4rensics/Malformity', v: HEAD }
 
 siftrem_extra_git_python_build:
-  - msg-extractor
+  - { d: msg-extractor, t: /usr/local/lib/python3.8/dist-packages/extract_msg-0.28.7-py3.8.egg }
 
 siftrem_extra_dl:
   - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
