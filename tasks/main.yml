@@ -99,7 +99,8 @@
 - name: python build extra tools  # noqa 301
   command: "python3 setup.py install"
   args:
-    chdir: "{{ siftrem_toolsetdir }}/{{ item }}"
+    chdir: "{{ siftrem_toolsetdir }}/{{ item.d }}"
+    creates: "{{ item.t }}"
   with_items: "{{ siftrem_extra_git_python_build }}"
   become: yes
 
