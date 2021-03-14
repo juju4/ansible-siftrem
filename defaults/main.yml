@@ -174,8 +174,6 @@ siftrem_extra_pip:
   - oletools
   # - pybeagle  # failing on grpcio dependency, https://github.com/grpc/grpc/issues/19964
   - visidata
-  # https://github.com/HurricaneLabs/machinae
-  - machinae
   - pandas
   - matplotlib
   - jupyterlab
