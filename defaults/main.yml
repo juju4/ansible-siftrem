@@ -57,9 +57,6 @@ siftrem_extra_pkgs:
   - xvfb
   - xauth
   - xfonts-base
-  # - node  ## NOK for casperjs
-  # - nodejs-legacy  ## OK trusty, xenial but not bionic
-  - npm
   ## Binglide Extra packages install
   - python3-pyqt5
   - python3-pyqt5.qtopengl
