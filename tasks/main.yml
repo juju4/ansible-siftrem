@@ -136,7 +136,7 @@
   become_user: "{{ sift_user }}"
 
 - include: regripper.yml
-- include: powershell.yml
+- include: powershell-empire.yml
 - include: maltego.yml
   when: siftrem_maltego_enable
 - include: powershell-core.yml
