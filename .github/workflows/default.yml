@@ -59,6 +59,7 @@ jobs:
           pwd
           env
           find -ls
+          df -h
       - name: Install lxd requirements
         run: |
           sudo apt-get update -qq
