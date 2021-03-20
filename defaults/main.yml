@@ -68,8 +68,8 @@ siftrem_extra_pkgs:
   ## moved to vars/Ubuntu-*
   # - libqt4-webkit
   # - libqt4-dev
-  ## manipulate vmware vmdk files
-  - libvmdk-utils
+  ## manipulate vmware vmdk files, requires libvmdk1/distribution which conflicts with libvmdk/gift
+  # - libvmdk-utils
   ## visualization
   - gource
   ## veles
@@ -165,8 +165,8 @@ siftrem_extra_dl:
 
   # - { url: '', s: '' }
 
-siftrem_extra_pip_version: []
 siftrem_extra_pip:
+  - cryptography==3.3.2
   - oletools
   # - pybeagle  # failing on grpcio dependency, https://github.com/grpc/grpc/issues/19964
   - visidata
