@@ -138,7 +138,9 @@
 - include: regripper.yml
 - include: powershell.yml
 - include: maltego.yml
+  when: siftrem_maltego_enable
 - include: powershell-core.yml
+  when: siftrem_powershell_enable
 - include: dislocker.yml
 - include: peda.yml
 - include: guymager.yml
