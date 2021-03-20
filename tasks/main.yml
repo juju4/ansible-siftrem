@@ -65,7 +65,6 @@
   apt:
     name:
       - rpcbind
-      - xterm
       # - netcat-traditional
       - cups-client
     state: absent
@@ -114,14 +113,6 @@
     validate_certs: "{{ item.v | default(true) }}"
   with_items: "{{ siftrem_extra_dl }}"
   ignore_errors: true
-
-- name: Extra pip install with version
-  pip:
-    name: "{{ item.n }}"
-    version: "{{ item.v }}"
-    state: present
-    executable: pip3
-  with_items: "{{ siftrem_extra_pip_version }}"
 
 - name: Extra pip install
   pip:
