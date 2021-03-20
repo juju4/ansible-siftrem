@@ -141,6 +141,8 @@ jobs:
           sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'ping -c 1 www.google.com' || true
           sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'ping -c 1 8.8.8.8' || true
           sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'curl -v https://www.google.com > /dev/null' || true
+          sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'df -h' || true
+          df -h
         if: ${{ failure() }}
         continue-on-error: true
       - name: After script - files
