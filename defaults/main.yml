@@ -124,7 +124,7 @@ siftrem_extra_git:
   - { r: 'https://github.com/JohnLaTwC/PyPowerShellXray', v: HEAD }
   - { r: 'https://github.com/THIBER-ORG/userline.git', v: HEAD }
   - { r: 'https://github.com/JPCERTCC/LogonTracer.git', v: HEAD }
-  - { r: 'https://github.com/insanitybit/grapl.git', v: HEAD }
+  # - { r: 'https://github.com/insanitybit/grapl.git', v: HEAD }
   - { r: 'https://github.com/yampelo/beagle.git', v: HEAD }
   - { r: 'https://github.com/BurntSushi/ripgrep.git', v: HEAD }
   - { r: 'https://github.com/sosreport/sos.git', v: HEAD }
