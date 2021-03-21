@@ -95,7 +95,7 @@ siftrem_extra_pkgs:
 
 siftrem_extra_git:
   - { r: 'https://github.com/keydet89/RegRipper3.0.git', v: HEAD }
-  - { r: 'https://github.com/wapiflapi/binglide', v: HEAD }
+  # - { r: 'https://github.com/wapiflapi/binglide', v: HEAD }
   - { r: 'https://github.com/wapiflapi/veles.git', v: HEAD }
   - { r: 'https://github.com/zrlram/afterglow', v: HEAD }
   - { r: 'https://github.com/zrlram/parsers', v: HEAD }
@@ -104,7 +104,7 @@ siftrem_extra_git:
   - { r: 'https://github.com/1aN0rmus/TekDefense-Automater', v: HEAD }
   - { r: 'https://github.com/rpt/Network-Traffic-Visualization', v: HEAD }
   - { r: 'https://github.com/urule99/jsunpack-n', v: HEAD }
-  - { r: 'https://github.com/google/binnavi', v: HEAD }
+  # - { r: 'https://github.com/google/binnavi', v: HEAD }
   - { r: 'https://github.com/lunixbochs/usercorn', v: HEAD }
   - { r: 'https://Ft44k@bitbucket.org/Ft44k/yavol', v: HEAD }
   - { r: 'https://github.com/504ensicsLabs/DAMM', v: HEAD }
@@ -147,7 +147,7 @@ siftrem_extra_git_python_build:
   - { d: msg-extractor, t: /usr/local/lib/python3.8/dist-packages/extract_msg-0.28.7-py3.8.egg }
 
 siftrem_extra_dl:
-  - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
+  # - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
   - { url: 'https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz', s: 'cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365' }
   - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
   - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz', s: '5553fd03fb7be564538fe56e871eac6e3caf56f40e8abc4602d2553964f8f0e1' }
