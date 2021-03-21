@@ -187,6 +187,6 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/juju4.siftrem
           sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'dpkg -l docker*' || true
-          sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'docker image ls' || true
+          # sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'docker image ls' || true
         if: ${{ always() }}
         continue-on-error: true
