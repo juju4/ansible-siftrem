@@ -186,7 +186,10 @@ jobs:
       - name: After script - docker
         run: |
           cd $GITHUB_WORKSPACE/juju4.siftrem
-          sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'dpkg -l docker*' || true
+          # sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'dpkg -l docker*' || true
           # sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'docker image ls' || true
+          sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'find /var/lib/dpkg/ -iname '*docker*'' || true
+          sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'cat /var/lib/docker/image/devicemapper/repositories.json' || true
+          sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'find /var/lib/docker ! -ipath "/var/lib/docker/overlay/*" ! -ipath "/var/lib/docker/image/overlay/*"' || true
         if: ${{ always() }}
         continue-on-error: true
