@@ -27,7 +27,12 @@
 - name: Ubuntu | snort noninteractive settings - dir
   file: dest=/etc/snort state=directory mode=0755
 - name: Ubuntu | snort noninteractive settings - conf
-  lineinfile: dest=/etc/snort/snort.debian.conf line="{{ item }}" mode=0755 backup=yes create=yes
+  lineinfile:
+    dest: /etc/snort/snort.debian.conf
+    line: "{{ item }}"
+    mode: '0755'
+    backup: yes
+    create: yes
   with_items:
     - 'DEBIAN_SNORT_HOME_NET="any"'
     - "DEBIAN_SNORT_INTERFACE=\"{{ __ubuntu_if }}\""
@@ -60,7 +65,6 @@
   apt:
     name:
       - rpcbind
-      - xterm
       # - netcat-traditional
       - cups-client
     state: absent
@@ -83,7 +87,7 @@
 - name: git clone extra tools
   git:
     repo: "{{ item.r }}"
-    dest: "{{ siftrem_toolsetdir }}/{{ item | basename }}"
+    dest: "{{ siftrem_toolsetdir }}/{{ item.r | basename }}"
     version: "{{ item.v }}"
     update: no
     force: no
@@ -94,7 +98,8 @@
 - name: python build extra tools  # noqa 301
   command: "python3 setup.py install"
   args:
-    chdir: "{{ siftrem_toolsetdir }}/{{ item }}"
+    chdir: "{{ siftrem_toolsetdir }}/{{ item.d }}"
+    creates: "{{ item.t }}"
   with_items: "{{ siftrem_extra_git_python_build }}"
   become: yes
 
@@ -108,14 +113,6 @@
     validate_certs: "{{ item.v | default(true) }}"
   with_items: "{{ siftrem_extra_dl }}"
   ignore_errors: true
-
-- name: Extra pip install with version
-  pip:
-    name: "{{ item.n }}"
-    version: "{{ item.v }}"
-    state: present
-    executable: pip3
-  with_items: "{{ siftrem_extra_pip_version }}"
 
 - name: Extra pip install
   pip:
@@ -139,9 +136,11 @@
   become_user: "{{ sift_user }}"
 
 - include: regripper.yml
-- include: powershell.yml
+- include: powershell-empire.yml
 - include: maltego.yml
+  when: siftrem_maltego_enable
 - include: powershell-core.yml
+  when: siftrem_powershell_enable
 - include: dislocker.yml
 - include: peda.yml
 - include: guymager.yml

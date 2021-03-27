@@ -12,29 +12,36 @@ ramdisk_path: /media/tmpfs
 ## is it vmware virtual machine? (OpenVM)
 vm: true
 
+siftrem_maltego_enable: true
+siftrem_powershell_enable: true
+
 siftrem_extra_pkgs:
   ## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
   ## https://major.io/2007/07/01/check-available-entropy-in-linux/
   ## https://blog.cloudflare.com/ensuring-randomness-with-linuxs-random-number-generator/
   - rng-tools
-  - python-pip
+  - python3-pip
+  - python3-xlrd
+  - python3-netaddr
+  - python3-virtualenv
+  - python3-dev
+  - python3-setuptools
   - git
   - argus-client
   - tshark
   - graphviz
-  - snort
-  - suricata
+  # - snort
+  # xenial and bionic; but not focal
+  # - suricata
+  # - picviz
   - librrds-perl
   - libnet-ip-perl
   - tcptrace
   - xplot
   - chaosreader
-  - picviz
-  - python-pip
   - cmake
   - make
   - g++
-  - python-hachoir-wx
   - sqlite3
   - lynx
   - fcrackzip
@@ -45,13 +52,7 @@ siftrem_extra_pkgs:
   - wngerman
   - wfrench
   - steghide
-  - python-xlrd
-  - python-netaddr
-  - python-virtualenv
   - build-essential
-  - python-dev
-  - python-setuptools
-  - python-lzma       # BinWalk
   - phantomjs
   - wkhtmltopdf
   ## cutycapt and its dependencies
@@ -59,24 +60,18 @@ siftrem_extra_pkgs:
   - xvfb
   - xauth
   - xfonts-base
-  # - node  ## NOK for casperjs
-  # - nodejs-legacy  ## OK trusty, xenial but not bionic
-  - npm
   ## Binglide Extra packages install
-  - python3-pyqt4
-  - python3-pyqt4.qtopengl
+  - python3-pyqt5
+  - python3-pyqt5.qtopengl
   - python3-opengl
   - python3-pip
   - python3-numpy
   ## event2timeline
-  - python-dateutil
+  - python3-dateutil
   ## moved to vars/Ubuntu-*
   # - libqt4-webkit
   # - libqt4-dev
-  ## manipulate vmware vmdk files
-  ## trusty, xenial
-  # - libvmdk-tools
-  ## bionic
+  ## manipulate vmware vmdk files, requires libvmdk1/distribution which conflicts with libvmdk/gift
   # - libvmdk-utils
   ## visualization
   - gource
@@ -94,11 +89,13 @@ siftrem_extra_pkgs:
   - vlc
   - audacity
   - smbclient
+  # for regripper
+  - libparse-win32registry-perl
   # morse code/decode?
 
 siftrem_extra_git:
   - { r: 'https://github.com/keydet89/RegRipper3.0.git', v: HEAD }
-  - { r: 'https://github.com/wapiflapi/binglide', v: HEAD }
+  # - { r: 'https://github.com/wapiflapi/binglide', v: HEAD }
   - { r: 'https://github.com/wapiflapi/veles.git', v: HEAD }
   - { r: 'https://github.com/zrlram/afterglow', v: HEAD }
   - { r: 'https://github.com/zrlram/parsers', v: HEAD }
@@ -107,7 +104,7 @@ siftrem_extra_git:
   - { r: 'https://github.com/1aN0rmus/TekDefense-Automater', v: HEAD }
   - { r: 'https://github.com/rpt/Network-Traffic-Visualization', v: HEAD }
   - { r: 'https://github.com/urule99/jsunpack-n', v: HEAD }
-  - { r: 'https://github.com/google/binnavi', v: HEAD }
+  # - { r: 'https://github.com/google/binnavi', v: HEAD }
   - { r: 'https://github.com/lunixbochs/usercorn', v: HEAD }
   - { r: 'https://Ft44k@bitbucket.org/Ft44k/yavol', v: HEAD }
   - { r: 'https://github.com/504ensicsLabs/DAMM', v: HEAD }
@@ -130,7 +127,7 @@ siftrem_extra_git:
   - { r: 'https://github.com/JohnLaTwC/PyPowerShellXray', v: HEAD }
   - { r: 'https://github.com/THIBER-ORG/userline.git', v: HEAD }
   - { r: 'https://github.com/JPCERTCC/LogonTracer.git', v: HEAD }
-  - { r: 'https://github.com/insanitybit/grapl.git', v: HEAD }
+  # - { r: 'https://github.com/insanitybit/grapl.git', v: HEAD }
   - { r: 'https://github.com/yampelo/beagle.git', v: HEAD }
   - { r: 'https://github.com/BurntSushi/ripgrep.git', v: HEAD }
   - { r: 'https://github.com/sosreport/sos.git', v: HEAD }
@@ -147,10 +144,10 @@ siftrem_git_maltego:
   - { r: 'https://github.com/digital4rensics/Malformity', v: HEAD }
 
 siftrem_extra_git_python_build:
-  - msg-extractor
+  - { d: msg-extractor, t: /usr/local/lib/python3.8/dist-packages/extract_msg-0.28.7-py3.8.egg }
 
 siftrem_extra_dl:
-  - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
+  # - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
   - { url: 'https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz', s: 'cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365' }
   - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
   - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz', s: '5553fd03fb7be564538fe56e871eac6e3caf56f40e8abc4602d2553964f8f0e1' }
@@ -167,18 +164,15 @@ siftrem_extra_dl:
   - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
   - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
   - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
-  - { url: 'https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip', s: 'ebe3fa4e1afd7d97650990b27777bb78bd0427e8e70c1d0ee042aeb52decac61' }
-  - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/blob/master/target/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar?raw=true', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
+  - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/releases/download/1.4-stable/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
+
   # - { url: '', s: '' }
 
-siftrem_extra_pip_version:
-  - { n: defang, v: 0.5.2 }
 siftrem_extra_pip:
+  - cryptography==3.3.2
   - oletools
-  - pybeagle
+  # - pybeagle  # failing on grpcio dependency, https://github.com/grpc/grpc/issues/19964
   - visidata
-  # https://github.com/HurricaneLabs/machinae
-  - machinae
   - pandas
   - matplotlib
   - jupyterlab

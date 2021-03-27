@@ -3,6 +3,6 @@
 - name: git clone maltego transforms
   git:
     repo: "{{ item.r }}"
-    dest: "{{ siftrem_toolsetdir }}/maltegotransforms/"
+    dest: "{{ siftrem_toolsetdir }}/maltegotransforms/{{ item.r | basename }}"
     version: "{{ item.v }}"
   with_items: "{{ siftrem_git_maltego }}"

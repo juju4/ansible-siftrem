@@ -3,8 +3,6 @@
 - hosts: all
   ## lighten the load for test instance
   vars:
-    - sift_docker: false
-    - remnux_docker_enable: false
     ## ensure consistency between sift and remnux values
     - sift_hostname: 'siftremworkstation'
     - sift_user: 'sansforensics'
@@ -16,8 +14,16 @@
     - remnux_pass: 'forensics'
     - remnux_do_x11: true
     - remnux_webserver: nginx
+    - sift_docker: false
+    - remnux_docker_enable: true
+    # selection per disk space limit of CI/CD
     - remnux_docker_images:
         - remnux/thug
+        # - remnux/retdec
+        # - remnux/viper
+        # - remnux/jsdetox
+        - remnux/radare2
+        # - radare/radare2
     ## pkg_resources.VersionConflict: (six 1.5.2 (/usr/lib/python2.7/dist-packages), Requirement.parse('six>=1.6.0'))
     - faup_virtualenv_user: "{{ sift_user }}"
     - faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
@@ -40,6 +46,9 @@
     - floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
     - floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
     - floss_pyinstaller_version: 3.3.1
+    - nodejs_install_npm_user: "root"
+    - siftrem_maltego_enable: false
+    - siftrem_powershell_enable: false
   pre_tasks:
     - name: Trusty | set fact
       set_fact:
@@ -49,4 +58,5 @@
           - python-virtualenv
       when: ansible_distribution_release == 'trusty'
   roles:
+    - { role: geerlingguy.docker, when: ansible_distribution == 'Ubuntu' }
     - juju4.siftrem

@@ -38,6 +38,7 @@
     - floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
     - floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
     - floss_pyinstaller_version: 3.3.1
+    - nodejs_install_npm_user: "root"
   pre_tasks:
     - name: Trusty | set fact
       set_fact:
