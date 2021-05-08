@@ -3,7 +3,7 @@
 - name: Unarchive densityscout
   unarchive:
     src: /usr/local/share/Toolset/densityscout_build_45_linux.zip
-    dest: /usr/local/bin/densityscout
+    dest: /usr/local/bin
     remote_src: yes
     mode: '0755'
     exclude:
