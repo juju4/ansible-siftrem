@@ -6,6 +6,8 @@
     dest: /usr/local/bin
     remote_src: yes
     mode: '0755'
+    creates: /usr/local/bin/densityscout
+    unsafe_writes: yes
     exclude:
       - license.txt
       - lin32/densityscout
