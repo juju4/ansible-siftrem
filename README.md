@@ -45,6 +45,9 @@ Nothing specific for now.
 * role has bigger disk requirements than usual and might need bigger disk image than usual whatever provider is used (lxc, virtualbox, ...)
 kitchen might end with error "IOError: [Errno 28] No space left on device"
 
+* for remote connection, you can use either ssh X-Forwarding with a local X11 server, either xrdp. Ensure your network connection is sufficient. Usually xrdp with lxde/xfce is less demanding.
+
+* if missing disk space, you can review: `apt clean all`, docker images, /opt/az, /usr/local/share/Toolset
 
 ## Known issues
 
