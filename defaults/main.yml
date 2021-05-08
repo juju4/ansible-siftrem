@@ -96,6 +96,7 @@ siftrem_extra_pkgs:
   - vlc
   - audacity
   - smbclient
+  - libmsiecf-tools
   # for regripper
   - libparse-win32registry-perl
   # morse code/decode?
