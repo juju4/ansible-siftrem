@@ -27,6 +27,7 @@
 - name: Set Azure Storage memo
   copy:
     dest: "/home/{{ sift_user }}/Desktop/Memo-Azure.md"
+    mode: '0644'
     content: |
       # Mount storage account
       ```
