@@ -1,6 +1,11 @@
 ---
 
-# remnux v6: /opt/remnux-rules/yara = http://yararules.com/
+# remnux v6: /opt/remnux-rules/yara = http://yararules.com/, https://github.com/Yara-Rules/rules
 # https://github.com/1aN0rmus/Yara
 # http://phishme.com/a-peek-inside-an-affiliates-malspam-operation-kovter-and-miurefboaxxe-infections/
 # https://github.com/mikesxrs/Open-Source-YARA-rules-
+# https://github.com/citizenlab/malware-signatures
+# https://github.com/jeFF0Falltrades/YARA-Signatures
+# https://github.com/InQuest/awesome-yara
+# https://github.com/AlienVault-Labs/AlienVaultLabs/tree/master/malware_analysis
+# https://github.com/Neo23x0/signature-base/tree/master/yara
