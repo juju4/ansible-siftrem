@@ -150,3 +150,6 @@
 
 - import_tasks: networkminer.yml
   when: siftrem_networkminer_enable
+
+- import_tasks: azurestorage.yml
+  when: siftrem_azurestorage_enable

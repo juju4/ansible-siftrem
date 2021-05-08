@@ -1,0 +1,35 @@
+---
+# https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-use-files-linux
+
+- name: Add Microsoft Apt signing key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Ensure Microsoft Azure repository is present
+  apt_repository:
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release | lower }} main"
+    filename: azure-cli
+    state: present
+
+- name: Ensure cifs-utils and azure dependencies are present
+  apt:
+    name:
+      - cifs-utils
+      - ca-certificates
+      - curl
+      - apt-transport-https
+      - lsb-release
+      - azure-cli
+    update_cache: true
+    state: present
+
+- name: Set Azure Storage memo
+  copy:
+    dest: "/home/{{ sift_user }}/Desktop/Memo-Azure.md"
+    content: |
+      # Mount storage account
+      ```
+      sudo mount -t cifs //$STORAGEACCT.file.core.windows.net/myshare /mnt/MyAzureFileShare -o vers=3.0,username=$STORAGEACCT,password=$STORAGEKEY,dir_mode=0444,file_mode=0444,serverino
+      ```
+      From https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mount-azure-file-storage-on-linux-using-smb
