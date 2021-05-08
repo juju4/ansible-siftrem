@@ -99,7 +99,8 @@ siftrem_extra_git:
   - { r: 'https://github.com/wapiflapi/veles.git', v: HEAD }
   - { r: 'https://github.com/zrlram/afterglow', v: HEAD }
   - { r: 'https://github.com/zrlram/parsers', v: HEAD }
-  - { r: 'https://github.com/certsocietegenerale/event2timeline', v: HEAD }
+  # unmaintained, python2
+  # - { r: 'https://github.com/certsocietegenerale/event2timeline', v: HEAD }
   - { r: 'https://github.com/tomchop/malcom.git', v: HEAD }
   - { r: 'https://github.com/1aN0rmus/TekDefense-Automater', v: HEAD }
   - { r: 'https://github.com/rpt/Network-Traffic-Visualization', v: HEAD }
@@ -136,6 +137,13 @@ siftrem_extra_git:
   - { r: 'https://github.com/longld/peda.git', v: HEAD }
   - { r: 'https://github.com/blackberry/pe_tree.git', v: HEAD }
   - { r: 'https://github.com/memoryforensics1/VolExp', v: HEAD }
+  - { r: 'https://github.com/memoryforensics1/Vol3xp', v: HEAD }
+  # volatility2
+  - { r: 'https://github.com/andreafortuna/autotimeliner', v: HEAD }
+  # python2
+  # - { r: 'https://github.com/mandiant/ShimCacheParser.git', v: HEAD }
+  - { r: 'https://github.com/comawill/ShimCacheParser.git', v: 'pull-req/python3' }
+  - { r: 'https://github.com/d4ncingd4n/Spondulas', v: HEAD }
 
 siftrem_git_maltego:
   - { r: 'https://github.com/brianwarehime/gavel', v: HEAD }
