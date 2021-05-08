@@ -1,0 +1,38 @@
+---
+# https://www.netresec.com/?page=Blog&month=2014-02&post=HowTo-install-NetworkMiner-in-Ubuntu-Fedora-and-Arch-Linux
+
+- name: Ensure mono is present
+  package:
+    name: mono-devel
+    state: present
+
+- name: Download NetworkMiner
+  get_url:
+    url: 'https://www.netresec.com/?download=NetworkMiner'
+    dest: "{{ siftrem_toolsetdir }}/NetworkMiner.zip"
+    checksum: 'sha256:34d81e42eec33183b79191de165ae506933fa3bb5b1fd836e70ef81468c9c65b'
+
+- name: Unarchive NetworkMiner
+  unarchive:
+    src: "{{ siftrem_toolsetdir }}/NetworkMiner.zip"
+    dest: /opt
+    mode: '0755'
+    remote_src: true
+    creates: /opt/NetworkMiner_2-6/ChangeLog
+
+- name: Symlink NetworkMiner directory
+  file:
+    src: /opt/NetworkMiner_2-6
+    dest: /opt/NetworkMiner
+    mode: '0755'
+    state: link
+
+- name: Validate NetworkMiner permissions
+  file:
+    path: "{{ item.p }}"
+    mode: "{{ item.m }}"
+  with_items:
+    - { p: /opt/NetworkMiner/NetworkMiner.exe, m: '0755' }
+    - { p: /opt/NetworkMiner/AssembledFiles, m: '1777' }
+    - { p: /opt/NetworkMiner/AssembledFiles/cache, m: '1777' }
+    - { p: /opt/NetworkMiner/Captures, m: '1777' }

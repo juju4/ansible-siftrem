@@ -14,6 +14,7 @@ vm: true
 
 siftrem_maltego_enable: true
 siftrem_powershell_enable: true
+siftrem_networkminer_enable: true
 
 siftrem_extra_pkgs:
   ## entropy check: cat /proc/sys/kernel/random/entropy_avail (100-200 is no good)
