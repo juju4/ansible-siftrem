@@ -153,3 +153,10 @@
 
 - import_tasks: azurestorage.yml
   when: siftrem_azurestorage_enable
+
+- name: Add Applications desktop shortcuts
+  copy:
+    src: "{{ item }}"
+    dest: /usr/share/applications/
+    mode: '0644'
+  with_items: "{{ siftrem_desktop_applications }}"
