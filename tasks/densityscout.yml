@@ -4,6 +4,7 @@
   unarchive:
     src: /usr/local/share/Toolset/densityscout_build_45_linux.zip
     dest: /usr/local/bin/densityscout
+    remote_src: yes
     mode: '0755'
     exclude:
       - license.txt
