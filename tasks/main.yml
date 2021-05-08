@@ -103,16 +103,16 @@
   with_items: "{{ siftrem_extra_git_python_build }}"
   become: yes
 
-- name: download {{ item.url | basename }}
+- name: extra downloads
   get_url:
     url: "{{ item.url }}"
-    dest: "{{ siftrem_toolsetdir }}/{{ item.url | basename }}"
-    mode: '0400'
+    dest: "{{ item.d | default(siftrem_toolsetdir + '/' + item.url | basename) }}"
+    mode: "{{ item.m | default('0400') }}"
     owner: "{{ sift_user }}"
-    sha256sum: "{{ item.s }}"
+    sha256sum: "{{ item.s | default(omit) }}"
     validate_certs: "{{ item.v | default(true) }}"
   with_items: "{{ siftrem_extra_dl }}"
-  ignore_errors: true
+  # ignore_errors: true
 
 - name: Extra pip install
   pip:

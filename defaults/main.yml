@@ -147,25 +147,33 @@ siftrem_extra_git_python_build:
   - { d: msg-extractor, t: /usr/local/lib/python3.8/dist-packages/extract_msg-0.28.7-py3.8.egg }
 
 siftrem_extra_dl:
-  # - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.7.1/Cytoscape_3_7_1_unix.sh', s: 'd1ad19c45a3bc6cfa6942a24eb599a5d935299948b9853145d75f698e3dd03d8' }
-  - { url: 'https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz', s: 'cc07dc6059f9a94dd729d8edfda230f95bc25d91dce17d94d73e5ead289bb365' }
+  # https://cytoscape.org/download.html
+  # - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.8.2/Cytoscape_3_8_2_unix.sh', s: '' }
+  # https://gephi.org/users/download/
+  - { url: 'https://github.com/gephi/gephi/releases/download/v0.9.2/gephi-0.9.2-linux.tar.gz', s: '' }
+  # https://www.maltego.com/downloads/
+  - { url: 'https://maltego-downloads.s3.us-east-2.amazonaws.com/linux/Maltego.v4.2.16.13775.deb', s: '57b29f731dc884651ac89d12574bdc26881973f7197199890d3b9f0c803fd4d0' }
+  # https://www.procdot.com/downloadprocdotbinaries.htm
+  - { url: 'https://www.procdot.com/download/procdot/binaries/procdot_1_22_57_linux.zip', s: '' }
+  # http://www.theusrus.de/Mondrian/
   - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
-  - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.0.7/logstalgia-1.0.7.tar.gz', s: '5553fd03fb7be564538fe56e871eac6e3caf56f40e8abc4602d2553964f8f0e1' }
-  - { url: 'http://procdot.com/download/procdot/binaries/procdot_1_2_55_linux.zip', s: '2a80d7ac9bead30786a4c391f87e4a8036dd977c8fe5811292c69f73b6caed73' }
+  - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.1.2/logstalgia-1.1.2.tar.gz', s: '' }
   - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: '8572cf7fee179b211fe12f829dad83ac36d040bcc105af38888a01189dae4945' }
   - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
   - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'd8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
-  - { url: 'http://didierstevens.com/files/software/byte-stats_V0_0_3.zip', s: '310b15865b332ff62f2c70ce441d322491db79bc5d1c8d8bbc9a7245005491b5' }
-  - { url: 'https://www.paterva.com/malv428/Maltego.v4.2.8.12786.linux.zip', s: 'ef4f30964e78522e55c669650648c7380907968080b7f567863ddebb36927601' }
-  - { url: 'http://downloads.sourceforge.net/project/capanalysis/version%201.2.2/capanalysis_1.2.2_amd64.deb', s: 'a9b4c56e80f1d53edbe0ad0158ccd05beab0d789e326f5201a6871598c8d7f52' }
-  - { url: 'https://didierstevens.com/files/software/base64dump_V0_0_5.zip', s: 'B4AB7B3A9D2947F08C6CC94F88CD825C9B2B63EE65AF7475E66BE9565EC4337A' }
+  # https://github.com/xplico/CapAnalysis/, unmaintained since 2018, dependencies like php5-cli
+  # - { url: 'https://download.sourceforge.net/project/capanalysis/version%201.2.3/capanalysis_1.2.3_amd64.deb', s: '' }
   - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
   - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
-  - { url: 'https://didierstevens.com/files/software/rtfdump_V0_0_5.zip', s: 'A26A60536509BA7CF55FF1876E8BC3A6DBA43F1EF8841F159D55411FD11B5078' }
-  - { url: 'https://didierstevens.com/files/software/emldump_V0_0_10.zip', s: 'C5877E252DDB61B40BFFCC5403DB500E672DACFE96FAA7D1E0668246C5202DE5' }
+  - { url: 'https://didierstevens.com/files/software/DidierStevensSuite.zip', s: '2A5931EFA21ADE6F7EFBD2B13C1C6CE00E33EBDB1DD03EEAA1B74B20CAF3A198' }
+  # https://www.cert.at/en/downloads/software/software-densityscout
   - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
   - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/releases/download/1.4-stable/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
-
+  - { url: 'https://gist.github.com/ilyaglow/cfa8b3565a5312e4111529500ecbce2c/raw/75311e918d2400f84c14cfbbc9c6ce770212df92/volatility_to_timesketch.py', s: '' }
+  # https://github.com/omerbenamram/EVTX A cross-platform parser for the Windows XML EventLog format  in rust
+  - { url: 'https://github.com/omerbenamram/evtx/releases/download/v0.7.2/evtx_dump-v0.7.2-x86_64-unknown-linux-gnu', s: '37ef49a719499a7ae01919a390c776219a93c5252eb455d6c7e21a3d1a04517b', d: /usr/local/bin/evtx_dump, m: '0755' }
+  # http://sandsprite.com/blogs/index.php?uid=7&pid=57 (Windows. if works with wine)
+  - { url: 'http://sandsprite.com/CodeStuff/PDFStreamDumper_Setup.exe', s: '' }
   # - { url: '', s: '' }
 
 siftrem_extra_pip:
