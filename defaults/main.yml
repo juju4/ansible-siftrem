@@ -192,6 +192,7 @@ siftrem_extra_pip:
   - pandas
   - matplotlib
   - jupyterlab
+  - timesketch-import-client
 
 siftrem_extra_docker:
   - "radare/radare2"
