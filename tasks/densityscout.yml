@@ -1,0 +1,11 @@
+---
+
+- name: Unarchive densityscout
+  unarchive:
+    src: /usr/local/share/Toolset/densityscout_build_45_linux.zip
+    dest: /usr/local/bin/densityscout
+    mode: '0755'
+    exclude:
+      - license.txt
+      - lin32/densityscout
+    extra_opts: -j

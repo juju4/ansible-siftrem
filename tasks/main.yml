@@ -148,6 +148,8 @@
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_major_version | int > 16
 
+- import_tasks: densityscout.yml
+
 - import_tasks: networkminer.yml
   when: siftrem_networkminer_enable
 
