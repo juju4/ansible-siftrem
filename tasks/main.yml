@@ -4,7 +4,6 @@
 - name: set hostname
   hostname: name={{ siftrem_hostname }}
   when: siftrem_hostname is defined
-  ignore_errors: true
 - name: Add new hostname in /etc/hosts (local resolv)
   replace:
     "dest='/etc/hosts' regexp='^127.0.0.1       localhost' replace='127.0.0.1       localhost {{ siftrem_hostname }}'"
@@ -112,7 +111,6 @@
     sha256sum: "{{ item.s | default(omit) }}"
     validate_certs: "{{ item.v | default(true) }}"
   with_items: "{{ siftrem_extra_dl }}"
-  # ignore_errors: true
 
 - name: Extra pip install
   pip:
@@ -124,7 +122,6 @@
   npm:
     name: casperjs
     path: "{{ siftrem_toolsetdir }}/casperjs"
-  ignore_errors: true
   register: pkg_result
   until: pkg_result is success
 

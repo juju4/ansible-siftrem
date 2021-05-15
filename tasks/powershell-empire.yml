@@ -6,7 +6,6 @@
     dest: "{{ siftrem_toolsetdir }}/empire"
     version: "{{ siftrem_empire_version | default('5aae31e7de591282773d2c8498af04ee4e8778f5') }}"
     force: no
-  ignore_errors: true
   become: yes
   become_user: "{{ sift_user }}"
 
