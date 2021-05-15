@@ -6,9 +6,17 @@
     dest: /usr/local/bin
     remote_src: yes
     mode: '0755'
-    creates: /usr/local/bin/densityscout
-    unsafe_writes: yes
+    creates: /usr/local/bin/lin64/densityscout
     exclude:
       - license.txt
       - lin32/densityscout
-    extra_opts: -j
+# this messes up with ansible detection
+#   extra_opts: -j
+#   unsafe_writes: yes
+
+- name: Symlink densityscout
+  file:
+    src: /usr/local/bin/lin64/densityscout
+    dest: /usr/local/bin/densityscout
+    mode: '0755'
+    state: link
