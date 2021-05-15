@@ -7,7 +7,8 @@
     ramdisk_size: 2048m
     sift_hostname: 'siftremworkstation'
     sift_user: 'sansforensics'
-    sift_pass: 'forensics'
+    # xrdp requires "complex" password
+    sift_pass: 'Forensics1234'
     sift_do_x11: false
     sift_webserver: nginx
     remnux_hostname: "{{ sift_hostname }}"
@@ -37,6 +38,8 @@
     floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
     floss_pyinstaller_version: 3.3.1
     nodejs_install_npm_user: "root"
+    tinyproxy_proxy_url: 'http://localhost:8888'
+    tinyproxy_filterdefaultdeny: 'No'
   pre_tasks:
     - name: Trusty | set fact
       set_fact:
@@ -46,4 +49,11 @@
           - python-virtualenv
       when: ansible_distribution_release == 'trusty'
   roles:
+    - geerlingguy.docker
+    - geerlingguy.nodejs
+    - juju4.sift
+    - juju4.remnux
     - juju4.siftrem
+    - juju4.brim
+    - juju4.tinyproxy
+    - juju4.xrdp
