@@ -32,4 +32,3 @@ describe command('/usr/local/bin/rip.pl -h') do
   its(:stderr) { should match /^$/ }
   its(:exit_status) { should eq 0 }
 end
-

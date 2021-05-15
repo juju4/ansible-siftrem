@@ -9,7 +9,7 @@
 ## http://dev.mysql.com/doc/refman/5.0/en/backup.html
 ## mysql> GRANT SELECT, RELOAD, LOCK TABLES ON *.* TO backup@localhost IDENTIFIED BY '<PASS>';
 ## or http://dev.mysql.com/doc/refman/4.1/en/backup.html
-##	same but different rights ? 
+##	same but different rights ?
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin
 umask 077
@@ -50,7 +50,7 @@ for db in $src_dbs; do
 	[ ! -f "$f" -a ! -f "$f.gz" ] && mysqldump $mysql_arg $mysql_auth $db > $f \
 		&& gzip $f && f=$f.gz && \
 		(openssl dgst -md5 $f; openssl dgst -sha1 $f; openssl dgst -ripemd160 $f) > $f.distinfo
-	#[ ! -f "$f" -a ! -f "$f.gz" ] && mysqlhotcopy $db $f 
+	#[ ! -f "$f" -a ! -f "$f.gz" ] && mysqlhotcopy $db $f
 
 done
 
@@ -60,4 +60,3 @@ done
 #mysqlhotcopy --user=backup $dbs $f && tar czf $f.tar.gz $f && \
 #	(openssl dgst -md5 $f; openssl dgst -sha1 $f; openssl dgst -ripemd160 $f) > $f.distinfo && \
 #	rm -R $f
-

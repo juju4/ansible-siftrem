@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=NetworkMiner
-Exec=mono /opt/NetworkMiner/NetworkMiner.exe --noupdatecheck 
+Exec=mono /opt/NetworkMiner/NetworkMiner.exe --noupdatecheck
 Comment=network forensics tool
 Icon=
 NoDisplay=false

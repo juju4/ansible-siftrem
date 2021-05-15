@@ -41,4 +41,3 @@ end
 describe command('xvfb-run --server-args="-screen 0, 1024x768x24" cutycapt --url="http://www.google.com" --out="/tmp/google.png"') do
   its(:exit_status) { should eq 0 }
 end
-
