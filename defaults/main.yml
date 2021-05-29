@@ -96,6 +96,10 @@ siftrem_extra_pkgs:
   - vlc
   - audacity
   - smbclient
+  - openvpn
+  - gimp
+  - sipcrack
+  - errno
   - libmsiecf-tools
   # for regripper
   - libparse-win32registry-perl
@@ -115,7 +119,7 @@ siftrem_extra_git:
   - { r: 'https://github.com/urule99/jsunpack-n', v: HEAD }
   # - { r: 'https://github.com/google/binnavi', v: HEAD }
   - { r: 'https://github.com/lunixbochs/usercorn', v: HEAD }
-  - { r: 'https://Ft44k@bitbucket.org/Ft44k/yavol', v: HEAD }
+  # - { r: 'https://Ft44k@bitbucket.org/Ft44k/yavol', v: HEAD }
   - { r: 'https://github.com/504ensicsLabs/DAMM', v: HEAD }
   - { r: 'https://github.com/defpoint/threat_note', v: HEAD }
   - { r: 'https://github.com/mattgwwalker/msg-extractor', v: HEAD }
@@ -152,6 +156,8 @@ siftrem_extra_git:
   # - { r: 'https://github.com/mandiant/ShimCacheParser.git', v: HEAD }
   - { r: 'https://github.com/comawill/ShimCacheParser.git', v: 'pull-req/python3' }
   - { r: 'https://github.com/d4ncingd4n/Spondulas', v: HEAD }
+  - { r: 'https://github.com/sandflysecurity/sandfly-filescan.git', v: HEAD }
+  - { r: 'https://github.com/sandflysecurity/sandfly-processdecloak.git', v: HEAD }
 
 siftrem_git_maltego:
   - { r: 'https://github.com/brianwarehime/gavel', v: HEAD }
@@ -190,6 +196,11 @@ siftrem_extra_dl:
   - { url: 'https://github.com/omerbenamram/evtx/releases/download/v0.7.2/evtx_dump-v0.7.2-x86_64-unknown-linux-gnu', s: '37ef49a719499a7ae01919a390c776219a93c5252eb455d6c7e21a3d1a04517b', d: /usr/local/bin/evtx_dump, m: '0755' }
   # http://sandsprite.com/blogs/index.php?uid=7&pid=57 (Windows. if works with wine)
   - { url: 'http://sandsprite.com/CodeStuff/PDFStreamDumper_Setup.exe', s: '' }
+  - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.10.0/zaproxy_2.10.0-1_all.deb', s: '54750581ec2fd21bd5aa8429b31b09eeb1e750ab6bb7e56f12504251892ccb09' }
+  - { url: 'https://portswigger.net/burp/releases/download?product=community&version=2021.5.1&type=Linux', s: '54bea55fb79fb00c6b0f1edf130322ef205f4b845332090e1363f7380312be53', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_5_1.sh }
+  - { url: 'https://github.com/rizinorg/cutter/releases/download/v2.0.2/Cutter-v2.0.2-x64.Linux.AppImage' }
+  - { url: 'https://github.com/RickdeJager/stegseek/releases/download/v0.6/stegseek_0.6-1.deb', s: '' }
+  - { url: 'https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz', s: '' }
   # - { url: '', s: '' }
 
 siftrem_extra_pip:
