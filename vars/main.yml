@@ -10,10 +10,6 @@ sift_hostname: siftworkstation
 # sift_webserver: apache2
 sift_webserver: nginx
 
-# sift_user: vagrant
-sift_user: sansforensics
-sift_pass: forensics
-
 ### Remnux
 
 remnux_hostname: siftworkstation
@@ -26,6 +22,3 @@ remnux_do_remnux: true
 
 # remnux_webserver: apache2
 remnux_webserver: nginx
-
-remnux_user: sansforensics
-remnux_pass: forensics
