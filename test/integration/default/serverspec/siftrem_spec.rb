@@ -15,7 +15,7 @@ describe file('/usr/share/remnux') do
   it { should be_directory }
 end
 
-describe file('/home/sansforensics/Desktop/REMnux Docs') do
+describe file('/home/remnux/Desktop/REMnux-README.md') do
   it { should be_symlink }
 end
 
