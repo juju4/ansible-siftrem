@@ -174,7 +174,7 @@ siftrem_extra_dl:
   # https://gephi.org/users/download/
   - { url: 'https://github.com/gephi/gephi/releases/download/v0.9.2/gephi-0.9.2-linux.tar.gz', s: '' }
   # https://www.maltego.com/downloads/
-  - { url: 'https://maltego-downloads.s3.us-east-2.amazonaws.com/linux/Maltego.v4.2.16.13775.deb', s: '57b29f731dc884651ac89d12574bdc26881973f7197199890d3b9f0c803fd4d0' }
+  - { url: 'https://maltego-downloads.s3.us-east-2.amazonaws.com/linux/Maltego.v4.2.18.13878.deb', s: 'e681a6ae7b02ec534f04fb4e83d753bcab07a206b94a50e17eddb024f7f9f572' }
   # https://www.procdot.com/downloadprocdotbinaries.htm
   - { url: 'https://www.procdot.com/download/procdot/binaries/procdot_1_22_57_linux.zip', s: '' }
   # http://www.theusrus.de/Mondrian/
@@ -187,7 +187,7 @@ siftrem_extra_dl:
   # - { url: 'https://download.sourceforge.net/project/capanalysis/version%201.2.3/capanalysis_1.2.3_amd64.deb', s: '' }
   - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
   - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
-  - { url: 'https://didierstevens.com/files/software/DidierStevensSuite.zip', s: '2A5931EFA21ADE6F7EFBD2B13C1C6CE00E33EBDB1DD03EEAA1B74B20CAF3A198' }
+  - { url: 'https://didierstevens.com/files/software/DidierStevensSuite.zip', s: '79df0d7e7e3fd04dabefd9e678d00411d2855c2f511d9958b545c0b04644cd63' }
   # https://www.cert.at/en/downloads/software/software-densityscout
   - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
   - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/releases/download/1.4-stable/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar', s: '19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
