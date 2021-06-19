@@ -9,7 +9,7 @@
     mode: '0755'
   with_items:
     - { re: ' c:\\perl\\bin\\perl.exe', rep: '/usr/bin/perl' }
-    - { re: '->catfile\("plugins"\)', rep: '->catfile("{{ siftrem_toolsetdir }}/RegRipper3.0.git/plugins")'}
+    - { re: '^my $scriptdir = File::Basename::dirname($scriptpath);', rep: 'my $scriptdir = "{{ siftrem_toolsetdir }}/RegRipper3.0.git/plugins"'}
 
 - name: RegRipper 3.0 | symlink in PATH
   file:
