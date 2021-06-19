@@ -18,11 +18,11 @@
     dest: /opt
     mode: '0755'
     remote_src: true
-    creates: /opt/NetworkMiner_2-7/ChangeLog
+    creates: /opt/NetworkMiner_2-7-1/ChangeLog
 
 - name: Symlink NetworkMiner directory
   file:
-    src: /opt/NetworkMiner_2-7
+    src: /opt/NetworkMiner_2-7-1
     dest: /opt/NetworkMiner
     mode: '0755'
     state: link
