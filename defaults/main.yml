@@ -103,6 +103,8 @@ siftrem_extra_pkgs:
   - libmsiecf-tools
   # for regripper
   - libparse-win32registry-perl
+  # from gift ppa
+  - docker-explorer-tools
   # morse code/decode?
 
 siftrem_extra_git:
