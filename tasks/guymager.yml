@@ -18,3 +18,6 @@
     update_cache: yes
   register: pkg_result
   until: pkg_result is success
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_major_version | int >= 20
