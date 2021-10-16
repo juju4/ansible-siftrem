@@ -36,3 +36,6 @@ suites:
   - name: default
     run_list:
     attributes:
+  - name: default-lesschecksums
+    run_list:
+    attributes:
