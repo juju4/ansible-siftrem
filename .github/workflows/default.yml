@@ -60,6 +60,10 @@ jobs:
           env
           find -ls
           df -h
+      - name: Free disk space
+        run: |
+          sudo rm -Rf /usr/local/lib/android
+          df -h
       - name: Install lxd requirements
         run: |
           sudo apt-get update -qq
