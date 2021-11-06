@@ -110,6 +110,8 @@
     owner: "{{ sift_user }}"
     sha256sum: "{{ item.s | default(omit) }}"
     validate_certs: "{{ item.v | default(true) }}"
+  register: dl_result
+  until: dl_result is success
   with_items: "{{ siftrem_extra_dl }}"
 
 - name: Extra pip install
