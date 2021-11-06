@@ -11,6 +11,11 @@
     repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release | lower }} main"
     filename: azure-cli
     state: present
+  notify:
+    - update apt cache
+
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: Ensure cifs-utils and azure dependencies are present
   apt:
@@ -21,7 +26,6 @@
       - apt-transport-https
       - lsb-release
       - azure-cli
-    update_cache: true
     state: present
 
 - name: Set Azure Storage memo

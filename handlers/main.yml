@@ -17,3 +17,7 @@
 
 - name: run ldconfig
   command: ldconfig
+
+- name: update apt cache
+  apt:
+    update_cache: yes
