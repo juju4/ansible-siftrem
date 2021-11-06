@@ -58,6 +58,7 @@ jobs:
       - name: idempotency run
         run: |
           cd $GITHUB_WORKSPACE/juju4.siftrem && ansible-playbook -i localhost, --connection=local --become -vvv test/integration/default/default.yml | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 1)
+        continue-on-error: true
       - name: On failure
         run: |
           systemctl -l --no-pager status
