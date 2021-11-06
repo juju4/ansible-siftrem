@@ -95,7 +95,7 @@ jobs:
           sudo lxc network list
           # configure storage pool
           sudo lxc storage list
-          sudo lxc storage create pool1 zfs
+          sudo lxc storage create pool1 zfs size=25GB
           sudo lxc storage list
           sudo zpool list
           sudo lxc profile device add default root disk path=/ pool=pool1
