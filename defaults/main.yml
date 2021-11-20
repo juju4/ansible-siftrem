@@ -160,6 +160,7 @@ siftrem_extra_git:
   - { r: 'https://github.com/d4ncingd4n/Spondulas', v: HEAD }
   - { r: 'https://github.com/sandflysecurity/sandfly-filescan.git', v: HEAD }
   - { r: 'https://github.com/sandflysecurity/sandfly-processdecloak.git', v: HEAD }
+  - { r: 'https://github.com/wagga40/Zircolite.git', v: HEAD }
 
 siftrem_git_maltego:
   - { r: 'https://github.com/brianwarehime/gavel', v: HEAD }
