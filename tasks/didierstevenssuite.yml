@@ -76,13 +76,13 @@
     - image-overlay.py
     - jpegdump.py
     - keihash.py
-    - mPDF.py
+    # - mPDF.py
     - nsrl.py
     - numbers-to-string.py
     - oledump.py
     - password-history-analysis.py
-    - pdf-parser.py
-    - pdfid.py
+    # - pdf-parser.py
+    # - pdfid.py
     - pdftool.py
     - pecheck.py
     - re-search.py
