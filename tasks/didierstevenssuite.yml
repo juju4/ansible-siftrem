@@ -1,0 +1,99 @@
+---
+# https://blog.didierstevens.com/didier-stevens-suite/
+
+- name: Retrieve DidierStevensSuite hash
+  uri:
+    url: https://blog.didierstevens.com/didier-stevens-suite/
+    return_content: yes
+  register: html
+  changed_when: false
+
+- name: Set fact DidierStevensSuite hash
+  set_fact:
+    siftrem_didierstevenssuite_sha256: "{{ html.content | regex_search('SHA256: (.+)<br />', '\\1') | first }}"
+
+- name: Download DidierStevensSuite
+  get_url:
+    url: 'https://didierstevens.com/files/software/DidierStevensSuite.zip'
+    dest: "{{ siftrem_toolsetdir }}/DidierStevensSuite.zip"
+    checksum: "sha256:{{ siftrem_didierstevenssuite_sha256 }}"
+
+- name: Ensure unzip package is present
+  package:
+    name: unzip
+    state: present
+
+- name: Unarchive DidierStevensSuite
+  unarchive:
+    src: "{{ siftrem_toolsetdir }}/DidierStevensSuite.zip"
+    dest: "{{ siftrem_toolsetdir }}"
+    mode: '0644'
+    remote_src: true
+    creates: "{{ siftrem_toolsetdir }}/DidierStevensSuite/rules.txt"
+
+- name: Ensure libc6-i386 package is present for 32-bits ELF
+  package:
+    name: libc6-i386
+    state: present
+
+- name: Symlink few Linux ELF files in /usr/local/bin
+  file:
+    src: "{{ siftrem_toolsetdir }}/DidierStevensSuite/Linux/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: '0755'
+    state: link
+  with_items:
+    - eicargen
+    - js
+    - js-ascii
+    - js-file
+    - xorsearch-x64-dynamic
+    - xorsearch-x64-static
+    - xorsearch-x86-dynamic
+    - xorsearch-x86-static
+
+- name: Symlink few python scripts in /usr/local/bin
+  file:
+    src: "{{ siftrem_toolsetdir }}/DidierStevensSuite/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: '0755'
+    state: link
+  with_items:
+    - amsiscan.py
+    - base64dump.py
+    - cipher-tool.py
+    - cs-analyze-processdump.py
+    - cs-decrypt-metadata.py
+    - cs-extract-key.py
+    - cut-bytes.py
+    - decode-vbe.py
+    - decompress_rtf.py
+    - defuzzer.py
+    - emldump.py
+    - headtail.py
+    - hex-to-bin.py
+    - image-forensics-ela.py
+    - image-overlay.py
+    - jpegdump.py
+    - keihash.py
+    - mPDF.py
+    - nsrl.py
+    - numbers-to-string.py
+    - oledump.py
+    - password-history-analysis.py
+    - pdf-parser.py
+    - pdfid.py
+    - pdftool.py
+    - pecheck.py
+    - re-search.py
+    - rtfdump.py
+    - ssdeep.py
+    - strings.py
+    - virustotal-search.py
+    - virustotal-submit.py
+    - xmldump.py
+    - xor-kpa.py
+    - zipdump.py
+# fileglob is local to orchestrator so not valid here
+#  with_fileglob:
+#    - "{{ siftrem_toolsetdir }}/DidierStevensSuite/*.py"

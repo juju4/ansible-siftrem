@@ -149,6 +149,8 @@
 
 - import_tasks: densityscout.yml
 
+- import_tasks: didierstevenssuite.yml
+
 - import_tasks: networkminer.yml
   when: siftrem_networkminer_enable
 
