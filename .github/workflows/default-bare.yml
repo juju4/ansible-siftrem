@@ -17,7 +17,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            experimental: false
+            experimental: true
           - os: ubuntu-18.04
             experimental: true
     env:
