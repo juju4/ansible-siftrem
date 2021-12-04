@@ -214,6 +214,8 @@ siftrem_extra_pip:
   - matplotlib
   - jupyterlab
   - timesketch-import-client
+  - blint
+  - binary-refinery
 
 siftrem_extra_docker:
   - "radare/radare2"
