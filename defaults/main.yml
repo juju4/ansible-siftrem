@@ -198,8 +198,9 @@ siftrem_extra_dl:
   - { url: 'https://github.com/omerbenamram/evtx/releases/download/v0.7.2/evtx_dump-v0.7.2-x86_64-unknown-linux-gnu', s: '37ef49a719499a7ae01919a390c776219a93c5252eb455d6c7e21a3d1a04517b', d: /usr/local/bin/evtx_dump, m: '0755' }
   # http://sandsprite.com/blogs/index.php?uid=7&pid=57 (Windows. if works with wine)
   - { url: 'http://sandsprite.com/CodeStuff/PDFStreamDumper_Setup.exe', s: '' }
-  - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.10.0/zaproxy_2.10.0-1_all.deb', s: '54750581ec2fd21bd5aa8429b31b09eeb1e750ab6bb7e56f12504251892ccb09' }
-  - { url: 'https://portswigger.net/burp/releases/download?product=community&version=2021.5.1&type=Linux', s: '54bea55fb79fb00c6b0f1edf130322ef205f4b845332090e1363f7380312be53', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_5_1.sh }
+  # https://github.com/zaproxy/zaproxy/releases
+  - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/zaproxy_2.11.1-1_all.deb', s: 'abbfe9ad057b3511043a0f0317d5f91d914145ada5b102a5708f8af6a5e191f8' }
+  - { url: 'https://portswigger.net/burp/releases/download?product=community&version=2021.12&type=Linux', s: 'a4c0c57686c9d509d66d8a131e7fae8ef259ef7650166e764854e47f41fac34a', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_12.sh }
   - { url: 'https://github.com/rizinorg/cutter/releases/download/v2.0.2/Cutter-v2.0.2-x64.Linux.AppImage' }
   - { url: 'https://github.com/RickdeJager/stegseek/releases/download/v0.6/stegseek_0.6-1.deb', s: '' }
   - { url: 'https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz', s: '' }
@@ -214,7 +215,8 @@ siftrem_extra_pip:
   - matplotlib
   - jupyterlab
   - timesketch-import-client
-  - blint
+  # blint requires PyYAML<6.0.0,>=5.4.1 - conflict with system package python3-yaml 5.3.1-1ubuntu0.1
+  #- blint
   - binary-refinery
 
 siftrem_extra_docker:
