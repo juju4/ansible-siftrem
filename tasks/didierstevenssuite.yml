@@ -17,6 +17,7 @@
     url: 'https://didierstevens.com/files/software/DidierStevensSuite.zip'
     dest: "{{ siftrem_toolsetdir }}/DidierStevensSuite.zip"
     checksum: "sha256:{{ siftrem_didierstevenssuite_sha256 }}"
+    mode: '0644'
 
 - name: Ensure unzip package is present
   package:
