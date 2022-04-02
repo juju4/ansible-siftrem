@@ -2,31 +2,31 @@
 
 ## fails under lxd+systemd, https://github.com/ansible/ansible-modules-core/issues/5582
 - name: set hostname
-  hostname: name={{ siftrem_hostname }}
+  ansible.builtin.hostname: name={{ siftrem_hostname }}
   when: siftrem_hostname is defined
 - name: Add new hostname in /etc/hosts (local resolv)
-  replace:
+  ansible.builtin.replace:
     "dest='/etc/hosts' regexp='^127.0.0.1       localhost' replace='127.0.0.1       localhost {{ siftrem_hostname }}'"
   when: siftrem_hostname is defined
 
 - name: Restrict sshd config
-  lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
+  ansible.builtin.lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
   with_items:
     - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
     - { regexp: '^PermitRootLogin', line: 'PermitRootLogin without-password' }
 
 - name: Include version-specific variables for Ubuntu.
-  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
   when: ansible_distribution == 'Ubuntu'
 
 - name: check ruby spec permissions
-  file: "dest=/home/{{ sift_user }}/.gem/specs state=directory mode=0755 owner={{ sift_user }}"
+  ansible.builtin.file: "dest=/home/{{ sift_user }}/.gem/specs state=directory mode=0755 owner={{ sift_user }}"
 
 ## https://answers.launchpad.net/ubuntu/+source/snort/+question/262496
 - name: Ubuntu | snort noninteractive settings - dir
-  file: dest=/etc/snort state=directory mode=0755
+  ansible.builtin.file: dest=/etc/snort state=directory mode=0755
 - name: Ubuntu | snort noninteractive settings - conf
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/snort/snort.debian.conf
     line: "{{ item }}"
     mode: '0755'
@@ -36,14 +36,14 @@
     - 'DEBIAN_SNORT_HOME_NET="any"'
     - "DEBIAN_SNORT_INTERFACE=\"{{ __ubuntu_if }}\""
 - name: Check current network interfaces
-  command: ip addr
+  ansible.builtin.command: ip addr
   register: ipaddr
   changed_when: false
 - name: Current network interfaces
-  debug: var=ipaddr.stdout_lines
+  ansible.builtin.debug: var=ipaddr.stdout_lines
 
 - name: Debian | Extra packages install
-  apt:
+  ansible.builtin.apt:
     name: "{{ siftrem_extra_pkgs + __ubuntu_packages }}"
     state: present
     update_cache: yes
@@ -55,13 +55,13 @@
   when: ramdisk_path is defined and ramdisk_size is defined
 
 - name: Debian | open-vm-tools install
-  apt: name=open-vm-tools state=present
+  ansible.builtin.apt: name=open-vm-tools state=present
   when: vm|bool
   register: pkg_result
   until: pkg_result is success
 
 - name: Debian | Remove some packages
-  apt:
+  ansible.builtin.apt:
     name:
       - rpcbind
       # - netcat-traditional
@@ -71,7 +71,7 @@
   until: pkg_result is success
 
 - name: Review some limits
-  lineinfile:  # noqa no-tabs
+  ansible.builtin.lineinfile:  # noqa no-tabs
     dest: /etc/security/limits.d/openfiles
     regexp: "^{{ sift_user }}\t\thard\tnofiles\t\t2048"
     line: "{{ sift_user }}\t\thard\tnofiles\t\t2048"
@@ -81,10 +81,10 @@
 
 ## Extra tools
 - name: create toolset root dir
-  file: dest={{ siftrem_toolsetdir }} mode=0755 owner={{ sift_user }} state=directory
+  ansible.builtin.file: dest={{ siftrem_toolsetdir }} mode=0755 owner={{ sift_user }} state=directory
 
 - name: git clone extra tools
-  git:
+  ansible.builtin.git:
     repo: "{{ item.r }}"
     dest: "{{ siftrem_toolsetdir }}/{{ item.r | basename }}"
     version: "{{ item.v }}"
@@ -95,7 +95,7 @@
   become_user: "{{ sift_user }}"
 
 - name: python build extra tools  # noqa 301
-  command: "python3 setup.py install"
+  ansible.builtin.command: "python3 setup.py install"
   args:
     chdir: "{{ siftrem_toolsetdir }}/{{ item.d }}"
     creates: "{{ item.t }}"
@@ -103,7 +103,7 @@
   become: yes
 
 - name: extra downloads
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ item.d | default(siftrem_toolsetdir + '/' + item.url | basename) }}"
     mode: "{{ item.m | default('0400') }}"
@@ -115,7 +115,7 @@
   with_items: "{{ siftrem_extra_dl }}"
 
 - name: Extra pip install
-  pip:
+  ansible.builtin.pip:
     name: "{{ siftrem_extra_pip }}"
     state: present
     executable: pip3
@@ -158,7 +158,7 @@
   when: siftrem_azurestorage_enable
 
 - name: Add Applications desktop shortcuts
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /usr/share/applications/
     mode: '0644'

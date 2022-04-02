@@ -2,13 +2,13 @@
 # https://airbus-cyber-security.com/mounting-bitlocker-volumes-linux/
 
 - name: git clone dislocker
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Aorimn/dislocker.git
     dest: "{{ siftrem_toolsetdir }}/dislocker"
     version: "{{ dislocker_version | default('c3d4cbcdbaa012bcf9f53555d04827be76cc1dfa') }}"
 
 - name: Ensure dislocker dependencies are present
-  apt:
+  ansible.builtin.apt:
     name:
       - gcc
       - cmake
@@ -20,7 +20,7 @@
   until: pkg_result is success
 
 - name: build dislocker
-  command: "{{ item.c }}"
+  ansible.builtin.command: "{{ item.c }}"
   args:
     chdir: "{{ siftrem_toolsetdir }}/dislocker"
     creates: "{{ item.t }}"
@@ -29,7 +29,7 @@
     - { c: make, t: "{{ siftrem_toolsetdir }}/dislocker/src/dislocker-fuse" }
 
 - name: install dislocker
-  command: make install
+  ansible.builtin.command: make install
   args:
     chdir: "{{ siftrem_toolsetdir }}/dislocker"
     creates: "/usr/local/bin/dislocker"

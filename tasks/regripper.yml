@@ -2,7 +2,7 @@
 # few adaptation to run latest on unix directly
 
 - name: RegRipper 3.0 | ensure linux setup
-  replace:
+  ansible.builtin.replace:
     dest: "{{ siftrem_toolsetdir }}/RegRipper3.0.git/rip.pl"
     regexp: "{{ item.re }}"
     replace: "{{ item.rep }}"
@@ -13,7 +13,7 @@
     - { re: '^my \$scriptdir = File::Basename::dirname\(\$scriptpath\);', rep: "my $scriptdir = \"{{ siftrem_toolsetdir }}/RegRipper3.0.git\";\nmy $plugindir = \"{{ siftrem_toolsetdir }}/RegRipper3.0.git/plugins\";"}
 
 - name: RegRipper 3.0 | symlink in PATH
-  file:
+  ansible.builtin.file:
     src: "{{ siftrem_toolsetdir }}/RegRipper3.0.git/rip.pl"
     dest: "/usr/local/bin/rip.pl"
     state: link

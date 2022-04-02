@@ -1,6 +1,6 @@
 ---
 - name: git clone binglide
-  git:
+  ansible.builtin.git:
     repo=https://github.com/volatilityfoundation/volatility.git
     dest={{ siftrem_toolsetdir }}/volatility-win10tp
     version=win10tp
@@ -8,10 +8,10 @@
   become_user: "{{ current_user }}"
 
 - name: Check if memory sample already present
-  stat: path={{ siftrem_toolsetdir }}/sample/Win10TPx64.vmem.zip
+  ansible.builtin.stat: path={{ siftrem_toolsetdir }}/sample/Win10TPx64.vmem.zip
   register: win10m
 - name: Win10 memory sample
-  get_url: url=https://www.sendspace.com/pro/dl/0cte2h
+  ansible.builtin.get_url: url=https://www.sendspace.com/pro/dl/0cte2h
     dest={{ siftrem_toolsetdir }}/sample/Win10TPx64.vmem.zip
     mode=0400
     owner={{ current_user }}

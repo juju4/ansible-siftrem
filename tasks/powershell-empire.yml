@@ -1,7 +1,7 @@
 ---
 
 - name: Powershell Empire
-  git:
+  ansible.builtin.git:
     repo: https://github.com/PowerShellEmpire/Empire.git
     dest: "{{ siftrem_toolsetdir }}/empire"
     version: "{{ siftrem_empire_version | default('5aae31e7de591282773d2c8498af04ee4e8778f5') }}"
@@ -11,4 +11,4 @@
 
 ## interactive
 # - name: Powershell Empire - setup
-#   command: "./install.sh chdir={{ siftrem_toolsetdir }}/empire/setup"
+#   ansible.builtin.command: "./install.sh chdir={{ siftrem_toolsetdir }}/empire/setup"

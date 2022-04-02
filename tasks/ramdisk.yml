@@ -2,13 +2,13 @@
 ## create a ramdisk
 
 - name: Ensure ramdisk directory exists
-  file:
+  ansible.builtin.file:
     dest: "{{ ramdisk_path }}"
     mode: '01777'
     state: directory
 
 - name: Ensure ramdisk is mounted
-  mount:
+  ansible.builtin.mount:
     name: "{{ ramdisk_path }}"
     src: tmpfs
     fstype: tmpfs

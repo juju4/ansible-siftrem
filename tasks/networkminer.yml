@@ -2,19 +2,19 @@
 # https://www.netresec.com/?page=Blog&month=2014-02&post=HowTo-install-NetworkMiner-in-Ubuntu-Fedora-and-Arch-Linux
 
 - name: Ensure mono is present
-  package:
+  ansible.builtin.package:
     name: mono-devel
     state: present
 
 - name: Download NetworkMiner
-  get_url:
+  ansible.builtin.get_url:
     url: 'https://www.netresec.com/?download=NetworkMiner'
     dest: "{{ siftrem_toolsetdir }}/NetworkMiner.zip"
     checksum: "sha256:{{ siftrem_networkminer_sha256 | default('094e14271a560a8880d3dded329c3d7cd9c84bdee527f926261c1b080a639b7f') }}"
     mode: '0644'
 
 - name: Unarchive NetworkMiner
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ siftrem_toolsetdir }}/NetworkMiner.zip"
     dest: /opt
     mode: '0755'
@@ -22,14 +22,14 @@
     creates: /opt/NetworkMiner_2-7-2/ChangeLog
 
 - name: Symlink NetworkMiner directory
-  file:
+  ansible.builtin.file:
     src: /opt/NetworkMiner_2-7-2
     dest: /opt/NetworkMiner
     mode: '0755'
     state: link
 
 - name: Validate NetworkMiner permissions
-  file:
+  ansible.builtin.file:
     path: "{{ item.p }}"
     mode: "{{ item.m }}"
   with_items:

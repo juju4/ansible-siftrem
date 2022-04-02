@@ -2,7 +2,7 @@
 # https://www.kali.org/tutorials/installing-powershell-on-kali-linux/
 
 - name: Ensure apt dependencies are present
-  package:
+  ansible.builtin.package:
     name:
       - curl
       - gnupg
@@ -12,20 +12,20 @@
   until: pkg_result is success
 
 - name: Ensure Microsoft apt repository key is present
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc
     state: present
   register: pkg_result
   until: pkg_result is success
 
 - name: Ensure Microsoft apt repository is present
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-{{ ansible_distribution | lower }}-{{ ansible_distribution_release | lower }}-prod {{ ansible_distribution_release | lower }} main"
     state: present
     filename: powershell
 
 - name: Ensure Powershell package is present
-  package:
+  ansible.builtin.package:
     name: powershell
     state: present
   register: pkg_result
