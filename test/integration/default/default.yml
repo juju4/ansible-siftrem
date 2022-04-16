@@ -6,12 +6,13 @@
     ## ensure consistency between sift and remnux values
     - sift_hostname: 'siftremworkstation'
     - sift_user: 'sansforensics'
-    - sift_pass: 'forensics'
+    # 'forensics'
+    - sift_pass: '$6$u9LOM5jmW0o$vIK0cgsGk92quWiV4uAGgZ9eIDwPwQ8We64yeagij7bCFLML2HVomciz2/lQ9k.QN.J/nQbpn21IosRWD5G9n.'
     - sift_do_x11: false
     - sift_webserver: nginx
     - remnux_hostname: 'siftremworkstation'
     - remnux_user: 'sansforensics'
-    - remnux_pass: 'forensics'
+    - remnux_pass: "{{ sift_pass }}"
     - remnux_do_x11: true
     - remnux_webserver: nginx
     - sift_docker: false
