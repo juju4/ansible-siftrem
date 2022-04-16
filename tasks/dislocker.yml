@@ -5,7 +5,7 @@
   ansible.builtin.git:
     repo: https://github.com/Aorimn/dislocker.git
     dest: "{{ siftrem_toolsetdir }}/dislocker"
-    version: "{{ dislocker_version | default('c3d4cbcdbaa012bcf9f53555d04827be76cc1dfa') }}"
+    version: "{{ dislocker_version | default('f9674c462c06ba47edb468fd1951b3707a3b3b89') }}"
 
 - name: Ensure dislocker dependencies are present
   ansible.builtin.apt:
