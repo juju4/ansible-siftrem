@@ -51,7 +51,7 @@
   register: pkg_result
   until: pkg_result is success
 
-- include: ramdisk.yml
+- import_tasks: ramdisk.yml
   when: ramdisk_path is defined and ramdisk_size is defined
 
 - name: Debian | open-vm-tools install
@@ -127,22 +127,22 @@
   register: pkg_result
   until: pkg_result is success
 
-- include: yara-signature.yml
+- import_tasks: yara-signature.yml
   become: yes
   become_user: "{{ sift_user }}"
-- include: iocrepository.yml
+- import_tasks: iocrepository.yml
   become: yes
   become_user: "{{ sift_user }}"
 
-- include: regripper.yml
-- include: powershell-empire.yml
-- include: maltego.yml
+- import_tasks: regripper.yml
+- import_tasks: powershell-empire.yml
+- import_tasks: maltego.yml
   when: siftrem_maltego_enable
-- include: powershell-core.yml
+- import_tasks: powershell-core.yml
   when: siftrem_powershell_enable
-- include: dislocker.yml
-- include: peda.yml
-- include: guymager.yml
+- import_tasks: dislocker.yml
+- import_tasks: peda.yml
+- import_tasks: guymager.yml
   when:
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_major_version | int > 16
