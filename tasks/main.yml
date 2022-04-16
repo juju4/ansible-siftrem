@@ -108,7 +108,7 @@
     dest: "{{ item.d | default(siftrem_toolsetdir + '/' + item.url | basename) }}"
     mode: "{{ item.m | default('0400') }}"
     owner: "{{ sift_user }}"
-    sha256sum: "{{ item.s | default(omit) }}"
+    checksum: "sha256:{{ item.s | default(omit) }}"
     validate_certs: "{{ item.v | default(true) }}"
   register: dl_result
   until: dl_result is success
