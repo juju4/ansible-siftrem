@@ -67,7 +67,7 @@
         # https://github.com/xplico/CapAnalysis/, unmaintained since 2018, dependencies like php5-cli
         # - { url: 'https://download.sourceforge.net/project/capanalysis/version%201.2.3/capanalysis_1.2.3_amd64.deb', s: '' }
         - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: '28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
-        - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
+        # - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: '8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
         - { url: 'https://didierstevens.com/files/software/DidierStevensSuite.zip', s: '' }
         # https://www.cert.at/en/downloads/software/software-densityscout
         - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: '7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
