@@ -1,6 +1,13 @@
 ---
 # https://airbus-cyber-security.com/mounting-bitlocker-volumes-linux/
 
+- name: Add git safe.directory
+  community.general.git_config:
+    scope: global
+    name: safe.directory
+    value: /usr/local/share/Toolset/dislocker
+    state: present
+
 - name: git clone dislocker
   ansible.builtin.git:
     repo: https://github.com/Aorimn/dislocker.git
