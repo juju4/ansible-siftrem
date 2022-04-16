@@ -10,7 +10,7 @@
   ansible.builtin.get_url:
     url: 'https://www.netresec.com/?download=NetworkMiner'
     dest: "{{ siftrem_toolsetdir }}/NetworkMiner.zip"
-    checksum: "sha256:{{ siftrem_networkminer_sha256 | default('094e14271a560a8880d3dded329c3d7cd9c84bdee527f926261c1b080a639b7f') }}"
+    checksum: "sha256:{{ siftrem_networkminer_sha256 | default('cf477b651c3bcc70d6f5d50f9bdcb6d8cf2dd85b7018109ff474b9df3c7a0f7e') }}"
     mode: '0644'
 
 - name: Unarchive NetworkMiner
