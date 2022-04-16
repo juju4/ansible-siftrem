@@ -19,11 +19,11 @@
     dest: /opt
     mode: '0755'
     remote_src: true
-    creates: /opt/NetworkMiner_2-7-2/ChangeLog
+    creates: /opt/NetworkMiner_2-7-3/ChangeLog
 
 - name: Symlink NetworkMiner directory
   ansible.builtin.file:
-    src: /opt/NetworkMiner_2-7-2
+    src: /opt/NetworkMiner_2-7-3
     dest: /opt/NetworkMiner
     mode: '0755'
     state: link
