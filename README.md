@@ -6,7 +6,7 @@
 Ansible role to setup both ISC SANS SIFT and Remnux on a box.
 Include a few extra tools
 
-Some settings/permissions/packages were aligned between the two to avoid unecessary changes and keep role as idempotent as possible.
+Some settings/permissions/packages were aligned between the two to avoid unnecessary changes and keep role as idempotent as possible.
 SIFT and Remnux has been moved to separate role each include as meta. Pay attention to conflicting options like x11 (unity - sift or lxde - remnux) or webserver.
 
 ## Requirements & Dependencies
