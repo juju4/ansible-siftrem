@@ -4,7 +4,7 @@ galaxy_info:
   author: juju4
   description: SIFT+Remnux+Extra role for Ubuntu-based system
   license: BSD
-  min_ansible_version: 1.9
+  min_ansible_version: '1.9'
   platforms:
     - name: Ubuntu
       versions:
