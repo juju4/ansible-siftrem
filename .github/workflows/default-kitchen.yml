@@ -18,6 +18,11 @@ jobs:
       matrix:
         include:
           - distribution: ubuntu
+            version: '22.04'
+            version2: 2204
+            suite: default
+            experimental: true
+          - distribution: ubuntu
             version: '20.04'
             version2: 2004
             suite: default
