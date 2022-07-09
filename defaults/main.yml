@@ -60,7 +60,8 @@ siftrem_extra_pkgs:
   - wfrench
   - steghide
   - build-essential
-  - phantomjs
+  # not jammy
+  # - phantomjs
   - wkhtmltopdf
   ## cutycapt and its dependencies
   - cutycapt
@@ -104,7 +105,7 @@ siftrem_extra_pkgs:
   # for regripper
   - libparse-win32registry-perl
   # from gift ppa
-  - docker-explorer-tools
+  # - docker-explorer-tools
   # morse code/decode?
 
 siftrem_extra_git:
