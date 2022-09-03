@@ -82,14 +82,6 @@
         - { url: 'https://github.com/rizinorg/cutter/releases/download/v2.0.2/Cutter-v2.0.2-x64.Linux.AppImage' }
         - { url: 'https://github.com/RickdeJager/stegseek/releases/download/v0.6/stegseek_0.6-1.deb' }
         - { url: 'https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz' }
-  pre_tasks:
-    - name: Trusty | set fact
-      set_fact:
-        vivisect_virtualenv:
-          - python-virtualenv
-        floss_virtualenv:
-          - python-virtualenv
-      when: ansible_distribution_release == 'trusty'
   roles:
     - { role: geerlingguy.docker, when: ansible_distribution == 'Ubuntu' }
     - juju4.siftrem
