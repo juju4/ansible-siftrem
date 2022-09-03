@@ -1,7 +1,7 @@
 ---
 
 ## fails under lxd+systemd, https://github.com/ansible/ansible-modules-core/issues/5582
-- name: set hostname
+- name: Set hostname
   ansible.builtin.hostname: name={{ siftrem_hostname }}
   when: siftrem_hostname is defined
 - name: Add new hostname in /etc/hosts (local resolv)
@@ -19,7 +19,7 @@
   ansible.builtin.include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
   when: ansible_distribution == 'Ubuntu'
 
-- name: check ruby spec permissions
+- name: Check ruby spec permissions
   ansible.builtin.file: "dest=/home/{{ sift_user }}/.gem/specs state=directory mode=0755 owner={{ sift_user }}"
 
 ## https://answers.launchpad.net/ubuntu/+source/snort/+question/262496
@@ -56,7 +56,7 @@
 
 - name: Debian | open-vm-tools install
   ansible.builtin.apt: name=open-vm-tools state=present
-  when: vm|bool
+  when: vm | bool
   register: pkg_result
   until: pkg_result is success
 
@@ -80,10 +80,10 @@
     create: yes
 
 ## Extra tools
-- name: create toolset root dir
+- name: Create toolset root dir
   ansible.builtin.file: dest={{ siftrem_toolsetdir }} mode=0755 owner={{ sift_user }} state=directory
 
-- name: git clone extra tools
+- name: Git clone extra tools
   ansible.builtin.git:
     repo: "{{ item.r }}"
     dest: "{{ siftrem_toolsetdir }}/{{ item.r | basename }}"
@@ -94,7 +94,7 @@
   become: yes
   become_user: "{{ sift_user }}"
 
-- name: python build extra tools  # noqa 301
+- name: Python build extra tools
   ansible.builtin.command: "python3 setup.py install"
   args:
     chdir: "{{ siftrem_toolsetdir }}/{{ item.d }}"
@@ -102,7 +102,7 @@
   with_items: "{{ siftrem_extra_git_python_build }}"
   become: yes
 
-- name: extra downloads
+- name: Extra downloads
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ item.d | default(siftrem_toolsetdir + '/' + item.url | basename) }}"

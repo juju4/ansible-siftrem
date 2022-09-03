@@ -12,25 +12,25 @@
     dest: "{{ siftrem_toolsetdir }}/volatilityplugins/community"
     version: "{{ volatilityplugins_version | default('099619c76e751296e688cfec22197af82fe38504') }}"
 
-- name: editbox - extracts the text from Windows Edit controls
+- name: Editbox - extracts the text from Windows Edit controls
   ansible.builtin.git:
     repo: https://github.com/bridgeythegeek/editbox.git
     dest: "{{ siftrem_toolsetdir }}/volatilityplugins/editbox"
     version: "{{ editbox_version | default('0baed53c37eb6d3822dd50fc29078c908a20054e') }}"
 
-- name: malware config extractor - plugx, andromeda
+- name: Malware config extractor - plugx, andromeda
   ansible.builtin.git:
     repo: https://github.com/arbor-jjones/volatility_plugins.git
     dest: "{{ siftrem_toolsetdir }}/volatilityplugins/plugx+andromeda"
     version: "{{ plugxandromeda_version | default('0399a57480ad8a1968465647ebb47c1b740abf35') }}"
 
-- name: autoruns
+- name: Autoruns
   ansible.builtin.git:
     repo: https://github.com/tomchop/volatility-autoruns
     dest: "{{ siftrem_toolsetdir }}/volatilityplugins/volatility-autoruns"
     version: "{{ autoruns_version | default('aa9a5103aa78367ce7f58c973223eeff4b48738c') }}"
 
-- name: bitlocker keys retrieving
+- name: Bitlocker keys retrieving
   ansible.builtin.git:
     repo: https://github.com/elceef/bitlocker
     dest: "{{ siftrem_toolsetdir }}/volatilityplugins/elceef-bitlocker"
@@ -55,7 +55,7 @@
   ansible.builtin.stat: path="{{ vol_plugins }}/autoruns.py"
   register: autoruns
   when: vol_plugins is defined
-- name: map autoruns in volatility plugins tree
+- name: Map autoruns in volatility plugins tree
   ansible.builtin.file:
     src: "{{ siftrem_toolsetdir }}/volatilityplugins/volatility-autoruns/autoruns.py"
     dest: "{{ vol_plugins }}/autoruns.py"

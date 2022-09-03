@@ -1,6 +1,6 @@
 ---
 
-- name: git clone maltego transforms
+- name: Git clone maltego transforms
   ansible.builtin.git:
     repo: "{{ item.r }}"
     dest: "{{ siftrem_toolsetdir }}/maltegotransforms/{{ item.r | basename }}"

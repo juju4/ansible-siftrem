@@ -8,7 +8,7 @@
     value: /usr/local/share/Toolset/dislocker
     state: present
 
-- name: git clone dislocker
+- name: Git clone dislocker
   ansible.builtin.git:
     repo: https://github.com/Aorimn/dislocker.git
     dest: "{{ siftrem_toolsetdir }}/dislocker"
@@ -26,7 +26,7 @@
   register: pkg_result
   until: pkg_result is success
 
-- name: build dislocker
+- name: Build dislocker
   ansible.builtin.command: "{{ item.c }}"
   args:
     chdir: "{{ siftrem_toolsetdir }}/dislocker"
@@ -35,7 +35,7 @@
     - { c: 'cmake .', t: "{{ siftrem_toolsetdir }}/dislocker/Makefile" }
     - { c: make, t: "{{ siftrem_toolsetdir }}/dislocker/src/dislocker-fuse" }
 
-- name: install dislocker
+- name: Install dislocker
   ansible.builtin.command: make install
   args:
     chdir: "{{ siftrem_toolsetdir }}/dislocker"

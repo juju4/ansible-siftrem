@@ -1,6 +1,6 @@
 ---
 
-- name: add peda to default user gdbinit
+- name: Add peda to default user gdbinit
   ansible.builtin.lineinfile:
     dest: "/home/{{ sift_user }}/.gdbinit"
     regexp: "^source {{ siftrem_toolsetdir }}/peda/.*"
