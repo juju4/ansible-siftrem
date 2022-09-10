@@ -146,6 +146,7 @@
   when:
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_major_version | int > 16
+    - siftrem_guymager_enable | bool
 
 - import_tasks: densityscout.yml
 

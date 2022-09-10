@@ -16,6 +16,7 @@ siftrem_maltego_enable: true
 siftrem_powershell_enable: true
 siftrem_networkminer_enable: true
 siftrem_azurestorage_enable: true
+siftrem_guymager_enable: false
 
 siftrem_desktop_applications:
   - androgui.desktop
