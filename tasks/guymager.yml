@@ -2,12 +2,12 @@
 
 - name: Guymager | add pinguin.lu repository key
   ansible.builtin.apt_key:
-    url: http://deb.pinguin.lu/debsign_public.key
+    url: http://deb.pinguin.lu/deb-pinguin-lu.gpg
     state: present
 
 - name: Guymager | add pinguin.lu apt repository
   ansible.builtin.apt_repository:
-    repo: 'deb http://deb.pinguin.lu/$(ARCH)/ ./'
+    repo: 'deb [signed-by=/usr/share/keyrings/deb-pinguin-lu.gpg] http://deb.pinguin.lu/$(ARCH)/ ./'
     filename: pinguin.lu
     state: present
 
