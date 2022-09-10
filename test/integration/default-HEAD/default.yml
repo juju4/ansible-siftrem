@@ -47,13 +47,5 @@
     - plugxandromeda_version: HEAD
     - autoruns_version: HEAD
     - bitlocker_version: HEAD
-  pre_tasks:
-    - name: Trusty | set fact
-      set_fact:
-        vivisect_virtualenv:
-          - python-virtualenv
-        floss_virtualenv:
-          - python-virtualenv
-      when: ansible_distribution_release == 'trusty'
   roles:
     - juju4.siftrem

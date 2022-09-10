@@ -50,14 +50,6 @@
     - nodejs_install_npm_user: "root"
     - siftrem_maltego_enable: false
     - siftrem_powershell_enable: false
-  pre_tasks:
-    - name: Trusty | set fact
-      set_fact:
-        vivisect_virtualenv:
-          - python-virtualenv
-        floss_virtualenv:
-          - python-virtualenv
-      when: ansible_distribution_release == 'trusty'
   roles:
     - { role: geerlingguy.docker, when: ansible_distribution == 'Ubuntu' }
     - juju4.siftrem
