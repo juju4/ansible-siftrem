@@ -12,7 +12,7 @@
     filename: azure-cli
     state: present
   notify:
-    - update apt cache
+    - Update apt cache
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers

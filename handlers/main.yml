@@ -1,23 +1,23 @@
 ---
 
-- name: restart sshd
+- name: Restart sshd
   ansible.builtin.service: name=ssh state=restarted
 
-- name: restart samba smbd
+- name: Restart samba smbd
   ansible.builtin.service: name=smbd state=restarted
 
-- name: restart samba nmbd
+- name: Restart samba nmbd
   ansible.builtin.service: name=nmbd state=restarted
 
-- name: update timezone
+- name: Update timezone
   ansible.builtin.command: dpkg-reconfigure --frontend noninteractive tzdata
 
 - name: Updating ClamAV Signatures
   ansible.builtin.command: freshclam --quiet
 
-- name: run ldconfig
+- name: Run ldconfig
   ansible.builtin.command: ldconfig
 
-- name: update apt cache
+- name: Update apt cache
   ansible.builtin.apt:
     update_cache: yes
