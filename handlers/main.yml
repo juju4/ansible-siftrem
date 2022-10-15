@@ -1,13 +1,19 @@
 ---
 
 - name: Restart sshd
-  ansible.builtin.service: name=ssh state=restarted
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
 
 - name: Restart samba smbd
-  ansible.builtin.service: name=smbd state=restarted
+  ansible.builtin.service:
+    name: smbd
+    state: restarted
 
 - name: Restart samba nmbd
-  ansible.builtin.service: name=nmbd state=restarted
+  ansible.builtin.service:
+    name: nmbd
+    state: restarted
 
 - name: Update timezone
   ansible.builtin.command: dpkg-reconfigure --frontend noninteractive tzdata

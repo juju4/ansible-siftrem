@@ -2,15 +2,23 @@
 
 ## fails under lxd+systemd, https://github.com/ansible/ansible-modules-core/issues/5582
 - name: Set hostname
-  ansible.builtin.hostname: name={{ siftrem_hostname }}
+  ansible.builtin.hostname:
+    name: "{{ siftrem_hostname }}"
   when: siftrem_hostname is defined
 - name: Add new hostname in /etc/hosts (local resolv)
   ansible.builtin.replace:
-    "dest='/etc/hosts' regexp='^127.0.0.1       localhost' replace='127.0.0.1       localhost {{ siftrem_hostname }}'"
+    dest: '/etc/hosts'
+    regexp: '^127.0.0.1       localhost'
+    replace: '127.0.0.1       localhost {{ siftrem_hostname }}'
+    mode: 0644
   when: siftrem_hostname is defined
 
 - name: Restrict sshd config
-  ansible.builtin.lineinfile: dest=/etc/ssh/sshd_config regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
+  ansible.builtin.lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    backup: yes
   with_items:
     - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
     - { regexp: '^PermitRootLogin', line: 'PermitRootLogin without-password' }
@@ -20,11 +28,18 @@
   when: ansible_distribution == 'Ubuntu'
 
 - name: Check ruby spec permissions
-  ansible.builtin.file: "dest=/home/{{ sift_user }}/.gem/specs state=directory mode=0755 owner={{ sift_user }}"
+  ansible.builtin.file:
+    dest: "/home/{{ sift_user }}/.gem/specs"
+    state: "directory"
+    mode: "0755"
+    owner: "{{ sift_user }}"
 
 ## https://answers.launchpad.net/ubuntu/+source/snort/+question/262496
 - name: Ubuntu | snort noninteractive settings - dir
-  ansible.builtin.file: dest=/etc/snort state=directory mode=0755
+  ansible.builtin.file:
+    dest: /etc/snort
+    state: directory
+    mode: 0755
 - name: Ubuntu | snort noninteractive settings - conf
   ansible.builtin.lineinfile:
     dest: /etc/snort/snort.debian.conf
@@ -40,7 +55,8 @@
   register: ipaddr
   changed_when: false
 - name: Current network interfaces
-  ansible.builtin.debug: var=ipaddr.stdout_lines
+  ansible.builtin.debug:
+    var: ipaddr.stdout_lines
 
 - name: Debian | Extra packages install
   ansible.builtin.apt:
@@ -51,11 +67,14 @@
   register: pkg_result
   until: pkg_result is success
 
-- import_tasks: ramdisk.yml
+- name: Import ramdisk
+  ansible.builtin.import_tasks: ramdisk.yml
   when: ramdisk_path is defined and ramdisk_size is defined
 
 - name: Debian | open-vm-tools install
-  ansible.builtin.apt: name=open-vm-tools state=present
+  ansible.builtin.apt:
+    name: open-vm-tools
+    state: present
   when: vm | bool
   register: pkg_result
   until: pkg_result is success
@@ -81,7 +100,11 @@
 
 ## Extra tools
 - name: Create toolset root dir
-  ansible.builtin.file: dest={{ siftrem_toolsetdir }} mode=0755 owner={{ sift_user }} state=directory
+  ansible.builtin.file:
+    dest: "{{ siftrem_toolsetdir }}"
+    mode: "0755"
+    owner: "{{ sift_user }}"
+    state: "directory"
 
 - name: Git clone extra tools
   ansible.builtin.git:
@@ -121,41 +144,54 @@
     executable: pip3
 
 - name: Ensure casperjs is present
-  npm:
+  community.general.npm:
     name: casperjs
     path: "{{ siftrem_toolsetdir }}/casperjs"
   register: pkg_result
   until: pkg_result is success
 
-- import_tasks: yara-signature.yml
+- name: Import yara-signature
+  ansible.builtin.import_tasks: yara-signature.yml
   become: yes
   become_user: "{{ sift_user }}"
-- import_tasks: iocrepository.yml
+- name: Import iocrepository
+  ansible.builtin.import_tasks: iocrepository.yml
   become: yes
   become_user: "{{ sift_user }}"
 
-- import_tasks: regripper.yml
-- import_tasks: powershell-empire.yml
-- import_tasks: maltego.yml
+- name: Import regripper
+  ansible.builtin.import_tasks: regripper.yml
+- name: Import powershell-empire
+  ansible.builtin.import_tasks: powershell-empire.yml
+- name: Import maltego
+  ansible.builtin.import_tasks: maltego.yml
   when: siftrem_maltego_enable
-- import_tasks: powershell-core.yml
+- name: Import powershell-core
+  ansible.builtin.import_tasks: powershell-core.yml
   when: siftrem_powershell_enable
-- import_tasks: dislocker.yml
-- import_tasks: peda.yml
-- import_tasks: guymager.yml
+- name: Import dislocker
+  ansible.builtin.import_tasks: dislocker.yml
+- name: Import peda
+  ansible.builtin.import_tasks: peda.yml
+- name: Import guymager
+  ansible.builtin.import_tasks: guymager.yml
   when:
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_major_version | int > 16
     - siftrem_guymager_enable | bool
 
-- import_tasks: densityscout.yml
+- name: Import densityscout
+  ansible.builtin.import_tasks: densityscout.yml
 
-- import_tasks: didierstevenssuite.yml
+- name: Import didierstevenssuite
+  ansible.builtin.import_tasks: didierstevenssuite.yml
 
-- import_tasks: networkminer.yml
+- name: Import networkminer
+  ansible.builtin.import_tasks: networkminer.yml
   when: siftrem_networkminer_enable
 
-- import_tasks: azurestorage.yml
+- name: Import azurestorage
+  ansible.builtin.import_tasks: azurestorage.yml
   when: siftrem_azurestorage_enable
 
 - name: Add Applications desktop shortcuts

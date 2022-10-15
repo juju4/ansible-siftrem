@@ -16,9 +16,9 @@ galaxy_info:
     - security
 
 dependencies:
-  - geerlingguy.java
-  - geerlingguy.nodejs
+  - role: geerlingguy.java
+  - role: geerlingguy.nodejs
   # - volatility
-  - juju4.sift
-  - juju4.remnux
-  - juju4.faup
+  - role: juju4.sift
+  - role: juju4.remnux
+  - role: juju4.faup

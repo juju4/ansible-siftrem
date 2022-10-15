@@ -37,10 +37,12 @@
     version: "{{ bitlocker_version | default('d1c1790045ea935678bafb5f2f933a884120429f') }}"
 
 - name: Check if volatility plugins path 1 exists
-  ansible.builtin.stat: path=/usr/lib/python2.7/dist-packages/volatility/plugins
+  ansible.builtin.stat:
+    path: /usr/lib/python2.7/dist-packages/volatility/plugins
   register: plugins1
 - name: Check if volatility plugins path 2 exists
-  ansible.builtin.stat: path=/usr/local/lib/python2.7/dist-packages/volatility/plugins
+  ansible.builtin.stat:
+    path: /usr/local/lib/python2.7/dist-packages/volatility/plugins
   register: plugins2
 - name: Set target volatility plugins path 1
   ansible.builtin.set_fact:
@@ -52,7 +54,8 @@
   when: plugins2.stat.exists
 
 - name: Check if autoruns.py volatility plugins exists
-  ansible.builtin.stat: path="{{ vol_plugins }}/autoruns.py"
+  ansible.builtin.stat:
+    path: "{{ vol_plugins }}/autoruns.py"
   register: autoruns
   when: vol_plugins is defined
 - name: Map autoruns in volatility plugins tree
