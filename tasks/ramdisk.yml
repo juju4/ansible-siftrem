@@ -8,7 +8,7 @@
     state: directory
 
 - name: Ensure ramdisk is mounted
-  ansible.builtin.mount:
+  ansible.posix.mount:
     name: "{{ ramdisk_path }}"
     src: tmpfs
     fstype: tmpfs
