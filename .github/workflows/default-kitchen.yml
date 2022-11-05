@@ -198,6 +198,12 @@ jobs:
           sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'localectl --no-pager list-locales'
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - python
+        run: |
+          cd $GITHUB_WORKSPACE/juju4.siftrem
+          sudo kitchen exec ${{ matrix.suite }}-${{ matrix.distribution }}-${{ matrix.version2 }} -c 'find /usr/local/env-remnux -type f -ls' || true
+        if: ${{ always() }}
+        continue-on-error: true
       - name: After script - docker
         run: |
           cd $GITHUB_WORKSPACE/juju4.siftrem
