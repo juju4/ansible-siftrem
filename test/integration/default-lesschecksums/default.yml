@@ -53,9 +53,9 @@
         # https://cytoscape.org/download.html
         # - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.8.2/Cytoscape_3_8_2_unix.sh' }
         # https://gephi.org/users/download/
-        - { url: 'https://github.com/gephi/gephi/releases/download/v0.9.2/gephi-0.9.2-linux.tar.gz' }
+        - { url: 'https://github.com/gephi/gephi/releases/download/v0.9.7/gephi-0.9.7-linux-x64.tar.gz' }
         # https://www.maltego.com/downloads/
-        - { url: 'https://maltego-downloads.s3.us-east-2.amazonaws.com/linux/Maltego.v4.2.18.13878.deb', s: 'sha256:e681a6ae7b02ec534f04fb4e83d753bcab07a206b94a50e17eddb024f7f9f572' }
+        - { url: 'https://maltego-downloads.s3.us-east-2.amazonaws.com/linux/Maltego.v4.3.1.deb', s: 'sha256:9f7493a557522b72e12fd6390001be6f882a0be1f25872eef2bcdf082bbef5c6' }
         # https://www.procdot.com/downloadprocdotbinaries.htm
         - { url: 'https://www.procdot.com/download/procdot/binaries/procdot_1_22_57_linux.zip' }
         # http://www.theusrus.de/Mondrian/
@@ -68,17 +68,16 @@
         # - { url: 'https://download.sourceforge.net/project/capanalysis/version%201.2.3/capanalysis_1.2.3_amd64.deb' }
         - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: 'sha256:28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
         # - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: 'sha256:8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
-        - { url: 'https://didierstevens.com/files/software/DidierStevensSuite.zip' }
         # https://www.cert.at/en/downloads/software/software-densityscout
         - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: 'sha256:7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
-        - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/releases/download/1.4-stable/AndroidProjectCreator-1.4-stable-jar-with-dependencies.jar', s: 'sha256:19c3424f3de4d8e572304036f193e80cc6d7d0341bd3bb11f8a4a09f6203f12e' }
+        - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/releases/download/1.5.2-stable/AndroidProjectCreator-1.5.2-stable-jar-with-dependencies.jar', s: 'sha256:6e3a3b1b5d4c508b9b13bc49e4a6437df99b3dce7a55e2b498c467a7eb23abdb' }
         - { url: 'https://gist.github.com/ilyaglow/cfa8b3565a5312e4111529500ecbce2c/raw/75311e918d2400f84c14cfbbc9c6ce770212df92/volatility_to_timesketch.py' }
         # https://github.com/omerbenamram/EVTX A cross-platform parser for the Windows XML EventLog format  in rust
-        - { url: 'https://github.com/omerbenamram/evtx/releases/download/v0.7.2/evtx_dump-v0.7.2-x86_64-unknown-linux-gnu', s: 'sha256:37ef49a719499a7ae01919a390c776219a93c5252eb455d6c7e21a3d1a04517b', d: /usr/local/bin/evtx_dump, m: '0755' }
+        - { url: 'https://github.com/omerbenamram/evtx/releases/download/v0.8.0/evtx_dump-v0.8.0-x86_64-unknown-linux-gnu', s: 'sha256:f934dbdf4af82d42501fa1dded188cc7d025ba6bbf8c388276bb85ed143be1d6', d: /usr/local/bin/evtx_dump, m: '0755' }
         # http://sandsprite.com/blogs/index.php?uid=7&pid=57 (Windows. if works with wine)
         - { url: 'http://sandsprite.com/CodeStuff/PDFStreamDumper_Setup.exe' }
-        - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.10.0/zaproxy_2.10.0-1_all.deb', s: 'sha256:54750581ec2fd21bd5aa8429b31b09eeb1e750ab6bb7e56f12504251892ccb09' }
-        - { url: 'https://portswigger.net/burp/releases/download?product=community&version=2021.5.1&type=Linux', s: 'sha256:54bea55fb79fb00c6b0f1edf130322ef205f4b845332090e1363f7380312be53', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_5_1.sh }
+        - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.12.0/zaproxy_2.12.0-1_all.deb', s: 'sha256:7eaf340d9fcc42576c7a5572249fe0bcad6e7acd68098a7ca110e64beab46207' }
+        - { url: 'https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.9.5&type=Linux', s: 'sha256:d75fda72e910a7440adfeab6ba0a949788f97feeb276cd685e7f801cef328b6f', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_12.sh }
         - { url: 'https://github.com/rizinorg/cutter/releases/download/v2.0.2/Cutter-v2.0.2-x64.Linux.AppImage' }
         - { url: 'https://github.com/RickdeJager/stegseek/releases/download/v0.6/stegseek_0.6-1.deb' }
         - { url: 'https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz' }
