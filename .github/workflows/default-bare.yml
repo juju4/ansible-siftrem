@@ -21,7 +21,7 @@ jobs:
           - os: ubuntu-18.04
             experimental: true
     env:
-      ANSIBLE_CALLBACK_WHITELIST: profile_tasks
+      ANSIBLE_CALLBACKS_ENABLED: profile_tasks
 
     steps:
       - uses: actions/checkout@v2
