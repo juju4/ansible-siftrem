@@ -10,7 +10,7 @@
   ansible.builtin.get_url:
     url: 'https://www.netresec.com/?download=NetworkMiner'
     dest: "{{ siftrem_toolsetdir }}/NetworkMiner.zip"
-    checksum: "sha256:{{ siftrem_networkminer_sha256 | default('cf477b651c3bcc70d6f5d50f9bdcb6d8cf2dd85b7018109ff474b9df3c7a0f7e') }}"
+    checksum: "sha256:{{ siftrem_networkminer_sha256 }}"
     mode: '0644'
 
 - name: Unarchive NetworkMiner
@@ -19,11 +19,11 @@
     dest: /opt
     mode: '0755'
     remote_src: true
-    creates: /opt/NetworkMiner_2-7-3/ChangeLog
+    creates: "/opt/{{ siftrem_networkminer_dirname }}/ChangeLog"
 
 - name: Symlink NetworkMiner directory
   ansible.builtin.file:
-    src: /opt/NetworkMiner_2-7-3
+    src: "/opt/{{ siftrem_networkminer_dirname }}"
     dest: /opt/NetworkMiner
     mode: '0755'
     state: link

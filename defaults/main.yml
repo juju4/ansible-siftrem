@@ -15,6 +15,8 @@ vm: true
 siftrem_maltego_enable: true
 siftrem_powershell_enable: true
 siftrem_networkminer_enable: true
+siftrem_networkminer_dirname: NetworkMiner_2-8
+siftrem_networkminer_sha256: 13dc519e24a44485554be6e3651bf9381b9ea13a0376cdf958508c75e3b1bb7a
 siftrem_azurestorage_enable: true
 siftrem_guymager_enable: false
 
