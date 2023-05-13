@@ -1,28 +1,29 @@
 ---
 
-- hosts: all
+- name: Test vagrant playbook
+  hosts: all
   vars:
-    - sift_docker: true
+    sift_docker: true
     ## ensure consistency between sift and remnux values
-    - sift_hostname: 'siftremworkstation'
-    - sift_user: 'sansforensics'
-    - sift_pass: 'forensics'
-    - sift_do_x11: false
-    - sift_webserver: nginx
-    - remnux_hostname: 'siftremworkstation'
-    - remnux_user: 'sansforensics'
-    - remnux_pass: 'forensics'
-    - remnux_do_x11: true
-    - remnux_webserver: nginx
-    - remnux_docker_images:
-        - remnux/thug
+    sift_hostname: 'siftremworkstation'
+    sift_user: 'sansforensics'
+    sift_pass: 'forensics'
+    sift_do_x11: false
+    sift_webserver: nginx
+    remnux_hostname: 'siftremworkstation'
+    remnux_user: 'sansforensics'
+    remnux_pass: 'forensics'
+    remnux_do_x11: true
+    remnux_webserver: nginx
+    remnux_docker_images:
+      - remnux/thug
     ## pkg_resources.VersionConflict: (six 1.5.2 (/usr/lib/python2.7/dist-packages), Requirement.parse('six>=1.6.0'))
-    - faup_virtualenv_user: "{{ sift_user }}"
-    - faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
-    - vivisect_virtualenv_user: "{{ sift_user }}"
-    - vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    faup_virtualenv_user: "{{ sift_user }}"
+    faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    vivisect_virtualenv_user: "{{ sift_user }}"
+    vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
   roles:
     - ernestas-poskus.docker
     - juju4.siftrem

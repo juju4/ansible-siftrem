@@ -16,13 +16,16 @@
     state: restarted
 
 - name: Update timezone
-  ansible.builtin.command: dpkg-reconfigure --frontend noninteractive tzdata
+  ansible.builtin.command:  # noqa no-changed-when
+    cmd: dpkg-reconfigure --frontend noninteractive tzdata
 
 - name: Updating ClamAV Signatures
-  ansible.builtin.command: freshclam --quiet
+  ansible.builtin.command:  # noqa no-changed-when
+    cmd: freshclam --quiet
 
 - name: Run ldconfig
-  ansible.builtin.command: ldconfig
+  ansible.builtin.command:  # noqa no-changed-when
+    cmd: ldconfig
 
 - name: Update apt cache
   ansible.builtin.apt:

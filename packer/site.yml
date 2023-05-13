@@ -1,6 +1,7 @@
 ---
 
-- hosts: all
+- name: Test packer playbook
+  hosts: all
   vars:
     sift_docker: true
     remnux_docker_enable: true

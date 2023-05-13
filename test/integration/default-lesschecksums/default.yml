@@ -1,86 +1,86 @@
 ---
 
-- hosts: all
+- name: Test integration playbook
+  hosts: all
   ## lighten the load for test instance
   vars:
     ## ensure consistency between sift and remnux values
-    - sift_hostname: 'siftremworkstation'
-    - sift_user: 'sansforensics'
-    - sift_pass: 'forensics'
-    - sift_do_x11: false
-    - sift_webserver: nginx
-    - remnux_hostname: 'siftremworkstation'
-    - remnux_user: 'sansforensics'
-    - remnux_pass: 'forensics'
-    - remnux_do_x11: true
-    - remnux_webserver: nginx
-    - sift_docker: false
-    - remnux_docker_enable: true
+    sift_hostname: 'siftremworkstation'
+    sift_user: 'sansforensics'
+    sift_pass: 'forensics'
+    sift_do_x11: false
+    sift_webserver: nginx
+    remnux_hostname: 'siftremworkstation'
+    remnux_user: 'sansforensics'
+    remnux_pass: 'forensics'
+    remnux_do_x11: true
+    remnux_webserver: nginx
+    sift_docker: false
+    remnux_docker_enable: true
     # selection per disk space limit of CI/CD
-    - remnux_docker_images:
-        - remnux/thug
-        # - remnux/retdec
-        # - remnux/viper
-        # - remnux/jsdetox
-        - remnux/radare2
-        # - radare/radare2
-    ## pkg_resources.VersionConflict: (six 1.5.2 (/usr/lib/python2.7/dist-packages), Requirement.parse('six>=1.6.0'))
-    - faup_virtualenv_user: "{{ sift_user }}"
-    - faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
-    - faup_ownership:
-        - { d: /home/sansforensics/.cache/pip, s: directory, m: '0755', o: "{{ sift_user }}" }
-        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/build", s: directory, m: '0755', o: "{{ sift_user }}" }
-        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/pyfaup.egg-info", s: directory, m: '0755', o: "{{ sift_user }}" }
-    - vivisect_virtualenv_user: "{{ sift_user }}"
-    - vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
-    - vivisect_pip: pip3
-    - vivisect_vcommand: virtualenv3
-    - vivisect_deps:
-        - python3
-        - python3-pip
-    - vivisect_virtualenv:
-        - python3-virtualenv
-    - floss_virtualenv_user: "{{ sift_user }}"
-    - floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
-    - floss_pyinstaller_version: 3.3.1
-    - nodejs_install_npm_user: "root"
-    - siftrem_maltego_enable: false
-    - siftrem_powershell_enable: false
-    - siftrem_extra_dl:
-        # https://cytoscape.org/download.html
-        # - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.8.2/Cytoscape_3_8_2_unix.sh' }
-        # https://gephi.org/users/download/
-        - { url: 'https://github.com/gephi/gephi/releases/download/v0.9.7/gephi-0.9.7-linux-x64.tar.gz' }
-        # https://www.maltego.com/downloads/
-        - { url: 'https://maltego-downloads.s3.us-east-2.amazonaws.com/linux/Maltego.v4.3.1.deb', s: 'sha256:9f7493a557522b72e12fd6390001be6f882a0be1f25872eef2bcdf082bbef5c6' }
-        # https://www.procdot.com/downloadprocdotbinaries.htm
-        - { url: 'https://www.procdot.com/download/procdot/binaries/procdot_1_22_57_linux.zip' }
-        # http://www.theusrus.de/Mondrian/
-        - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'sha256:b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
-        - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.1.2/logstalgia-1.1.2.tar.gz' }
-        - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: 'sha256:8572cf7fee179b211fe12f829dad83ac36d040bcc105af38888a01189dae4945' }
-        - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'sha256:ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
-        - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'sha256:d8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
-        # https://github.com/xplico/CapAnalysis/, unmaintained since 2018, dependencies like php5-cli
-        # - { url: 'https://download.sourceforge.net/project/capanalysis/version%201.2.3/capanalysis_1.2.3_amd64.deb' }
-        - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: 'sha256:28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
-        # - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: 'sha256:8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
-        # https://www.cert.at/en/downloads/software/software-densityscout
-        - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: 'sha256:7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
-        - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/releases/download/1.5.2-stable/AndroidProjectCreator-1.5.2-stable-jar-with-dependencies.jar', s: 'sha256:6e3a3b1b5d4c508b9b13bc49e4a6437df99b3dce7a55e2b498c467a7eb23abdb' }
-        - { url: 'https://gist.github.com/ilyaglow/cfa8b3565a5312e4111529500ecbce2c/raw/75311e918d2400f84c14cfbbc9c6ce770212df92/volatility_to_timesketch.py' }
-        # https://github.com/omerbenamram/EVTX A cross-platform parser for the Windows XML EventLog format  in rust
-        - { url: 'https://github.com/omerbenamram/evtx/releases/download/v0.8.0/evtx_dump-v0.8.0-x86_64-unknown-linux-gnu', s: 'sha256:f934dbdf4af82d42501fa1dded188cc7d025ba6bbf8c388276bb85ed143be1d6', d: /usr/local/bin/evtx_dump, m: '0755' }
-        # http://sandsprite.com/blogs/index.php?uid=7&pid=57 (Windows. if works with wine)
-        - { url: 'http://sandsprite.com/CodeStuff/PDFStreamDumper_Setup.exe' }
-        - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.12.0/zaproxy_2.12.0-1_all.deb', s: 'sha256:7eaf340d9fcc42576c7a5572249fe0bcad6e7acd68098a7ca110e64beab46207' }
-        - { url: 'https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.9.5&type=Linux', s: 'sha256:d75fda72e910a7440adfeab6ba0a949788f97feeb276cd685e7f801cef328b6f', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_12.sh }
-        - { url: 'https://github.com/rizinorg/cutter/releases/download/v2.0.2/Cutter-v2.0.2-x64.Linux.AppImage' }
-        - { url: 'https://github.com/RickdeJager/stegseek/releases/download/v0.6/stegseek_0.6-1.deb' }
-        - { url: 'https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz' }
+    remnux_docker_images:
+      - remnux/thug
+      # - remnux/retdec
+      # - remnux/viper
+      # - remnux/jsdetox
+      - remnux/radare2
+      # - radare/radare2
+    faup_virtualenv_user: "{{ sift_user }}"
+    faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    faup_ownership:
+      - { d: /home/sansforensics/.cache/pip, s: directory, m: '0755', o: "{{ sift_user }}" }
+      - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/build", s: directory, m: '0755', o: "{{ sift_user }}" }
+      - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/pyfaup.egg-info", s: directory, m: '0755', o: "{{ sift_user }}" }
+    vivisect_virtualenv_user: "{{ sift_user }}"
+    vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    vivisect_pip: pip3
+    vivisect_vcommand: virtualenv3
+    vivisect_deps:
+      - python3
+      - python3-pip
+    vivisect_virtualenv:
+      - python3-virtualenv
+    floss_virtualenv_user: "{{ sift_user }}"
+    floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    floss_pyinstaller_version: 3.3.1
+    nodejs_install_npm_user: "root"
+    siftrem_maltego_enable: false
+    siftrem_powershell_enable: false
+    siftrem_extra_dl:
+      # https://cytoscape.org/download.html
+      # - { url: 'https://github.com/cytoscape/cytoscape/releases/download/3.8.2/Cytoscape_3_8_2_unix.sh' }
+      # https://gephi.org/users/download/
+      - { url: 'https://github.com/gephi/gephi/releases/download/v0.9.7/gephi-0.9.7-linux-x64.tar.gz' }
+      # https://www.maltego.com/downloads/
+      - { url: 'https://maltego-downloads.s3.us-east-2.amazonaws.com/linux/Maltego.v4.3.1.deb', s: 'sha256:9f7493a557522b72e12fd6390001be6f882a0be1f25872eef2bcdf082bbef5c6' }
+      # https://www.procdot.com/downloadprocdotbinaries.htm
+      - { url: 'https://www.procdot.com/download/procdot/binaries/procdot_1_22_57_linux.zip' }
+      # http://www.theusrus.de/Mondrian/
+      - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'sha256:b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
+      - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.1.2/logstalgia-1.1.2.tar.gz' }
+      - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: 'sha256:8572cf7fee179b211fe12f829dad83ac36d040bcc105af38888a01189dae4945' }
+      - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'sha256:ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
+      - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'sha256:d8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
+      # https://github.com/xplico/CapAnalysis/, unmaintained since 2018, dependencies like php5-cli
+      # - { url: 'https://download.sourceforge.net/project/capanalysis/version%201.2.3/capanalysis_1.2.3_amd64.deb' }
+      - { url: 'https://raw.githubusercontent.com/pstirparo/utils/master/epochalypse.py', s: 'sha256:28cd70fcecc30dd5b82d8fab8c035bc9080925bfe8e6455a725d4da046f9df0c' }
+      # - { url: 'https://faui1s205.informatik.uni-erlangen.de/forensic-email-visualization.tar.gz', s: 'sha256:8bbcd0696a7c5890b9b2344b3f78942ac30eb8b2d086c5fbdde5099842ca52d1', v: false }
+      # https://www.cert.at/en/downloads/software/software-densityscout
+      - { url: 'https://www.cert.at/media/files/downloads/software/densityscout/files/densityscout_build_45_linux.zip', s: 'sha256:7d49813d407df06529e4b0138d4c0eec725c73bf9e93c0444639c6d409890f2c' }
+      - { url: 'https://github.com/ThisIsLibra/AndroidProjectCreator/releases/download/1.5.2-stable/AndroidProjectCreator-1.5.2-stable-jar-with-dependencies.jar', s: 'sha256:6e3a3b1b5d4c508b9b13bc49e4a6437df99b3dce7a55e2b498c467a7eb23abdb' }
+      - { url: 'https://gist.github.com/ilyaglow/cfa8b3565a5312e4111529500ecbce2c/raw/75311e918d2400f84c14cfbbc9c6ce770212df92/volatility_to_timesketch.py' }
+      # https://github.com/omerbenamram/EVTX A cross-platform parser for the Windows XML EventLog format  in rust
+      - { url: 'https://github.com/omerbenamram/evtx/releases/download/v0.8.0/evtx_dump-v0.8.0-x86_64-unknown-linux-gnu', s: 'sha256:f934dbdf4af82d42501fa1dded188cc7d025ba6bbf8c388276bb85ed143be1d6', d: /usr/local/bin/evtx_dump, m: '0755' }
+      # http://sandsprite.com/blogs/index.php?uid=7&pid=57 (Windows. if works with wine)
+      - { url: 'http://sandsprite.com/CodeStuff/PDFStreamDumper_Setup.exe' }
+      - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.12.0/zaproxy_2.12.0-1_all.deb', s: 'sha256:7eaf340d9fcc42576c7a5572249fe0bcad6e7acd68098a7ca110e64beab46207' }
+      - { url: 'https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.9.5&type=Linux', s: 'sha256:d75fda72e910a7440adfeab6ba0a949788f97feeb276cd685e7f801cef328b6f', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_12.sh }
+      - { url: 'https://github.com/rizinorg/cutter/releases/download/v2.0.2/Cutter-v2.0.2-x64.Linux.AppImage' }
+      - { url: 'https://github.com/RickdeJager/stegseek/releases/download/v0.6/stegseek_0.6-1.deb' }
+      - { url: 'https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz' }
   roles:
     - { role: geerlingguy.docker, when: ansible_distribution == 'Ubuntu' }
     - juju4.siftrem

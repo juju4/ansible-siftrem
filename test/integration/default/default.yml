@@ -1,55 +1,56 @@
 ---
 
-- hosts: all
+- name: Test integration playbook
+  hosts: all
   ## lighten the load for test instance
   vars:
     ## ensure consistency between sift and remnux values
-    - sift_hostname: 'siftremworkstation'
-    - sift_user: 'sansforensics'
+    sift_hostname: 'siftremworkstation'
+    sift_user: 'sansforensics'
     # 'forensics'
-    - sift_pass: '$6$u9LOM5jmW0o$vIK0cgsGk92quWiV4uAGgZ9eIDwPwQ8We64yeagij7bCFLML2HVomciz2/lQ9k.QN.J/nQbpn21IosRWD5G9n.'
-    - sift_do_x11: false
-    - sift_webserver: nginx
-    - remnux_hostname: 'siftremworkstation'
-    - remnux_user: 'sansforensics'
-    - remnux_pass: "{{ sift_pass }}"
-    - remnux_do_x11: true
-    - remnux_webserver: nginx
-    - sift_docker: false
-    - remnux_docker_enable: true
+    sift_pass: '$6$u9LOM5jmW0o$vIK0cgsGk92quWiV4uAGgZ9eIDwPwQ8We64yeagij7bCFLML2HVomciz2/lQ9k.QN.J/nQbpn21IosRWD5G9n.'
+    sift_do_x11: false
+    sift_webserver: nginx
+    remnux_hostname: 'siftremworkstation'
+    remnux_user: 'sansforensics'
+    remnux_pass: "{{ sift_pass }}"
+    remnux_do_x11: true
+    remnux_webserver: nginx
+    sift_docker: false
+    remnux_docker_enable: true
     # selection per disk space limit of CI/CD
-    - remnux_docker_images:
-        - remnux/thug
-        # - remnux/retdec
-        # - remnux/viper
-        # - remnux/jsdetox
-        - remnux/radare2
-        # - radare/radare2
+    remnux_docker_images:
+      - remnux/thug
+      # - remnux/retdec
+      # - remnux/viper
+      # - remnux/jsdetox
+      - remnux/radare2
+      # - radare/radare2
     ## pkg_resources.VersionConflict: (six 1.5.2 (/usr/lib/python2.7/dist-packages), Requirement.parse('six>=1.6.0'))
-    - faup_virtualenv_user: "{{ sift_user }}"
-    - faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
-    - faup_ownership:
-        - { d: /home/sansforensics/.cache/pip, s: directory, m: '0755', o: "{{ sift_user }}" }
-        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/build", s: directory, m: '0755', o: "{{ sift_user }}" }
-        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/pyfaup.egg-info", s: directory, m: '0755', o: "{{ sift_user }}" }
-    - vivisect_virtualenv_user: "{{ sift_user }}"
-    - vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
-    - vivisect_pip: pip3
-    - vivisect_vcommand: virtualenv3
-    - vivisect_deps:
-        - python3
-        - python3-pip
-    - vivisect_virtualenv:
-        - python3-virtualenv
-    - floss_virtualenv_user: "{{ sift_user }}"
-    - floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
-    - floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
-    - floss_pyinstaller_version: 3.3.1
-    - nodejs_install_npm_user: "root"
-    - siftrem_maltego_enable: false
-    - siftrem_powershell_enable: false
+    faup_virtualenv_user: "{{ sift_user }}"
+    faup_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    faup_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    faup_ownership:
+      - { d: /home/sansforensics/.cache/pip, s: directory, m: '0755', o: "{{ sift_user }}" }
+      - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/build", s: directory, m: '0755', o: "{{ sift_user }}" }
+      - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/pyfaup.egg-info", s: directory, m: '0755', o: "{{ sift_user }}" }
+    vivisect_virtualenv_user: "{{ sift_user }}"
+    vivisect_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    vivisect_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    vivisect_pip: pip3
+    vivisect_vcommand: virtualenv3
+    vivisect_deps:
+      - python3
+      - python3-pip
+    vivisect_virtualenv:
+      - python3-virtualenv
+    floss_virtualenv_user: "{{ sift_user }}"
+    floss_virtualenv_home: "/home/{{ faup_virtualenv_user }}"
+    floss_virtualenv_path: "{{ faup_virtualenv_home }}/env-python"
+    floss_pyinstaller_version: 3.3.1
+    nodejs_install_npm_user: "root"
+    siftrem_maltego_enable: false
+    siftrem_powershell_enable: false
   roles:
     - { role: geerlingguy.docker, when: ansible_distribution == 'Ubuntu' }
     - juju4.siftrem
