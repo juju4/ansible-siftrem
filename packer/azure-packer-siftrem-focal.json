@@ -21,6 +21,7 @@
     {
       "type": "ansible",
       "playbook_file": "../test/integration/default/default.yml",
+      "use_proxy": false,
       "extra_arguments": [ "--become" ]
     }
   ],
@@ -34,11 +35,20 @@
       "client_secret": "{{user `client_secret`}}",
 
       "cloud_environment_name": "AzurePublicCloud",
-      "location": "eastus",
-      "vm_size": "Standard_D1",
+      "vm_size": "Standard_DS2_v2",
 
+      "build_resource_group_name": "Testing",
+      "allowed_inbound_ip_addresses": [ "" ],
       "managed_image_resource_group_name": "Testing",
       "managed_image_name": "juju4.siftrem-focal-{{isotime \"2006-01-02\"}}",
+      "azure_tags": {
+        "ticket": "TIC-123456",
+        "role": "Packer Image building",
+        "source": "packer",
+        "costcenter": "",
+        "environment": "dev",
+        "contact": ""
+      },
 
       "os_type": "Linux",
       "image_publisher": "Canonical",
