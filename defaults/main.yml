@@ -211,6 +211,7 @@ siftrem_extra_dl:
   - { url: 'https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz' }
   - { url: 'https://github.com/WithSecureLabs/chainsaw/releases/download/v2.2.0/chainsaw_x86_64-unknown-linux-gnu.tar.gz', s: 'sha256:d229ac96e3f537dab5cdadb5c097cd62a07f6fa1f1d67fba2d06ffa6e3efa7a1' }
   - { url: 'https://github.com/Yamato-Security/hayabusa/releases/download/v1.7.2/hayabusa-1.7.2-all-platforms.zip', s: 'sha256:47ed8f73bcd5f181272621a84826344cf75b3a707c79a9d9a3f6c511fe899e7f' }
+  - { url: 'https://github.com/WerWolv/ImHex/releases/download/v1.30.0/imhex-1.30.0-Ubuntu-22.04-x86_64.deb', s: 'sha256:4241a0add4d60e59bfba71889b6fb3d16e0e52f24f8b8b9e71457ce0573e5a12' }
   # - { url: '', s: '' }
 
 siftrem_extra_pip:
