@@ -13,16 +13,15 @@ SIFT and Remnux has been moved to separate role each include as meta. Pay attent
 
 ### Ansible
 It was tested on the following versions:
- * 2.0
- * 2.2
- * 2.4
- * 2.5
- * 2.9
+ * 2.10-2.17
 
 ### Operating systems
 
-Tested on Ubuntu 18.04.
-Some applications might required a big ramdisk
+* Ubuntu 20.04
+* Ubuntu 22.04
+* Ubuntu 24.04 (tentative, depending on pending upstream ppa support)
+
+Some applications might required a big ramdisk.
 
 ## Example Playbook
 
