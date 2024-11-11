@@ -29,11 +29,11 @@ jobs:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: juju4.siftrem
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Install dependencies
