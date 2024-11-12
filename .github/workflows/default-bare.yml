@@ -107,6 +107,6 @@ jobs:
         continue-on-error: true
       - name: After script - freshclam
         run: |
-          tail -100 /var/log/clamav/freshclam.log || true
+          sudo tail -100 /var/log/clamav/freshclam.log || true
         if: ${{ always() }}
         continue-on-error: true
