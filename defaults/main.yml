@@ -204,7 +204,7 @@ siftrem_extra_dl:
   # http://sandsprite.com/blogs/index.php?uid=7&pid=57 (Windows. if works with wine)
   - { url: 'http://sandsprite.com/CodeStuff/PDFStreamDumper_Setup.exe' }
   # https://github.com/zaproxy/zaproxy/releases
-  - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.12.0/zaproxy_2.12.0-1_all.deb', s: 'sha256:7eaf340d9fcc42576c7a5572249fe0bcad6e7acd68098a7ca110e64beab46207' }
+  - { url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.15.0/ZAP_2.15.0_Linux.tar.gz', s: 'sha256:6410e196baab458a9204e29aafb5745fca003a2a6c0386f2c6e5c04b67621fa7' }
   - { url: 'https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.9.5&type=Linux', s: 'sha256:d75fda72e910a7440adfeab6ba0a949788f97feeb276cd685e7f801cef328b6f', d: /usr/local/share/Toolset/burpsuite_community_linux_v2021_12.sh }
   - { url: 'https://github.com/rizinorg/cutter/releases/download/v2.0.2/Cutter-v2.0.2-x64.Linux.AppImage' }
   - { url: 'https://github.com/RickdeJager/stegseek/releases/download/v0.6/stegseek_0.6-1.deb' }
