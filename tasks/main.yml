@@ -137,6 +137,16 @@
   until: dl_result is success
   with_items: "{{ siftrem_extra_dl }}"
 
+- name: Install pip virtualenv
+  ansible.builtin.pip:
+    name: pip
+    extra_args: --upgrade
+    state: present
+    virtualenv: "{{ siftrem_virtualenv }}"
+    virtualenv_python: "{{ siftrem_python | default('/usr/bin/python3') }}"
+  register: pkg_result
+  until: pkg_result is success
+
 - name: Extra pip install
   ansible.builtin.pip:
     name: "{{ siftrem_extra_pip }}"

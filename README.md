@@ -38,30 +38,6 @@ For example
 
 Nothing specific for now.
 
-
-## FAQ
-
-* role has bigger disk requirements than usual and might need bigger disk image than usual whatever provider is used (lxc, virtualbox, ...)
-kitchen might end with error "IOError: [Errno 28] No space left on device"
-
-* for remote connection, you can use either ssh X-Forwarding with a local X11 server, either xrdp. Ensure your network connection is sufficient. Usually xrdp with lxde/xfce is less demanding.
-
-* if missing disk space, you can review: `apt clean all`, docker images, /opt/az, /usr/local/share/Toolset
-
-## Known issues
-
-* A few times, got packages install failing and at next run working fine...
-ex:
-$ vagrant up siftrem
-[fail]
-$ vagrant provision siftrem
-[OK]
-* menu entries are not available be it for sift (unity-based?) or remnux(lxde)
-* remnux use nginx, sift apache2...
-* travis fails because whole role take more than maximum time limit (50min) or no space left on device
-https://github.com/travis-ci/travis-ci/issues/3810
-* packer build generate a vdi increasing to 250GB+ for unknown reason.
-
 ## Continuous integration
 
 This role has a travis basic test (for github), more advanced with kitchen and also a Vagrantfile (test/vagrant).
@@ -98,6 +74,36 @@ $ PACKER_LOG_PATH="packerlog.txt" PACKER_LOG=1 packer build packer-*.json
 ##  update json config on your setup and region.
 $ export DO_TOKEN=xxx
 $ packer build -only=digitalocean packer-*.json
+```
+
+## FAQ
+
+* role has bigger disk requirements than usual and might need bigger disk image than usual whatever provider is used (lxc, virtualbox, ...)
+kitchen might end with error "IOError: [Errno 28] No space left on device"
+
+* for remote connection, you can use either ssh X-Forwarding with a local X11 server, either xrdp. Ensure your network connection is sufficient. Usually xrdp with lxde/xfce is less demanding.
+
+* if missing disk space, you can review: `apt clean all`, docker images, /opt/az, /usr/local/share/Toolset
+
+## Known issues
+
+* A few times, got packages install failing and at next run working fine...
+ex:
+$ vagrant up siftrem
+[fail]
+$ vagrant provision siftrem
+[OK]
+* menu entries are not available be it for sift (unity-based?) or remnux(lxde)
+* remnux use nginx, sift apache2...
+* travis fails because whole role take more than maximum time limit (50min) or no space left on device
+https://github.com/travis-ci/travis-ci/issues/3810
+* packer build generate a vdi increasing to 250GB+ for unknown reason.
+
+* [24.04] "ModuleNotFoundError: No module named 'pip._vendor.six.moves'". A quick dirty solution from https://stackoverflow.com/questions/49478573/pip3-install-not-working-no-module-named-pip-vendor-pkg-resources:
+```
+. /usr/local/env-sift/bin/activate
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py --force-reinstall
 ```
 
 ## License
