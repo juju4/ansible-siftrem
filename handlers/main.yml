@@ -24,6 +24,7 @@
     cmd: freshclam --quiet
   register: freshclam_update
   until: freshclam_update is success
+  failed_when: false
 
 - name: Run ldconfig
   ansible.builtin.command:  # noqa no-changed-when
