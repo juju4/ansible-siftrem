@@ -10,7 +10,7 @@
     dest: '/etc/hosts'
     regexp: '^127.0.0.1       localhost'
     replace: '127.0.0.1       localhost {{ siftrem_hostname }}'
-    mode: 0644
+    mode: '0644'
   when: siftrem_hostname is defined
 
 - name: Restrict sshd config
@@ -39,7 +39,7 @@
   ansible.builtin.file:
     dest: /etc/snort
     state: directory
-    mode: 0755
+    mode: '0755'
 - name: Ubuntu | snort noninteractive settings - conf
   ansible.builtin.lineinfile:
     dest: /etc/snort/snort.debian.conf
