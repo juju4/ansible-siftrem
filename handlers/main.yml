@@ -20,28 +20,10 @@
     cmd: dpkg-reconfigure --frontend noninteractive tzdata
 
 - name: Updating ClamAV Signatures
-  block:
-    - name: Run freshclam
-      ansible.builtin.command:  # noqa no-changed-when
-        cmd: freshclam --quiet
-      register: freshclam_update
-      until: freshclam_update is success
-  rescue:
-    - name: Check freshclam process
-      ansible.builtin.shell:  # noqa no-changed-when
-        cmd: |
-          set -o pipefail
-          ps aux | grep freshclam
-      args:
-        executable: /bin/bash
-      changed_when: false
-      failed_when: false
-    - name: Check freshclam log
-      ansible.builtin.command:  # noqa no-changed-when
-        cmd: tail -50 /var/log/clamav/freshclam.log
-      changed_when: false
-      failed_when: false
-
+  ansible.builtin.command:  # noqa no-changed-when
+    cmd: freshclam --quiet
+  register: freshclam_update
+  until: freshclam_update is success
 
 - name: Run ldconfig
   ansible.builtin.command:  # noqa no-changed-when
