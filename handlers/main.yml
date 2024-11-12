@@ -22,6 +22,8 @@
 - name: Updating ClamAV Signatures
   ansible.builtin.command:  # noqa no-changed-when
     cmd: freshclam --quiet
+  register: freshclam_update
+  until: freshclam_update is success
 
 - name: Run ldconfig
   ansible.builtin.command:  # noqa no-changed-when
