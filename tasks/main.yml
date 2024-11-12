@@ -141,7 +141,8 @@
   ansible.builtin.pip:
     name: "{{ siftrem_extra_pip }}"
     state: present
-    executable: pip3
+    virtualenv: "{{ siftrem_virtualenv }}"
+    virtualenv_python: "{{ siftrem_python | default('/usr/bin/python3') }}"
 
 - name: Ensure casperjs is present
   community.general.npm:

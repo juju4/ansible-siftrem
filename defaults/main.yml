@@ -3,6 +3,8 @@ tz: Etc/UTC
 
 # siftrem_toolsetdir: "/home/{{ sift_user }}/Toolset"
 siftrem_toolsetdir: "/usr/local/share/Toolset"
+# avoid conflicts between pip and distrib packages
+siftrem_virtualenv: /usr/local/env-sift
 
 ## for a volatility/vortessence usage, you want it maxmemfilesize+300MB
 ## define size to enable
