@@ -118,7 +118,7 @@
   become_user: "{{ sift_user }}"
 
 - name: Python build extra tools
-  ansible.builtin.command: "python3 setup.py install"
+  ansible.builtin.command: "pip3 install"
   args:
     chdir: "{{ siftrem_toolsetdir }}/{{ item.d }}"
     creates: "{{ item.t }}"
