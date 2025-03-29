@@ -190,7 +190,7 @@ siftrem_extra_dl:
   # http://www.theusrus.de/Mondrian/
   - { url: 'http://www.theusrus.de/Mondrian/Mondrian15b.jar', s: 'sha256:b190f1f47830e81c0a84a02cf16c277e1dea3d36cea596edce5f9ab7ff08d00a' }
   - { url: 'https://github.com/acaudwell/Logstalgia/releases/download/logstalgia-1.1.3/logstalgia-1.1.3.tar.gz' }
-  - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: 'sha256:adf6deae429299ca482ebd3e7742388f5aa71eea126a0f78df7a924acc1f9b4c' }
+  - { url: 'http://www.rfxn.com/downloads/maldetect-current.tar.gz', s: 'sha256:3ef7fd06b9ecc526e668b4afec889b583aa33005d3a71285e8bf32ab65bde3dc' }
   - { url: 'http://www.hexacorn.com/tools/TimeCraver.pl', s: 'sha256:ba1b88d3b6d7fefff628b1a24c377afaeeb6e885b4cf24fae6231980d3d2a151' }
   - { url: 'https://raw.githubusercontent.com/504ensicsLabs/find_times/master/find_times.py', s: 'sha256:d8942c8cb410c8759d5016ab0161ab00e78a6eacaa1861c2975a595e09b4e7b9' }
   # https://github.com/xplico/CapAnalysis/, unmaintained since 2018, dependencies like php5-cli
