@@ -67,6 +67,15 @@
   register: pkg_result
   until: pkg_result is success
 
+- name: Debian | Extra packages install (snap-based)
+  ansible.builtin.apt:
+    name: "{{ siftrem_extra_snap_pkgs }}"
+    state: "present"
+  register: pkg_result
+  until: pkg_result is success
+  when:
+    - ansible_virtualization_type != 'lxc' or siftrem_snap_enable | bool
+
 - name: Import ramdisk
   ansible.builtin.import_tasks: ramdisk.yml
   when: ramdisk_path is defined and ramdisk_size is defined
@@ -137,6 +146,7 @@
   until: dl_result is success
   with_items: "{{ siftrem_extra_dl }}"
 
+# 24.04: ModuleNotFoundError: No module named 'pip._vendor.six.moves'
 - name: Install pip virtualenv
   ansible.builtin.pip:
     name: pip
@@ -146,6 +156,7 @@
     virtualenv_python: "{{ siftrem_python | default('/usr/bin/python3') }}"
   register: pkg_result
   until: pkg_result is success
+  when: false
 
 - name: Extra pip install
   ansible.builtin.pip:

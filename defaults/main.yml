@@ -113,6 +113,10 @@ siftrem_extra_pkgs:
   # - docker-explorer-tools
   # morse code/decode?
 
+siftrem_snap_enable: false
+siftrem_extra_snap_pkgs:
+  - chromium-browser
+
 siftrem_extra_git:
   - { r: 'https://github.com/keydet89/RegRipper3.0.git', v: HEAD }
   # - { r: 'https://github.com/wapiflapi/binglide', v: HEAD }
