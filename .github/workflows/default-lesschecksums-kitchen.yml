@@ -31,7 +31,7 @@ jobs:
       ANSIBLE_EXTRA_VARS: "-e ubuntu_if=eth0"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: juju4.siftrem
       - name: Set up Python
