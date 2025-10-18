@@ -32,7 +32,7 @@
   ansible.builtin.file:
     path: "{{ item.p }}"
     mode: "{{ item.m }}"
-    state: "{{ item.s | default('present') }}"
+    state: "{{ item.s | default('file') }}"
   with_items:
     - { p: /opt/NetworkMiner/NetworkMiner.exe, m: '0755' }
     - { p: /opt/NetworkMiner/AssembledFiles, m: '1777', s: directory }
