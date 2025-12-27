@@ -12,6 +12,8 @@
     dest: "{{ siftrem_toolsetdir }}/NetworkMiner.zip"
     checksum: "sha256:{{ siftrem_networkminer_sha256 }}"
     mode: '0644'
+  register: dl_result
+  until: dl_result is success
 
 - name: Unarchive NetworkMiner
   ansible.builtin.unarchive:
