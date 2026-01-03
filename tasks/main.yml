@@ -24,8 +24,8 @@
     - { regexp: '^PermitRootLogin', line: 'PermitRootLogin without-password' }
 
 - name: Include version-specific variables for Ubuntu.
-  ansible.builtin.include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-  when: ansible_distribution == 'Ubuntu'
+  ansible.builtin.include_vars: "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_version'] }}.yml"
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Check ruby spec permissions
   ansible.builtin.file:
@@ -74,7 +74,7 @@
   register: pkg_result
   until: pkg_result is success
   when:
-    - ansible_virtualization_type != 'lxc' or siftrem_snap_enable | bool
+    - ansible_facts['virtualization_type'] != 'lxc' or siftrem_snap_enable | bool
 
 - name: Import ramdisk
   ansible.builtin.import_tasks: ramdisk.yml
@@ -198,8 +198,8 @@
 - name: Import guymager
   ansible.builtin.import_tasks: guymager.yml
   when:
-    - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_major_version | int > 16
+    - ansible_facts['distribution'] == 'Ubuntu'
+    - ansible_facts['distribution_major_version'] | int > 16
     - siftrem_guymager_enable | bool
 
 - name: Import densityscout

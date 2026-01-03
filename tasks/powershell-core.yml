@@ -20,7 +20,7 @@
 
 - name: Ensure Microsoft apt repository is present
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-{{ ansible_distribution | lower }}-{{ ansible_distribution_release | lower }}-prod {{ ansible_distribution_release | lower }} main"
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-{{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_release'] | lower }}-prod {{ ansible_facts['distribution_release'] | lower }} main"
     state: present
     filename: powershell
 

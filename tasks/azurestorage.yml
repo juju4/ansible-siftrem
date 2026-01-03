@@ -8,7 +8,7 @@
 
 - name: Ensure Microsoft Azure repository is present
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release | lower }} main"
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_facts['distribution_release'] | lower }} main"
     filename: azure-cli
     state: present
   notify:
