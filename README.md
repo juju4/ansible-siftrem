@@ -1,7 +1,7 @@
+# Sift+Remnux ansible role
+
 [![Actions Status - Main](https://github.com/juju4/ansible-siftrem/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-siftrem/actions?query=branch%3Amain)
 [![Actions Status - Devel](https://github.com/juju4/ansible-siftrem/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-siftrem/actions?query=branch%3Adevel)
-
-# Sift+Remnux ansible role
 
 Ansible role to setup both ISC SANS SIFT and Remnux on a box.
 Include a few extra tools
