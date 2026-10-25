@@ -117,6 +117,10 @@ siftrem_snap_enable: false
 siftrem_extra_snap_pkgs:
   - chromium-browser
 
+# renovate: datasource=github-releases depName=wagga40/Zircolite
+siftrem_zircolite_github_version: v4.7.0
+# renovate: datasource=github-releases depName=wagga40/LogsTotal
+siftrem_logstotal_github_version: v1.1.0
 siftrem_extra_git:
   - { r: 'https://github.com/keydet89/RegRipper3.0.git', v: HEAD }
   # - { r: 'https://github.com/wapiflapi/binglide', v: HEAD }
@@ -170,7 +174,8 @@ siftrem_extra_git:
   - { r: 'https://github.com/d4ncingd4n/Spondulas', v: HEAD }
   - { r: 'https://github.com/sandflysecurity/sandfly-filescan.git', v: HEAD }
   - { r: 'https://github.com/sandflysecurity/sandfly-processdecloak.git', v: HEAD }
-  - { r: 'https://github.com/wagga40/Zircolite.git', v: HEAD }
+  - { r: 'https://github.com/wagga40/Zircolite.git', v: "{{ siftrem_zircolite_github_version }}" }
+  - { r: 'https://github.com/wagga40/LogsTotal.git', v: "{{ siftrem_logstotal_github_version }}" }
   - { r: 'https://github.com/DissectMalware/OfficeForensicTools', v: HEAD }
   - { r: 'https://github.com/rfxn/linux-malware-detect', v: HEAD }
 
