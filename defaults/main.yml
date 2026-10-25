@@ -21,6 +21,8 @@ siftrem_networkminer_dirname: NetworkMiner_3-1
 siftrem_networkminer_sha256: 782e3d4d0b917a5aadf59966ab7d21ab30dbd593eff14e426f2b580a2e3f89e1
 siftrem_azurestorage_enable: true
 siftrem_guymager_enable: false
+# Captcha may prevent download
+siftrem_didierstevenssuite_enable: false
 
 siftrem_desktop_applications:
   - androgui.desktop

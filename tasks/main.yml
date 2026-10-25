@@ -207,6 +207,7 @@
 
 - name: Import didierstevenssuite
   ansible.builtin.import_tasks: didierstevenssuite.yml
+  when: siftrem_didierstevenssuite_enable
 
 - name: Import networkminer
   ansible.builtin.import_tasks: networkminer.yml
